@@ -25,44 +25,48 @@ const nav = document.getElementById('nav');
 const backToTop = document.getElementById('backToTop');
 
 window.addEventListener('scroll', () => {
-  const scrolled = window.scrollY > 60;
-  nav.classList.toggle('scrolled', scrolled);
-  backToTop.classList.toggle('visible', window.scrollY > 400);
+  if (nav) {
+    const scrolled = window.scrollY > 60;
+    nav.classList.toggle('scrolled', scrolled);
+  }
+  if (backToTop) backToTop.classList.toggle('visible', window.scrollY > 400);
   updateActiveNavLink();
 });
 
-backToTop.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+if (backToTop) {
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
 
 // ─── MOBILE NAV ────────────────────────────────────────
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 
-hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
-  hamburger.classList.toggle('active');
-  // animate hamburger bars
-  const bars = hamburger.querySelectorAll('span');
-  if (navLinks.classList.contains('open')) {
-    bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-    bars[1].style.opacity = '0';
-    bars[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-  } else {
-    bars.forEach(b => { b.style.transform = ''; b.style.opacity = ''; });
-  }
-});
+if (hamburger && navLinks) {
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    hamburger.classList.toggle('active');
+    const bars = hamburger.querySelectorAll('span');
+    if (navLinks.classList.contains('open')) {
+      bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+      bars[1].style.opacity = '0';
+      bars[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+    } else {
+      bars.forEach(b => { b.style.transform = ''; b.style.opacity = ''; });
+    }
+  });
 
-// Close nav when link clicked
-navLinks.querySelectorAll('.nav__link').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    hamburger.querySelectorAll('span').forEach(b => {
-      b.style.transform = '';
-      b.style.opacity = '';
+  navLinks.querySelectorAll('.nav__link').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburger.querySelectorAll('span').forEach(b => {
+        b.style.transform = '';
+        b.style.opacity = '';
+      });
     });
   });
-});
+}
 
 // ─── ACTIVE NAV LINK ───────────────────────────────────
 function updateActiveNavLink() {
@@ -90,33 +94,34 @@ const cursorFollower = document.getElementById('cursorFollower');
 let mouseX = 0, mouseY = 0;
 let followerX = 0, followerY = 0;
 
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursor.style.left = mouseX + 'px';
-  cursor.style.top = mouseY + 'px';
-});
+if (cursor && cursorFollower) {
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
 
-function animateCursor() {
-  followerX += (mouseX - followerX) * 0.12;
-  followerY += (mouseY - followerY) * 0.12;
-  cursorFollower.style.left = followerX + 'px';
-  cursorFollower.style.top = followerY + 'px';
-  requestAnimationFrame(animateCursor);
+  function animateCursor() {
+    followerX += (mouseX - followerX) * 0.12;
+    followerY += (mouseY - followerY) * 0.12;
+    cursorFollower.style.left = followerX + 'px';
+    cursorFollower.style.top = followerY + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  document.querySelectorAll('a, button, .project-card, .skill-group, .edu-card, .case-panel').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.8)';
+      cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.8)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+      cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.5)';
+    });
+  });
 }
-animateCursor();
-
-// Cursor enlarge on hoverable elements
-document.querySelectorAll('a, button, .project-card, .skill-group, .edu-card').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.8)';
-    cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.8)';
-  });
-  el.addEventListener('mouseleave', () => {
-    cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
-    cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.5)';
-  });
-});
 
 // ─── TYPED ROLE EFFECT ─────────────────────────────────
 const roles = [
@@ -258,26 +263,27 @@ if (typedEl) setTimeout(typeRole, 800);
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
-contactForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const btn = contactForm.querySelector('button[type="submit"]');
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-
-  // Simulate slight delay then show message
-  setTimeout(() => {
-    btn.innerHTML = '<span>Message Sent!</span> <i class="fas fa-check"></i>';
-    btn.style.background = 'var(--success)';
-    formSuccess.classList.add('visible');
-    contactForm.reset();
+if (contactForm && formSuccess) {
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = contactForm.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
     setTimeout(() => {
-      btn.disabled = false;
-      btn.innerHTML = '<span>Send Message</span> <i class="fas fa-paper-plane"></i>';
-      btn.style.background = '';
-    }, 4000);
-  }, 900);
-});
+      btn.innerHTML = '<span>Message Sent!</span> <i class="fas fa-check"></i>';
+      btn.style.background = 'var(--success)';
+      formSuccess.classList.add('visible');
+      contactForm.reset();
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<span>Send Message</span> <i class="fas fa-paper-plane"></i>';
+        btn.style.background = '';
+      }, 4000);
+    }, 900);
+  });
+}
 
 // ─── SMOOTH ANCHOR SCROLL ──────────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {

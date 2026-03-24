@@ -29,9 +29,9 @@
 
   <!-- ─── NAV ──────────────────────────────────────── -->
   <nav class="nav" id="nav">
-    <div class="nav__logo">
+    <a href="#home" class="nav__logo" aria-label="Shivam Parab home">
       <span class="nav__logo-text">SP<span class="accent">.</span></span>
-    </div>
+    </a>
     <ul class="nav__links" id="navLinks">
       <li><a href="#about" class="nav__link">About</a></li>
       <li><a href="#skills" class="nav__link">Skills</a></li>
@@ -135,8 +135,10 @@
             plus cross-platform development with <strong>.NET MAUI</strong> and interactive systems in <strong>Unity</strong>.
           </p>
           <p class="about__bio">
-            I've developed a <strong>Secure Banking Authentication System</strong> that simulates real-world financial
-            security—multi-factor authentication, cryptographic password handling, and basic fraud detection—and contributed
+            I've developed a <strong>Secure Banking Authentication System</strong> in <strong>.NET MAUI</strong> with a
+            service-based, <strong>clean architecture</strong>—simulating real-world financial security with OTP-based
+            <strong>MFA</strong>, hashed credentials, rule-based <strong>fraud detection</strong> (including location-aware
+            login checks), transactions, and admin monitoring—and contributed
             to a <strong>Theatre Seat Reservation System</strong>, a collaborative full-stack piece covering database design,
             user interaction flows, and simulated transactions. My <strong>dissertation</strong> explored <strong>AI</strong> and
             <strong>gamification in education</strong> through a Unity-based adaptive learning experience powered by
@@ -167,7 +169,7 @@
             </div>
             <div class="highlight-item">
               <i class="fas fa-shield-halved"></i>
-              <span>Secure banking auth system · MFA, crypto password handling, fraud detection</span>
+              <span>Secure banking app · .NET MAUI, clean architecture, MFA &amp; fraud detection</span>
             </div>
           </div>
           <a href="mailto:parabshivam@gmail.com" class="btn btn--primary">Get In Touch</a>
@@ -295,25 +297,35 @@
             </div>
             <div class="project-card__tags">
               <span class="tag tag--sm">Solo Project</span>
-              <span class="tag tag--sm">Secure Systems</span>
-              <span class="tag tag--sm">C# / .NET</span>
+              <span class="tag tag--sm">.NET MAUI</span>
+              <span class="tag tag--sm">Clean Architecture</span>
             </div>
           </div>
           <div class="project-card__body">
             <span class="project-card__number">01</span>
             <h3 class="project-card__title">Secure Banking Authentication System</h3>
-            <p class="project-card__sub">Application security · Simulated financial-grade practices</p>
+            <p class="project-card__sub">C# · .NET MAUI · MFA, fraud detection &amp; service-layer design</p>
             <p class="project-card__desc">
-              A system that simulates real-world financial security practices: <strong>multi-factor authentication</strong>,
-              <strong>cryptographic password handling</strong>, and <strong>basic fraud detection</strong>. Demonstrates
-              secure software design, data protection, and defensive thinking aligned with industry expectations for
-              sensitive applications.
+              Open-source prototype that mirrors how digital banking apps approach <strong>authentication</strong> and
+              <strong>fraud monitoring</strong>: registration and login, <strong>OTP-based MFA</strong> via an
+              <strong>AuthService</strong>, and <strong>rule-based fraud detection</strong> (e.g. unusual login location,
+              failed attempts, suspicious transactions) through a <strong>FraudDetectionService</strong>.
+              Includes transaction flows, history, fraud-alert logging, and admin oversight—structured with
+              <strong>SOLID</strong>-oriented separation of concerns and documented design (UML, threat considerations).
             </p>
             <ul class="project-card__bullets">
-              <li><i class="fas fa-check-circle"></i> MFA flows and hardened credential handling</li>
-              <li><i class="fas fa-check-circle"></i> Cryptographic password storage &amp; verification patterns</li>
-              <li><i class="fas fa-check-circle"></i> Foundational fraud-detection behaviour</li>
+              <li><i class="fas fa-check-circle"></i> .NET MAUI UI with service-based backend logic</li>
+              <li><i class="fas fa-check-circle"></i> Password hashing, validation, and controlled session-style flow</li>
+              <li><i class="fas fa-check-circle"></i> Location-aware login checks &amp; rule-based fraud rules</li>
             </ul>
+            <div class="project-card__links">
+              <a href="secure-banking.html" class="btn btn--sm btn--primary">
+                <i class="fas fa-book-open"></i> Case study
+              </a>
+              <a href="https://github.com/Shivam361/secure-banking-authentication-system" target="_blank" rel="noopener" class="btn btn--sm btn--outline">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </div>
           </div>
         </article>
 

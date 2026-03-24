@@ -20,10 +20,11 @@ A static, dark-themed personal site for **Shivam Parab** — **Software Engineer
 ## File structure
 
 ```
-index.html       Main page (all sections)
-css/style.css    Stylesheet
-js/main.js       Loader, nav, cursor, hero canvas, skill bars, form demo, AOS init
-README.md        This file
+index.html           Main portfolio (all sections)
+secure-banking.html  Case study: Secure Banking Authentication System
+css/style.css        Stylesheet (includes project detail layout)
+js/main.js           Shared interactions (safe on subpages)
+README.md            This file
 ```
 
 ## Run locally
