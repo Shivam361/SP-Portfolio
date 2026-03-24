@@ -7,12 +7,12 @@ A static, dark-themed personal site for **Shivam Parab** — **Software Engineer
 - **Hero** — Particle canvas background, typed rotating roles, tags, CTAs, social links  
 - **About** — Bio, stat cards (experience, projects, MSc, teaching), highlight list  
 - **Skills** — Grouped categories (game engines, programming, backend & .NET, design, tools) with animated bars and a tech pill row  
-- **Projects** — Six cards including secure banking auth, theatre reservation system, MSc dissertation (DevQuest / ML-Agents), and game work (Monster Slayer, Samsara, game jam)  
+- **Projects** — Six cards including secure banking auth, theatre reservation system, MSc dissertation (DevQuest / ML-Agents), and game work (Monster Slayer, Samsara, game jam). Project cards now support direct click-through on images.
 - **Experience** — Timeline with roles, dates, bullets, and tags  
 - **Education** — Qualification cards with status badges (MSc and BSc graduated)  
 - **Languages** — English, Hindi, Marathi  
 - **Contact** — Email, phone, GitHub, LinkedIn, and a client-side contact form (demo UX only)  
-- **UI polish** — Page loader with gradient bar, custom cursor (desktop), project card tilt and media sheen on hover, glassy nav when scrolled, mesh background on `body`, gradient buttons, gradient section dividers, `:focus-visible` outlines, `prefers-reduced-motion` support for loader and hero micro-animations, back-to-top, smooth anchor scrolling  
+- **UI polish & Accessibility** — Page loader with gradient bar, custom cursor (with battery-saving pointer detection), project card tilt and media sheen on hover (respects `prefers-reduced-motion`), glassy nav when scrolled, robust WCAG-compliant text contrast, expanded `:focus-visible` keyboard navigation outlines, smooth anchor scrolling.
 - **Nav** — Sticky header, scroll state, active section, mobile hamburger  
 - **Responsive** — Layout tuned for mobile through desktop  
 - **AOS** — Scroll-triggered section animations (CDN)
@@ -73,6 +73,4 @@ Update these if your deployment URL changes.
 
 - Add **Open Graph** / Twitter meta and a **canonical** URL once you know your production domain  
 - Replace the About **placeholder** with a photo if you want a face on the page  
-- Add **screenshots, demos, or GitHub links** per project  
-- Offer a **downloadable CV** (PDF) from the hero or nav  
-- Optionally **disable AOS and the custom cursor in JS** when `prefers-reduced-motion: reduce` for fuller accessibility (CSS already tones down several animations)  
+- Offer a **downloadable CV** (PDF) from the hero or nav
