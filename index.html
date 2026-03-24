@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shivam Parab | Software Engineer, Game Developer & Educator</title>
+  <meta name="description" content="Shivam Parab — Software Engineer and Game Developer based in the UK. Backend &amp; .NET, secure systems, SQL, Unity, and games education. MSc Software Engineering (Staffordshire University, graduated)." />
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+  <!-- AOS animations -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ─── LOADER ──────────────────────────────────── -->
+  <div class="loader" id="loader">
+    <p class="loader__logo">SP<span class="accent">.</span></p>
+    <div class="loader__bar"><div class="loader__fill"></div></div>
+  </div>
+
+  <!-- ─── CURSOR ──────────────────────────────────── -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- ─── NAV ──────────────────────────────────────── -->
+  <nav class="nav" id="nav">
+    <div class="nav__logo">
+      <span class="nav__logo-text">SP<span class="accent">.</span></span>
+    </div>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="#about" class="nav__link">About</a></li>
+      <li><a href="#skills" class="nav__link">Skills</a></li>
+      <li><a href="#projects" class="nav__link">Projects</a></li>
+      <li><a href="#experience" class="nav__link">Experience</a></li>
+      <li><a href="#education" class="nav__link">Education</a></li>
+      <li><a href="#contact" class="nav__link">Contact</a></li>
+    </ul>
+    <a href="#contact" class="btn btn--nav">Hire Me</a>
+    <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ─── HERO ──────────────────────────────────────── -->
+  <header class="hero" id="home">
+    <div class="hero__canvas-wrap">
+      <canvas id="heroCanvas"></canvas>
+    </div>
+    <div class="hero__content">
+      <p class="hero__eyebrow" data-aos="fade-up" data-aos-delay="0">
+        <span class="tag">Based in UK 🇬🇧</span>
+        <span class="tag">MSc Software Engineering</span>
+        <span class="tag">Open to Opportunities</span>
+      </p>
+      <h1 class="hero__name" data-aos="fade-up" data-aos-delay="100">
+        Shivam<br /><span class="accent">Parab</span>
+      </h1>
+      <p class="hero__roles" data-aos="fade-up" data-aos-delay="200">
+        <span id="typedRole"></span><span class="cursor-blink">|</span>
+      </p>
+      <p class="hero__summary" data-aos="fade-up" data-aos-delay="300">
+        <strong>Software Engineer</strong> and <strong>Game Developer</strong> with a strong foundation in backend and
+        application development. I build secure, scalable, user-focused systems with <strong>C#</strong>,
+        <strong>.NET</strong>, and <strong>SQL</strong>, alongside <strong>.NET MAUI</strong> and interactive products in
+        <strong>Unity</strong>. MSc Software Engineering · BSc Games Programming &amp; Design.
+      </p>
+      <div class="hero__cta" data-aos="fade-up" data-aos-delay="400">
+        <a href="#projects" class="btn btn--primary">View Projects</a>
+        <a href="https://github.com/Shivam361" target="_blank" rel="noopener" class="btn btn--outline">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+      </div>
+      <div class="hero__socials" data-aos="fade-up" data-aos-delay="500">
+        <a href="https://github.com/Shivam361" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/shivam-parab-3b747b150/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:parabshivam@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="hero__scroll-hint">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </header>
+
+  <!-- ─── ABOUT ─────────────────────────────────────── -->
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="about__grid">
+
+        <div class="about__visual" data-aos="fade-right">
+          <div class="about__img-wrap">
+            <div class="about__img-placeholder">
+              <div class="about__avatar-icon">
+                <i class="fas fa-laptop-code"></i>
+              </div>
+            </div>
+            <div class="about__badge">
+              <i class="fas fa-star"></i>
+              <span>4+ Years Experience</span>
+            </div>
+          </div>
+          <div class="about__stats">
+            <div class="stat-card">
+              <span class="stat-card__num">4+</span>
+              <span class="stat-card__label">Years Exp.</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card__num">8+</span>
+              <span class="stat-card__label">Projects</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card__num">MSc</span>
+              <span class="stat-card__label">Software Eng.</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card__num">2+</span>
+              <span class="stat-card__label">Roles Taught</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about__text" data-aos="fade-left">
+          <p class="section__eyebrow">Who I am</p>
+          <h2 class="section__title">Software Engineer, <br /><span class="accent">Game Developer &amp; Educator</span></h2>
+          <p class="about__bio">
+            I'm a <strong>Software Engineer</strong> with a strong foundation in backend and application development,
+            with an <strong>MSc in Software Engineering</strong> from Staffordshire University and a
+            <strong>BSc in Games Programming and Design</strong>. My work focuses on building secure, scalable,
+            user-focused systems with <strong>C#</strong>, <strong>.NET</strong>, and <strong>SQL</strong>-based databases,
+            plus cross-platform development with <strong>.NET MAUI</strong> and interactive systems in <strong>Unity</strong>.
+          </p>
+          <p class="about__bio">
+            I've developed a <strong>Secure Banking Authentication System</strong> that simulates real-world financial
+            security—multi-factor authentication, cryptographic password handling, and basic fraud detection—and contributed
+            to a <strong>Theatre Seat Reservation System</strong>, a collaborative full-stack piece covering database design,
+            user interaction flows, and simulated transactions. My <strong>dissertation</strong> explored <strong>AI</strong> and
+            <strong>gamification in education</strong> through a Unity-based adaptive learning experience powered by
+            <strong>ML-Agents</strong>.
+          </p>
+          <p class="about__bio">
+            I'm skilled in object-oriented programming, API design, authentication systems, and debugging complex
+            applications, with hands-on use of <strong>Git</strong>, <strong>Visual Studio</strong>, and modern frameworks.
+            Alongside shipping games and tools, I've taught and led modules in higher education—bringing the same rigour in
+            software architecture and practical, industry-aligned delivery.
+          </p>
+          <div class="about__highlights">
+            <div class="highlight-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Based in UK — Graduate Work Visa</span>
+            </div>
+            <div class="highlight-item">
+              <i class="fas fa-graduation-cap"></i>
+              <span>MSc Software Engineering · Staffordshire University (Graduated)</span>
+            </div>
+            <div class="highlight-item">
+              <i class="fas fa-chalkboard-teacher"></i>
+              <span>Module Leader — dBs Institute Manchester (2024–2025)</span>
+            </div>
+            <div class="highlight-item">
+              <i class="fas fa-flask"></i>
+              <span>Dissertation: Unity + ML-Agents adaptive learning &amp; gamification (DevQuest)</span>
+            </div>
+            <div class="highlight-item">
+              <i class="fas fa-shield-halved"></i>
+              <span>Secure banking auth system · MFA, crypto password handling, fraud detection</span>
+            </div>
+          </div>
+          <a href="mailto:parabshivam@gmail.com" class="btn btn--primary">Get In Touch</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SKILLS ────────────────────────────────────── -->
+  <section class="section skills" id="skills">
+    <div class="container">
+      <div class="section__header" data-aos="fade-up">
+        <p class="section__eyebrow">What I work with</p>
+        <h2 class="section__title">Skills &amp; <span class="accent">Tools</span></h2>
+      </div>
+
+      <div class="skills__grid">
+
+        <div class="skill-group" data-aos="fade-up" data-aos-delay="50">
+          <div class="skill-group__icon"><i class="fas fa-gamepad"></i></div>
+          <h3 class="skill-group__title">Game Engines</h3>
+          <ul class="skill-list">
+            <li><span>Unreal Engine 4 / 5</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:90%"></div></div></li>
+            <li><span>Unity (C#)</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:88%"></div></div></li>
+          </ul>
+        </div>
+
+        <div class="skill-group" data-aos="fade-up" data-aos-delay="100">
+          <div class="skill-group__icon"><i class="fas fa-code"></i></div>
+          <h3 class="skill-group__title">Programming</h3>
+          <ul class="skill-list">
+            <li><span>C++ / C#</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:85%"></div></div></li>
+            <li><span>Object-Oriented Design</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:88%"></div></div></li>
+            <li><span>Blueprint Scripting (UE)</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:90%"></div></div></li>
+            <li><span>AI / Gameplay Systems</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:80%"></div></div></li>
+            <li><span>JavaScript / Kotlin</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:65%"></div></div></li>
+          </ul>
+        </div>
+
+        <div class="skill-group" data-aos="fade-up" data-aos-delay="125">
+          <div class="skill-group__icon"><i class="fas fa-server"></i></div>
+          <h3 class="skill-group__title">Backend &amp; .NET</h3>
+          <ul class="skill-list">
+            <li><span>C# / .NET</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:88%"></div></div></li>
+            <li><span>SQL &amp; Database Design</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:85%"></div></div></li>
+            <li><span>API &amp; Auth Architecture</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:86%"></div></div></li>
+            <li><span>.NET MAUI (cross-platform)</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:78%"></div></div></li>
+            <li><span>Secure Software Practices</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:84%"></div></div></li>
+          </ul>
+        </div>
+
+        <div class="skill-group" data-aos="fade-up" data-aos-delay="175">
+          <div class="skill-group__icon"><i class="fas fa-pencil-ruler"></i></div>
+          <h3 class="skill-group__title">Design</h3>
+          <ul class="skill-list">
+            <li><span>UI/UX Design</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:82%"></div></div></li>
+            <li><span>Level Design</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:85%"></div></div></li>
+            <li><span>3D Modelling (Maya/Blender)</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:70%"></div></div></li>
+            <li><span>Animation &amp; Lighting</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:72%"></div></div></li>
+          </ul>
+        </div>
+
+        <div class="skill-group" data-aos="fade-up" data-aos-delay="200">
+          <div class="skill-group__icon"><i class="fas fa-tools"></i></div>
+          <h3 class="skill-group__title">Tools &amp; Practices</h3>
+          <ul class="skill-list">
+            <li><span>Git / Visual Studio</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:90%"></div></div></li>
+            <li><span>Perforce / GitHub / Jira</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:85%"></div></div></li>
+            <li><span>Agile / Scrum</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:88%"></div></div></li>
+            <li><span>Adobe Photoshop</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:75%"></div></div></li>
+            <li><span>QA Testing &amp; Debugging</span><div class="skill-bar"><div class="skill-bar__fill" style="--w:82%"></div></div></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Tech pills -->
+      <div class="skills__pills" data-aos="fade-up">
+        <span class="pill">C#</span>
+        <span class="pill">.NET</span>
+        <span class="pill">SQL</span>
+        <span class="pill">REST APIs</span>
+        <span class="pill">.NET MAUI</span>
+        <span class="pill">Auth &amp; Security</span>
+        <span class="pill">Git</span>
+        <span class="pill">Visual Studio</span>
+        <span class="pill">Unity</span>
+        <span class="pill">Unreal Engine 5</span>
+        <span class="pill">C++</span>
+        <span class="pill">Blueprint</span>
+        <span class="pill">ML-Agents</span>
+        <span class="pill">OOP</span>
+        <span class="pill">JavaScript</span>
+        <span class="pill">Kotlin</span>
+        <span class="pill">Maya</span>
+        <span class="pill">Blender</span>
+        <span class="pill">Photoshop</span>
+        <span class="pill">Perforce</span>
+        <span class="pill">GitHub</span>
+        <span class="pill">Jira</span>
+        <span class="pill">Agile/Scrum</span>
+        <span class="pill">Level Design</span>
+        <span class="pill">UI/UX</span>
+        <span class="pill">QA Testing</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PROJECTS ───────────────────────────────────── -->
+  <section class="section projects" id="projects">
+    <div class="container">
+      <div class="section__header" data-aos="fade-up">
+        <p class="section__eyebrow">What I've built</p>
+        <h2 class="section__title">Featured <span class="accent">Projects</span></h2>
+      </div>
+
+      <div class="projects__grid">
+
+        <!-- Project 1: Secure Banking Authentication -->
+        <article class="project-card project-card--featured" data-aos="fade-up" data-aos-delay="50">
+          <div class="project-card__media">
+            <div class="project-card__img-wrap project-card__img-wrap--p-banking">
+              <div class="project-card__icon"><i class="fas fa-building-columns"></i></div>
+            </div>
+            <div class="project-card__tags">
+              <span class="tag tag--sm">Solo Project</span>
+              <span class="tag tag--sm">Secure Systems</span>
+              <span class="tag tag--sm">C# / .NET</span>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__number">01</span>
+            <h3 class="project-card__title">Secure Banking Authentication System</h3>
+            <p class="project-card__sub">Application security · Simulated financial-grade practices</p>
+            <p class="project-card__desc">
+              A system that simulates real-world financial security practices: <strong>multi-factor authentication</strong>,
+              <strong>cryptographic password handling</strong>, and <strong>basic fraud detection</strong>. Demonstrates
+              secure software design, data protection, and defensive thinking aligned with industry expectations for
+              sensitive applications.
+            </p>
+            <ul class="project-card__bullets">
+              <li><i class="fas fa-check-circle"></i> MFA flows and hardened credential handling</li>
+              <li><i class="fas fa-check-circle"></i> Cryptographic password storage &amp; verification patterns</li>
+              <li><i class="fas fa-check-circle"></i> Foundational fraud-detection behaviour</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Project 2: Theatre Seat Reservation -->
+        <article class="project-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="project-card__media">
+            <div class="project-card__img-wrap project-card__img-wrap--p-theatre">
+              <div class="project-card__icon"><i class="fas fa-masks-theater"></i></div>
+            </div>
+            <div class="project-card__tags">
+              <span class="tag tag--sm">Team Project</span>
+              <span class="tag tag--sm">Full-Stack</span>
+              <span class="tag tag--sm">SQL</span>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__number">02</span>
+            <h3 class="project-card__title">Theatre Seat Reservation System</h3>
+            <p class="project-card__sub">Collaborative · Database design &amp; transactional flows</p>
+            <p class="project-card__desc">
+              A collaborative <strong>full-stack</strong> project spanning <strong>database design</strong>, clear
+              <strong>user interaction flows</strong>, and <strong>simulated transaction handling</strong>. Strengthened
+              my ability to work in team-based development environments while keeping consistency and reliability at the centre.
+            </p>
+            <ul class="project-card__bullets">
+              <li><i class="fas fa-check-circle"></i> Relational schema &amp; data modelling</li>
+              <li><i class="fas fa-check-circle"></i> End-to-end booking UX and validation</li>
+              <li><i class="fas fa-check-circle"></i> Simulated transactional integrity</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Project 3: DevQuest Dissertation -->
+        <article class="project-card project-card--research" data-aos="fade-up" data-aos-delay="150">
+          <div class="project-card__media">
+            <div class="project-card__img-wrap project-card__img-wrap--p4">
+              <div class="project-card__icon"><i class="fas fa-brain"></i></div>
+            </div>
+            <div class="project-card__tags">
+              <span class="tag tag--sm tag--research">Dissertation</span>
+              <span class="tag tag--sm">Unity</span>
+              <span class="tag tag--sm">ML-Agents</span>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__number">03</span>
+            <h3 class="project-card__title">DevQuest — Adaptive Learning &amp; Gamification</h3>
+            <p class="project-card__sub">MSc dissertation · AI × education × engagement</p>
+            <p class="project-card__desc">
+              Explores the integration of <strong>AI</strong> and <strong>gamification in education</strong> through a
+              <strong>Unity</strong>-based adaptive learning system powered by <strong>ML-Agents</strong>. Combines software
+              engineering discipline with intelligent systems and user-engagement strategies for real-world learning contexts.
+            </p>
+            <ul class="project-card__bullets">
+              <li><i class="fas fa-check-circle"></i> ML-Agents-driven adaptation</li>
+              <li><i class="fas fa-check-circle"></i> Gamified progression &amp; motivational design</li>
+              <li><i class="fas fa-check-circle"></i> Bridges intelligent systems with robust application architecture</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Project 4: Monster Slayer -->
+        <article class="project-card" data-aos="fade-up" data-aos-delay="175">
+          <div class="project-card__media">
+            <div class="project-card__img-wrap project-card__img-wrap--p1">
+              <div class="project-card__icon"><i class="fas fa-khanda"></i></div>
+            </div>
+            <div class="project-card__tags">
+              <span class="tag tag--sm">Solo Project</span>
+              <span class="tag tag--sm">Unity</span>
+              <span class="tag tag--sm">C#</span>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__number">04</span>
+            <h3 class="project-card__title">Monster Slayer</h3>
+            <p class="project-card__sub">2D Hack n' Slash Platformer · Game Programmer &amp; Designer</p>
+            <p class="project-card__desc">
+              A challenging 2D platformer requiring players to defeat all enemies and bosses to progress through levels.
+              Features distinct themes, enemy varieties, obstacle courses, and strategic pick-up systems. Developed entirely
+              solo — designed the levels, coded the combat system, and balanced gameplay difficulty.
+            </p>
+            <ul class="project-card__bullets">
+              <li><i class="fas fa-check-circle"></i> Custom AI enemy pathfinding</li>
+              <li><i class="fas fa-check-circle"></i> Multiple boss encounter designs</li>
+              <li><i class="fas fa-check-circle"></i> Animated combat system with combo attacks</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Project 5: Samsara - Leech Blade -->
+        <article class="project-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="project-card__media">
+            <div class="project-card__img-wrap project-card__img-wrap--p2">
+              <div class="project-card__icon"><i class="fas fa-magic"></i></div>
+            </div>
+            <div class="project-card__tags">
+              <span class="tag tag--sm">Industry</span>
+              <span class="tag tag--sm">Unreal Engine</span>
+              <span class="tag tag--sm">Blueprints</span>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__number">05</span>
+            <h3 class="project-card__title">Samsara — Leech Blade Spell</h3>
+            <p class="project-card__sub">Game Dev Intern · Infinity27 Studio · PC · 2023</p>
+            <p class="project-card__desc">
+              Created the "Leech Blade" spell for the commercially published game <strong>Samsara on Steam</strong>
+              during a skills bootcamp/internship at Infinity27 Studio. The spell was praised by senior developers
+              and shipped in the final game.
+            </p>
+            <ul class="project-card__bullets">
+              <li><i class="fas fa-check-circle"></i> Unreal Engine 5 Blueprint scripting</li>
+              <li><i class="fas fa-check-circle"></i> Agile/Scrum development workflow</li>
+              <li><i class="fas fa-check-circle"></i> Perforce &amp; Hansoft version control</li>
+            </ul>
+            <div class="project-card__links">
+              <a href="https://store.steampowered.com/app/2065700/Samsara_Spell/" target="_blank" rel="noopener" class="btn btn--sm">
+                <i class="fab fa-steam"></i> View on Steam
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 6: Rogue-like Dungeon Crawler -->
+        <article class="project-card" data-aos="fade-up" data-aos-delay="225">
+          <div class="project-card__media">
+            <div class="project-card__img-wrap project-card__img-wrap--p3">
+              <div class="project-card__icon"><i class="fas fa-dungeon"></i></div>
+            </div>
+            <div class="project-card__tags">
+              <span class="tag tag--sm">Team Project</span>
+              <span class="tag tag--sm">Unreal Engine</span>
+              <span class="tag tag--sm">UI Programming</span>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <span class="project-card__number">06</span>
+            <h3 class="project-card__title">Rogue-like 3D Dungeon Crawler</h3>
+            <p class="project-card__sub">Senior Programmer · CGD 22 Game Jam · Staffordshire University</p>
+            <p class="project-card__desc">
+              Led UI programming for a collaborative game jam project made in Unreal Engine. Focused on building
+              robust HUD systems, minimap functionality, and navigation menus, while also conducting extensive
+              QA testing and design iterations.
+            </p>
+            <ul class="project-card__bullets">
+              <li><i class="fas fa-check-circle"></i> Minimap system design &amp; implementation</li>
+              <li><i class="fas fa-check-circle"></i> Full HUD &amp; menu UI programming</li>
+              <li><i class="fas fa-check-circle"></i> QA testing &amp; cross-team collaboration</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EXPERIENCE ─────────────────────────────────── -->
+  <section class="section experience" id="experience">
+    <div class="container">
+      <div class="section__header" data-aos="fade-up">
+        <p class="section__eyebrow">Where I've worked</p>
+        <h2 class="section__title">Work <span class="accent">Experience</span></h2>
+      </div>
+
+      <div class="timeline">
+
+        <div class="timeline__item" data-aos="fade-up" data-aos-delay="50">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <div class="timeline__header">
+              <div>
+                <h3 class="timeline__role">Module Leader — BA Games Development</h3>
+                <p class="timeline__company"><i class="fas fa-building"></i> dBs Institute Manchester <span class="timeline__accent">· Accredited by Falmouth University</span></p>
+              </div>
+              <span class="timeline__date">Nov 2024 – Sep 2025</span>
+            </div>
+            <ul class="timeline__bullets">
+              <li>Designed and delivered the <strong>Advanced Game Programming</strong> module, integrating AI-driven gameplay systems and performance optimization using Unity.</li>
+              <li>Led lectures and practical workshops on game engine architecture, AI algorithms (pathfinding, FSMs), and adaptive gameplay systems.</li>
+              <li>Embedded ethical and societal reflection into the curriculum, guiding students on AI bias, privacy, and interactive media.</li>
+              <li>Supervised student projects culminating in AI-integrated game prototypes and technical documentation.</li>
+            </ul>
+            <div class="timeline__tags">
+              <span class="tag tag--sm">Unity</span><span class="tag tag--sm">AI Systems</span><span class="tag tag--sm">Curriculum Design</span><span class="tag tag--sm">Academic Supervision</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-aos="fade-up" data-aos-delay="100">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <div class="timeline__header">
+              <div>
+                <h3 class="timeline__role">Lecturer — Games &amp; Interactive Media</h3>
+                <p class="timeline__company"><i class="fas fa-building"></i> Stafford College – NSCG</p>
+              </div>
+              <span class="timeline__date">Sep 2023 – Aug 2024</span>
+            </div>
+            <ul class="timeline__bullets">
+              <li>Guided Level 3 students in game design — achieved <strong>Grade 1 Ofsted review</strong>.</li>
+              <li>Developed comprehensive curriculum integrating Unity and Maya, boosting industry readiness.</li>
+              <li>Modernized curriculum to align with current industry trends, fostering peer collaboration and partnerships.</li>
+            </ul>
+            <div class="timeline__tags">
+              <span class="tag tag--sm">Unity</span><span class="tag tag--sm">Maya</span><span class="tag tag--sm">Ofsted Grade 1</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-aos="fade-up" data-aos-delay="125">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <div class="timeline__header">
+              <div>
+                <h3 class="timeline__role">Global Game Jam — Event Organizer &amp; Manager</h3>
+                <p class="timeline__company"><i class="fas fa-building"></i> Stafford College</p>
+              </div>
+              <span class="timeline__date">Jan 2024</span>
+            </div>
+            <ul class="timeline__bullets">
+              <li>Managed logistics and workshops for Global Games Jam, enhancing event efficiency and experience.</li>
+              <li>Guided students to foster creativity and problem-solving, improving teamwork dynamics.</li>
+              <li>Received commendations for creating an <strong>inclusive, collaborative atmosphere</strong>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-aos="fade-up" data-aos-delay="150">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <div class="timeline__header">
+              <div>
+                <h3 class="timeline__role">Lecturer — Games &amp; Interactive Media</h3>
+                <p class="timeline__company"><i class="fas fa-building"></i> Newcastle-under-Lyme College – NSCG</p>
+              </div>
+              <span class="timeline__date">Dec 2023 – Mar 2024</span>
+            </div>
+            <ul class="timeline__bullets">
+              <li>Guided Level 3 students in Game Design and 3D Modelling; developed assignment themes.</li>
+              <li>Taught Level 2 students Media Design using Photoshop, enhancing software proficiency.</li>
+              <li>Crafted and evaluated 3D modelling assignments under tight deadlines.</li>
+            </ul>
+            <div class="timeline__tags">
+              <span class="tag tag--sm">3D Modelling</span><span class="tag tag--sm">Photoshop</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-aos="fade-up" data-aos-delay="175">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <div class="timeline__header">
+              <div>
+                <h3 class="timeline__role">Junior Game Developer Intern</h3>
+                <p class="timeline__company"><i class="fas fa-building"></i> Infinity27 Studio <span class="timeline__accent">· Skills Bootcamp</span></p>
+              </div>
+              <span class="timeline__date">Jul 2023</span>
+            </div>
+            <ul class="timeline__bullets">
+              <li>Developed 'Leech Blade' spell in Agile workflow — <strong>praised by senior developers</strong>.</li>
+              <li>Gained expertise in Perforce, Hansoft, and Unreal Engine blueprinting.</li>
+              <li>Improved QA testing skills, identifying and resolving critical game issues.</li>
+            </ul>
+            <div class="timeline__tags">
+              <span class="tag tag--sm">Unreal Engine</span><span class="tag tag--sm">Blueprints</span><span class="tag tag--sm">Perforce</span><span class="tag tag--sm">QA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-aos="fade-up" data-aos-delay="200">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <div class="timeline__header">
+              <div>
+                <h3 class="timeline__role">Finance Officer — Video Games Union</h3>
+                <p class="timeline__company"><i class="fas fa-building"></i> Staffordshire University Student Union</p>
+              </div>
+              <span class="timeline__date">Sep 2020 – Sep 2022</span>
+            </div>
+            <ul class="timeline__bullets">
+              <li>Managed financial operations, ensuring accurate budgeting and reporting.</li>
+              <li>Coordinated 50+ events yearly, engaging 100+ members.</li>
+              <li>Implemented financial strategies, improving resource allocation and cost efficiency.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EDUCATION ──────────────────────────────────── -->
+  <section class="section education" id="education">
+    <div class="container">
+      <div class="section__header" data-aos="fade-up">
+        <p class="section__eyebrow">Academic background</p>
+        <h2 class="section__title">Education &amp; <span class="accent">Qualifications</span></h2>
+      </div>
+
+      <div class="education__grid">
+
+        <div class="edu-card" data-aos="fade-up" data-aos-delay="50">
+          <div class="edu-card__icon"><i class="fas fa-user-graduate"></i></div>
+          <div class="edu-card__body">
+            <span class="edu-card__date">Sept 2024 – Sept 2025</span>
+            <h3 class="edu-card__degree">MSc Software Engineering</h3>
+            <p class="edu-card__school">Staffordshire University · West Midlands, UK</p>
+            <p class="edu-card__note">Graduated — software architecture, secure and data-driven systems, AI/ML integration, and dissertation research (Unity + ML-Agents for adaptive learning).</p>
+          </div>
+          <div class="edu-card__badge edu-card__badge--done">Graduated</div>
+        </div>
+
+        <div class="edu-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="edu-card__icon"><i class="fas fa-gamepad"></i></div>
+          <div class="edu-card__body">
+            <span class="edu-card__date">Sept 2019 – Jul 2022</span>
+            <h3 class="edu-card__degree">BSc (Hons.) Computer Games Design &amp; Programming</h3>
+            <p class="edu-card__school">Staffordshire University · West Midlands, UK</p>
+            <p class="edu-card__note">Graduated 2022 — games programming and design, interactive systems, and technical foundations carried forward into software engineering.</p>
+          </div>
+          <div class="edu-card__badge edu-card__badge--done">Graduated</div>
+        </div>
+
+        <div class="edu-card" data-aos="fade-up" data-aos-delay="150">
+          <div class="edu-card__icon"><i class="fas fa-school"></i></div>
+          <div class="edu-card__body">
+            <span class="edu-card__date">2017</span>
+            <h3 class="edu-card__degree">Higher Secondary School Certificate (10+2)</h3>
+            <p class="edu-card__school">Thakur Vidya Mandir Junior College · Mumbai, India</p>
+          </div>
+          <div class="edu-card__badge edu-card__badge--done">Completed</div>
+        </div>
+
+      </div>
+
+      <!-- Languages -->
+      <div class="languages" data-aos="fade-up">
+        <h3 class="languages__title">Languages</h3>
+        <div class="languages__list">
+          <div class="lang-badge"><span class="lang-badge__flag">🇬🇧</span><span>English — Fluent</span></div>
+          <div class="lang-badge"><span class="lang-badge__flag">🇮🇳</span><span>Hindi — Native</span></div>
+          <div class="lang-badge"><span class="lang-badge__flag">🇮🇳</span><span>Marathi — Native</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ────────────────────────────────────── -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="contact__inner">
+        <div class="contact__text" data-aos="fade-right">
+          <p class="section__eyebrow">Let's connect</p>
+          <h2 class="section__title">Get In <span class="accent">Touch</span></h2>
+          <p class="contact__desc">
+            I'm open to <strong>software engineering</strong> and <strong>backend/application development</strong> roles,
+            as well as game development, collaborative projects, academic partnerships, and consulting. Feel free to reach out!
+          </p>
+          <div class="contact__links">
+            <a href="mailto:parabshivam@gmail.com" class="contact__link-item">
+              <div class="contact__link-icon"><i class="fas fa-envelope"></i></div>
+              <div>
+                <span class="contact__link-label">Email</span>
+                <span class="contact__link-val">parabshivam@gmail.com</span>
+              </div>
+            </a>
+            <a href="tel:+447448102288" class="contact__link-item">
+              <div class="contact__link-icon"><i class="fas fa-phone"></i></div>
+              <div>
+                <span class="contact__link-label">Phone</span>
+                <span class="contact__link-val">+44 7448 102288</span>
+              </div>
+            </a>
+            <a href="https://github.com/Shivam361" target="_blank" rel="noopener" class="contact__link-item">
+              <div class="contact__link-icon"><i class="fab fa-github"></i></div>
+              <div>
+                <span class="contact__link-label">GitHub</span>
+                <span class="contact__link-val">github.com/Shivam361</span>
+              </div>
+            </a>
+            <a href="https://www.linkedin.com/in/shivam-parab-3b747b150/" target="_blank" rel="noopener" class="contact__link-item">
+              <div class="contact__link-icon"><i class="fab fa-linkedin"></i></div>
+              <div>
+                <span class="contact__link-label">LinkedIn</span>
+                <span class="contact__link-val">Connect on LinkedIn</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact__form-wrap" data-aos="fade-left">
+          <form class="contact__form" id="contactForm" novalidate>
+            <div class="form__group">
+              <label class="form__label" for="name">Your Name</label>
+              <input class="form__input" type="text" id="name" name="name" placeholder="Jane Doe" required />
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="email">Email Address</label>
+              <input class="form__input" type="email" id="email" name="email" placeholder="jane@company.com" required />
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="subject">Subject</label>
+              <input class="form__input" type="text" id="subject" name="subject" placeholder="Job Opportunity / Collaboration" />
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="message">Message</label>
+              <textarea class="form__input form__textarea" id="message" name="message" placeholder="Tell me about your project or opportunity..." required rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full">
+              <span id="submitText">Send Message</span>
+              <i class="fas fa-paper-plane"></i>
+            </button>
+            <div class="form__success" id="formSuccess">
+              <i class="fas fa-check-circle"></i>
+              <span>Message noted! Since this is a static demo, please email me directly at <strong>parabshivam@gmail.com</strong></span>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__logo">SP<span class="accent">.</span></p>
+        <p class="footer__copy">&copy; 2025 Shivam Parab. Crafted with passion &amp; pixels.</p>
+        <div class="footer__socials">
+          <a href="https://github.com/Shivam361" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/shivam-parab-3b747b150/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:parabshivam@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── BACK TO TOP ───────────────────────────────── -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
