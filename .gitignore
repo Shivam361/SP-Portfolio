@@ -1,0 +1,25 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors / IDEs
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Swap / backup files
+*.swp
+*.swo
+*~
+
+# If you add Node tooling later
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env (if you ever use API keys)
+.env
+.env.local
+.env.*.local

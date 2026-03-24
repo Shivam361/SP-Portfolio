@@ -12,7 +12,7 @@ A static, dark-themed personal site for **Shivam Parab** — **Software Engineer
 - **Education** — Qualification cards with status badges (MSc and BSc graduated)  
 - **Languages** — English, Hindi, Marathi  
 - **Contact** — Email, phone, GitHub, LinkedIn, and a client-side contact form (demo UX only)  
-- **UI polish** — Page loader, custom cursor (desktop), project card tilt, back-to-top, smooth anchor scrolling  
+- **UI polish** — Page loader with gradient bar, custom cursor (desktop), project card tilt and media sheen on hover, glassy nav when scrolled, mesh background on `body`, gradient buttons, gradient section dividers, `:focus-visible` outlines, `prefers-reduced-motion` support for loader and hero micro-animations, back-to-top, smooth anchor scrolling  
 - **Nav** — Sticky header, scroll state, active section, mobile hamburger  
 - **Responsive** — Layout tuned for mobile through desktop  
 - **AOS** — Scroll-triggered section animations (CDN)
@@ -28,7 +28,7 @@ README.md        This file
 
 ## Run locally
 
-Open `index.html` in a browser from this folder (so `css/` and `js/` resolve), or serve the directory:
+Work from **`SP-Portfolio`** (this repo root): open `index.html` in a browser from here so `css/` and `js/` paths resolve. Or serve the directory:
 
 ```bash
 python -m http.server 8080
@@ -74,4 +74,4 @@ Update these if your deployment URL changes.
 - Replace the About **placeholder** with a photo if you want a face on the page  
 - Add **screenshots, demos, or GitHub links** per project  
 - Offer a **downloadable CV** (PDF) from the hero or nav  
-- Respect **`prefers-reduced-motion`** for cursor, loader, and AOS if you want stronger accessibility  
+- Optionally **disable AOS and the custom cursor in JS** when `prefers-reduced-motion: reduce` for fuller accessibility (CSS already tones down several animations)  

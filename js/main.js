@@ -133,6 +133,8 @@ let isDeleting = false;
 const typedEl = document.getElementById('typedRole');
 
 function typeRole() {
+  if (!typedEl) return;
+
   const currentRole = roles[roleIndex];
 
   if (!isDeleting) {
@@ -156,7 +158,7 @@ function typeRole() {
     setTimeout(typeRole, 40);
   }
 }
-setTimeout(typeRole, 800);
+if (typedEl) setTimeout(typeRole, 800);
 
 // ─── HERO CANVAS PARTICLES ─────────────────────────────
 (function () {
