@@ -15,8 +15,8 @@
   --accent-teal: #14b8a6;
   --accent-teal-dim: rgba(20, 184, 166, 0.12);
   --text:     #e8edf5;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
+  --text-muted: #cbd5e1;
+  --text-dim: #94a3b8;
   --border:   rgba(124, 58, 237, 0.22);
   --border-subtle: rgba(255,255,255,0.055);
   --white:    #ffffff;
@@ -73,11 +73,11 @@ img { max-width: 100%; display: block; }
 /* Keyboard focus — visible, on-brand */
 :focus-visible {
   outline: 2px solid var(--accent-2);
-  outline-offset: 3px;
+  outline-offset: 5px;
 }
 button:focus-visible,
 .nav__link:focus-visible {
-  outline-offset: 4px;
+  outline-offset: 6px;
 }
 
 /* ─── SCROLLBAR ──────────────────────────────────────── */
@@ -220,7 +220,7 @@ button:focus-visible,
   border: 1px solid var(--border);
   border-radius: 100px;
   font-size: 0.78rem;
-  color: var(--accent-2);
+  color: #c4b5fd; /* Softened light purple for better contrast against dark background */
   font-family: var(--font-mono);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -478,9 +478,9 @@ button:focus-visible,
   align-items: center;
   gap: 8px;
   color: var(--text-dim);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-family: var(--font-mono);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
@@ -1615,7 +1615,7 @@ a.nav__logo {
 .case-hero__bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #0a1628 0%, #134e4a 42%, #0f766e 55%, #0a1628 100%);
+  background: linear-gradient(135deg, #020617 0%, #022c22 42%, #064e3b 55%, #020617 100%);
   z-index: 0;
 }
 
@@ -1623,8 +1623,8 @@ a.nav__logo {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 55% at 50% 20%, rgba(124, 58, 237, 0.2), transparent 55%),
-    linear-gradient(to bottom, transparent 50%, var(--bg) 100%);
+    radial-gradient(ellipse 70% 55% at 50% 10%, rgba(20, 184, 166, 0.15), transparent 55%),
+    linear-gradient(to bottom, transparent 30%, var(--bg) 100%);
   z-index: 1;
 }
 
@@ -1689,23 +1689,21 @@ a.nav__logo {
   line-height: 1.12;
   letter-spacing: -0.03em;
   color: var(--white);
-  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 0 25px rgba(20, 184, 166, 0.4), 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
 .case-hero__title .accent {
-  background: linear-gradient(120deg, #e9d5ff, #5eead4);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: #5eead4; /* Bright cyan for maximum readability */
+  text-shadow: 0 0 15px rgba(94, 234, 212, 0.5), 0 0 30px rgba(94, 234, 212, 0.25);
 }
 
 .case-hero__lead {
   font-size: 1.05rem;
-  color: rgba(226, 232, 240, 0.82);
+  color: rgba(226, 232, 240, 0.95);
   line-height: 1.75;
   margin: 22px auto 28px;
   max-width: 620px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .case-hero__actions {

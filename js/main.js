@@ -94,7 +94,7 @@ const cursorFollower = document.getElementById('cursorFollower');
 let mouseX = 0, mouseY = 0;
 let followerX = 0, followerY = 0;
 
-if (cursor && cursorFollower) {
+if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
@@ -300,19 +300,23 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ─── PROJECT CARD TILT ─────────────────────────────────
-document.querySelectorAll('.project-card').forEach(card => {
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 6;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -6;
-    card.style.transform = `translateY(-4px) rotateX(${y}deg) rotateY(${x}deg)`;
-    card.style.transition = 'transform 0.1s ease';
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+if (!prefersReducedMotion.matches) {
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 6;
+      const y = ((e.clientY - rect.top) / rect.height - 0.5) * -6;
+      card.style.transform = `translateY(-4px) rotateX(${y}deg) rotateY(${x}deg)`;
+      card.style.transition = 'transform 0.1s ease';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+      card.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
+    });
   });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-    card.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
-  });
-});
+}
 
 // ─── COUNTER ANIMATION (STAT CARDS) ────────────────────
 function animateCounter(el, target, suffix = '') {
