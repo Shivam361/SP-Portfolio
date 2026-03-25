@@ -8,34 +8,97 @@ window.addEventListener('load', () => {
   if (loader) {
     setTimeout(() => {
       loader.classList.add('hidden');
+      // Start GSAP animations after loader is gone
+      if (typeof heroTl !== 'undefined') heroTl.play();
     }, 1000);
   }
 });
 
-// ─── AOS INIT ──────────────────────────────────────────
-AOS.init({
-  duration: 700,
-  easing: 'ease-out-cubic',
-  once: true,
-  offset: 80
+// ─── GSAP + SCROLLTRIGGER ─────────────────────────────
+gsap.registerPlugin(ScrollTrigger);
+
+// ─── AOS INIT (kept for case study pages) ─────────────
+AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 80 });
+
+// ─── LENIS SMOOTH SCROLL ───────────────────────────────
+const lenis = new Lenis({
+  duration: 1.3,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smoothWheel: true,
+  smoothTouch: false,
+});
+
+// Single authoritative tick loop — drives both Lenis and ScrollTrigger
+gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+gsap.ticker.lagSmoothing(0);
+lenis.on('scroll', () => {
+  ScrollTrigger.update();
+});
+
+// Refresh ScrollTrigger once everything is loaded
+window.addEventListener('load', () => {
+  ScrollTrigger.refresh();
+});
+
+// ─── GSAP SCROLL ANIMATIONS ────────────────────────────
+
+// Hero entrance — stagger in on page load
+// Pause by default, will be played by loader event listener
+const heroTl = gsap.timeline({ delay: 0.2, paused: true });
+heroTl
+  .from('.hero__eyebrow',    { y: 24, opacity: 0, duration: 0.7, ease: 'power3.out' })
+  .from('.hero__name',       { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4')
+  .from('.hero__roles',      { y: 24, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+  .from('.hero__summary',    { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.3')
+  .from('.hero__cta',        { y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
+  .from('.hero__socials',    { y: 10, opacity: 0, duration: 0.4 }, '-=0.2')
+  .from('.hero__scroll-hint',{ opacity: 0, duration: 0.5 }, '-=0.1');
+
+// Section titles slide up as they enter viewport
+gsap.utils.toArray('.section__title, .section__eyebrow').forEach(el => {
+  gsap.from(el, {
+    y: 40, opacity: 0, duration: 0.8, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+  });
+});
+
+// Project cards stagger in from below
+gsap.utils.toArray('.project-card').forEach((card, i) => {
+  gsap.from(card, {
+    y: 60, opacity: 0, duration: 0.75, ease: 'power3.out', delay: (i % 2) * 0.12,
+    scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' }
+  });
+});
+
+// Timeline items slide in from the left
+gsap.utils.toArray('.timeline__item').forEach((item, i) => {
+  gsap.from(item, {
+    x: -40, opacity: 0, duration: 0.7, ease: 'power2.out', delay: i * 0.06,
+    scrollTrigger: { trigger: item, start: 'top 90%', toggleActions: 'play none none none' }
+  });
+});
+
+// Skill groups and edu cards fade + scale up
+gsap.utils.toArray('.skill-group, .edu-card').forEach((el, i) => {
+  gsap.from(el, {
+    y: 30, opacity: 0, scale: 0.97, duration: 0.65, ease: 'power2.out', delay: (i % 3) * 0.08,
+    scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
+  });
 });
 
 // ─── NAV SCROLL ────────────────────────────────────────
 const nav = document.getElementById('nav');
 const backToTop = document.getElementById('backToTop');
 
-window.addEventListener('scroll', () => {
-  if (nav) {
-    const scrolled = window.scrollY > 60;
-    nav.classList.toggle('scrolled', scrolled);
-  }
-  if (backToTop) backToTop.classList.toggle('visible', window.scrollY > 400);
+lenis.on('scroll', ({ scroll }) => {
+  if (nav) nav.classList.toggle('scrolled', scroll > 60);
+  if (backToTop) backToTop.classList.toggle('visible', scroll > 400);
   updateActiveNavLink();
 });
 
 if (backToTop) {
   backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    lenis.scrollTo(0, { duration: 1.4 });
   });
 }
 
@@ -333,8 +396,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       e.preventDefault();
       const navH = parseInt(getComputedStyle(document.documentElement)
         .getPropertyValue('--nav-h'));
-      const top = target.getBoundingClientRect().top + window.scrollY - navH;
-      window.scrollTo({ top, behavior: 'smooth' });
+      lenis.scrollTo(target, { offset: -navH, duration: 1.4 });
     }
   });
 });
@@ -394,3 +456,4 @@ const statsObserver = new IntersectionObserver((entries) => {
 
 const statsSection = document.querySelector('.about__stats');
 if (statsSection) statsObserver.observe(statsSection);
+
