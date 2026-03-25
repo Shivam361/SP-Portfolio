@@ -240,26 +240,64 @@ if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
 
 // ─── MAGNETIC BUTTONS ──────────────────────────────────
 document.querySelectorAll('.btn, .social-icon, .nav__link').forEach(btn => {
-  btn.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
-  btn.addEventListener('mousemove', (e) => {
-    const rect = btn.getBoundingClientRect();
-    const x = (e.clientX - rect.left - rect.width / 2) * 0.18;
-    const y = (e.clientY - rect.top - rect.height / 2) * 0.18;
-    btn.style.transform = `translate(${x}px, ${y}px)`;
+  let magRafId = null;
+  let mx = 0, my = 0;
+  let isMagHovered = false;
+
+  btn.addEventListener('mouseenter', () => {
+    isMagHovered = true;
+    btn.style.transition = 'none';
   });
+
+  btn.addEventListener('mousemove', (e) => {
+    mx = e.clientX;
+    my = e.clientY;
+    if (!magRafId) {
+      magRafId = requestAnimationFrame(function updateMagnetic() {
+        if (!isMagHovered) {
+          magRafId = null;
+          return;
+        }
+        const rect = btn.getBoundingClientRect();
+        const x = (mx - rect.left - rect.width / 2) * 0.18;
+        const y = (my - rect.top - rect.height / 2) * 0.18;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+        magRafId = requestAnimationFrame(updateMagnetic);
+      });
+    }
+  });
+
   btn.addEventListener('mouseleave', () => {
+    isMagHovered = false;
+    btn.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
     btn.style.transform = `translate(0px, 0px)`;
   });
 });
 
 // ─── SPOTLIGHT CARDS ───────────────────────────────────
 document.querySelectorAll('.project-card, .skill-card, .case-panel, .stat-card').forEach(card => {
+  let spotlightRafId = null;
+  let mx = 0, my = 0;
+  let isSpotHovered = false;
+
+  card.addEventListener('mouseenter', () => isSpotHovered = true);
+  card.addEventListener('mouseleave', () => isSpotHovered = false);
+
   card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    card.style.setProperty('--spot-x', `${x}px`);
-    card.style.setProperty('--spot-y', `${y}px`);
+    mx = e.clientX;
+    my = e.clientY;
+    if (!spotlightRafId) {
+      spotlightRafId = requestAnimationFrame(function updateSpotlight() {
+        if (!isSpotHovered) {
+          spotlightRafId = null;
+          return;
+        }
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--spot-x', `${mx - rect.left}px`);
+        card.style.setProperty('--spot-y', `${my - rect.top}px`);
+        spotlightRafId = requestAnimationFrame(updateSpotlight);
+      });
+    }
   });
 });
 
@@ -364,16 +402,39 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 
 if (!prefersReducedMotion.matches) {
   document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 6;
-      const y = ((e.clientY - rect.top) / rect.height - 0.5) * -6;
-      card.style.transform = `translateY(-4px) rotateX(${y}deg) rotateY(${x}deg)`;
-      card.style.transition = 'transform 0.1s ease';
+    let rafId = null;
+    let mx = 0, my = 0;
+    let isHovering = false;
+
+    card.addEventListener('mouseenter', () => {
+      isHovering = true;
+      card.style.transition = 'none';
+      card.style.willChange = 'transform';
     });
+
+    card.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      if (!rafId) {
+        rafId = requestAnimationFrame(function updateTilt() {
+          if (!isHovering) {
+            rafId = null;
+            return;
+          }
+          const rect = card.getBoundingClientRect();
+          const x = ((mx - rect.left) / rect.width - 0.5) * 6;
+          const y = ((my - rect.top) / rect.height - 0.5) * -6;
+          card.style.transform = `perspective(1000px) translateY(-4px) rotateX(${y}deg) rotateY(${x}deg)`;
+          rafId = requestAnimationFrame(updateTilt);
+        });
+      }
+    });
+
     card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-      card.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
+      isHovering = false;
+      card.style.willChange = 'auto';
+      card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
+      card.style.transform = 'perspective(1000px) translateY(0) rotateX(0deg) rotateY(0deg)';
     });
   });
 }
