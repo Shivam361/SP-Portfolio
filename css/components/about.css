@@ -10,14 +10,13 @@
 
 .about__img-wrap {
   position: relative;
-  margin-bottom: 32px;
+  margin: 0 auto 32px;
+  max-width: 340px;
 }
 
 .about__img-placeholder {
   width: 100%;
   aspect-ratio: 1;
-  max-width: 340px;
-  margin: 0 auto;
   background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card2) 100%);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
@@ -57,7 +56,8 @@
 .about__badge {
   position: absolute;
   bottom: -16px;
-  right: 10%;
+  right: -16px;
+  z-index: 10;
   background: var(--accent);
   color: var(--white);
   padding: 8px 18px;
