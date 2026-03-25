@@ -71,6 +71,9 @@
   background: var(--bg-card2);
   min-height: 200px;
   overflow: hidden;
+  display: block;        /* works for both div and anchor */
+  text-decoration: none; /* removes underline when it's an <a> tag */
+  cursor: pointer;
 }
 
 .project-card__media::after {

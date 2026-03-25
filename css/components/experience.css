@@ -120,3 +120,5 @@
   gap: 6px;
   flex-wrap: wrap;
 }
+ 
+.timeline__item:last-child { margin-bottom: 0; }

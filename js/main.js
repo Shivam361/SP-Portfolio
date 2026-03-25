@@ -2,23 +2,98 @@
    SHIVAM PARAB PORTFOLIO — MAIN JS
    ==================================================== */
 
-// ─── PAGE LOADER ───────────────────────────────────────
+let heroTl, caseHeroTl, vantaEffect, swup;
+
+/**
+ * CACHED UI SINGLETONS
+ * Elements outside the #swup container that persist across page views.
+ */
+const UI = {
+  nav: document.getElementById('nav'),
+  navLinks: document.querySelectorAll('.nav__link'),
+  backToTop: document.getElementById('backToTop'),
+  hamburger: document.getElementById('hamburger'),
+  mobileNav: document.getElementById('navLinks'),
+  cursor: document.getElementById('cursor'),
+  cursorFollower: document.getElementById('cursorFollower'),
+  root: document.documentElement
+};
+
+// ─── PAGE LOADER & SWUP INIT ───────────────────────────
 window.addEventListener('load', () => {
   const loader = document.getElementById('loader');
   if (loader) {
+    const loaderText = loader.querySelector('.loader__text');
+    if (loaderText && typeof gsap !== 'undefined') {
+      const counter = { val: 0 };
+      gsap.to(counter, {
+        val: 100,
+        duration: 0.9,
+        ease: 'power2.out',
+        onUpdate: () => { loaderText.innerText = Math.round(counter.val) + '%'; }
+      });
+    }
+
     setTimeout(() => {
       loader.classList.add('hidden');
-      // Start GSAP animations after loader is gone
-      if (typeof heroTl !== 'undefined') heroTl.play();
+      if (heroTl) heroTl.play();
+      if (caseHeroTl) caseHeroTl.play();
     }, 1000);
   }
+
+  // Bind Swup Framework — only on http/https (Swup uses fetch() which is blocked on file://)
+  const isServed = window.location.protocol.startsWith('http');
+  if (typeof Swup !== 'undefined' && isServed) {
+    swup = new Swup({
+      containers: ['#swup'],
+      animationSelector: '[class*="transition-"]',
+    });
+    
+    swup.hooks.on('visit:start', () => {
+      try {
+        document.querySelectorAll('[id^="vanta-bg"]').forEach(el => {
+          if (el.vantaEffect) { el.vantaEffect.destroy(); el.vantaEffect = null; }
+        });
+        if (window.typedInstance) { window.typedInstance.destroy(); window.typedInstance = null; }
+      } catch (err) {
+        console.warn('Silent cleanup error:', err);
+      }
+    });
+
+    swup.hooks.on('content:replace', (visit) => {
+      // If the user navigated to a #hash (e.g. index.html#about), scroll there instantly
+      if (visit.to.hash) {
+        const target = document.querySelector(visit.to.hash);
+        if (target && typeof lenis !== 'undefined') {
+          const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
+          lenis.scrollTo(target, { offset: -navH, immediate: true });
+          return;
+        }
+      }
+      // Otherwise, snap to the absolute top of the new page
+      window.scrollTo(0, 0);
+      if (typeof lenis !== 'undefined') lenis.scrollTo(0, { immediate: true });
+    });
+
+    swup.hooks.on('page:view', () => {
+      // Clean previous scroll states & listeners
+      ScrollTrigger.getAll().forEach(t => t.kill());
+      window.scrollTo(0, 0);
+      
+      initPage();  // Re-arm GSAP staggered entrances
+      initPage2(); // Re-arm dynamic interactive DOM states
+      
+      // Play immediately (loader is bypassed by Swup)
+      if (heroTl) heroTl.play();
+      if (caseHeroTl) caseHeroTl.play();
+    });
+  }
+
 });
 
 // ─── GSAP + SCROLLTRIGGER ─────────────────────────────
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── AOS INIT (kept for case study pages) ─────────────
-AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 80 });
 
 // ─── LENIS SMOOTH SCROLL ───────────────────────────────
 const lenis = new Lenis({
@@ -41,21 +116,79 @@ window.addEventListener('load', () => {
 });
 
 // ─── GSAP SCROLL ANIMATIONS ────────────────────────────
+function initPage() {
+  if (vantaEffect) { vantaEffect.destroy(); vantaEffect = null; }
 
-// Hero entrance — stagger in on page load
-// Pause by default, will be played by loader event listener
-const heroTl = gsap.timeline({ delay: 0.2, paused: true });
+  // Hero entrance — stagger in on page load
+  // Pause by default, will be played by loader event listener
+  heroTl = gsap.timeline({ delay: 0.2, paused: true });
+
+  // Split Type for Hero Name
+  let heroNameSplit;
+if (typeof SplitType !== 'undefined' && document.querySelector('.hero__name')) {
+  heroNameSplit = new SplitType('.hero__name', { types: 'chars' });
+}
+
 heroTl
-  .from('.hero__eyebrow',    { y: 24, opacity: 0, duration: 0.7, ease: 'power3.out' })
-  .from('.hero__name',       { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4')
+  .from('.hero__eyebrow',    { y: 24, opacity: 0, duration: 0.7, ease: 'power3.out' });
+
+if (heroNameSplit) {
+  heroTl.from(heroNameSplit.chars, { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.05 }, '-=0.4');
+} else {
+  heroTl.from('.hero__name', { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4');
+}
+
+heroTl
   .from('.hero__roles',      { y: 24, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
   .from('.hero__summary',    { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.3')
   .from('.hero__cta',        { y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
   .from('.hero__socials',    { y: 10, opacity: 0, duration: 0.4 }, '-=0.2')
   .from('.hero__scroll-hint',{ opacity: 0, duration: 0.5 }, '-=0.1');
 
+// ─── CASE STUDY HERO ANIMATION ─────────────────────────
+  if (document.querySelector('.case-hero')) {
+    caseHeroTl = gsap.timeline({ delay: 0.2, paused: true });
+
+  let caseTitleSplit;
+  if (typeof SplitType !== 'undefined' && document.querySelector('.case-hero__title')) {
+    caseTitleSplit = new SplitType('.case-hero__title', { types: 'chars' });
+  }
+
+  caseHeroTl
+    .from('.case-breadcrumb', { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out' });
+
+  if (caseTitleSplit) {
+    caseHeroTl.from(caseTitleSplit.chars, { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.03 }, '-=0.4');
+  } else {
+    caseHeroTl.from('.case-hero__title', { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4');
+  }
+
+  caseHeroTl
+    .from('.case-hero__icon',    { scale: 0.5, opacity: 0, duration: 0.6, ease: 'back.out(1.7)' }, '-=0.6')
+    .from('.case-hero__lead',    { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+    .from('.case-hero__actions .btn', { y: 20, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' }, '-=0.3')
+    .from('.case-meta .tag',     { scale: 0.8, opacity: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out' }, '-=0.3');
+}
+
 // Section titles slide up as they enter viewport
-gsap.utils.toArray('.section__title, .section__eyebrow').forEach(el => {
+if (typeof SplitType !== 'undefined') {
+  gsap.utils.toArray('.section__title').forEach(title => {
+    const splitTitle = new SplitType(title, { types: 'chars' });
+    gsap.from(splitTitle.chars, {
+      y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.02,
+      scrollTrigger: { trigger: title, start: 'top 88%', toggleActions: 'play none none none' }
+    });
+  });
+} else {
+  gsap.utils.toArray('.section__title').forEach(el => {
+    gsap.from(el, {
+      y: 40, opacity: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+    });
+  });
+}
+
+gsap.utils.toArray('.section__eyebrow').forEach(el => {
   gsap.from(el, {
     y: 40, opacity: 0, duration: 0.8, ease: 'power3.out',
     scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
@@ -86,32 +219,35 @@ gsap.utils.toArray('.skill-group, .edu-card').forEach((el, i) => {
   });
 });
 
-// ─── NAV SCROLL ────────────────────────────────────────
-const nav = document.getElementById('nav');
-const backToTop = document.getElementById('backToTop');
-
-lenis.on('scroll', ({ scroll }) => {
-  if (nav) nav.classList.toggle('scrolled', scroll > 60);
-  if (backToTop) backToTop.classList.toggle('visible', scroll > 400);
-  updateActiveNavLink();
+// Case study items fade up
+gsap.utils.toArray('.case-panel, .case-prose, .case-cta-bar').forEach((el, i) => {
+  gsap.from(el, {
+    y: 40, opacity: 0, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 92%', toggleActions: 'play none none none' }
+  });
 });
 
-if (backToTop) {
-  backToTop.addEventListener('click', () => {
+} // <--- END initPage()
+
+// ─── NAV & SCROLL EFFECTS ────────────────────────────
+lenis.on('scroll', ({ scroll }) => {
+  if (UI.nav) UI.nav.classList.toggle('scrolled', scroll > 60);
+  if (UI.backToTop) UI.backToTop.classList.toggle('visible', scroll > 400);
+});
+
+if (UI.backToTop) {
+  UI.backToTop.addEventListener('click', () => {
     lenis.scrollTo(0, { duration: 1.4 });
   });
 }
 
 // ─── MOBILE NAV ────────────────────────────────────────
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
-
-if (hamburger && navLinks) {
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-    hamburger.classList.toggle('active');
-    const bars = hamburger.querySelectorAll('span');
-    if (navLinks.classList.contains('open')) {
+if (UI.hamburger && UI.mobileNav) {
+  UI.hamburger.addEventListener('click', () => {
+    UI.mobileNav.classList.toggle('open');
+    UI.hamburger.classList.toggle('active');
+    const bars = UI.hamburger.querySelectorAll('span');
+    if (UI.mobileNav.classList.contains('open')) {
       bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
       bars[1].style.opacity = '0';
       bars[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
@@ -120,10 +256,11 @@ if (hamburger && navLinks) {
     }
   });
 
-  navLinks.querySelectorAll('.nav__link').forEach(link => {
+  UI.mobileNav.querySelectorAll('.nav__link').forEach(link => {
     link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      hamburger.querySelectorAll('span').forEach(b => {
+      UI.mobileNav.classList.remove('open');
+      UI.hamburger.classList.remove('active');
+      UI.hamburger.querySelectorAll('span').forEach(b => {
         b.style.transform = '';
         b.style.opacity = '';
       });
@@ -131,24 +268,7 @@ if (hamburger && navLinks) {
   });
 }
 
-// ─── ACTIVE NAV LINK ───────────────────────────────────
-function updateActiveNavLink() {
-  const sections = document.querySelectorAll('section[id], header[id]');
-  const links = document.querySelectorAll('.nav__link');
-  let current = '';
 
-  sections.forEach(section => {
-    const top = section.offsetTop - 120;
-    if (window.scrollY >= top) current = section.getAttribute('id');
-  });
-
-  links.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === `#${current}`) {
-      link.classList.add('active');
-    }
-  });
-}
 
 // ─── CUSTOM CURSOR ─────────────────────────────────────
 const cursor = document.getElementById('cursor');
@@ -157,12 +277,12 @@ const cursorFollower = document.getElementById('cursorFollower');
 let mouseX = 0, mouseY = 0;
 let followerX = 0, followerY = 0;
 
-if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
+if (UI.cursor && UI.cursorFollower && window.matchMedia("(pointer: fine)").matches) {
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top = mouseY + 'px';
+    UI.cursor.style.left = mouseX + 'px';
+    UI.cursor.style.top = mouseY + 'px';
   });
 
   let velX = 0, velY = 0;
@@ -175,18 +295,19 @@ if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
     velY *= friction;
     followerX += velX;
     followerY += velY;
-    cursorFollower.style.left = followerX + 'px';
-    cursorFollower.style.top = followerY + 'px';
+    UI.cursorFollower.style.left = followerX + 'px';
+    UI.cursorFollower.style.top = followerY + 'px';
     requestAnimationFrame(animateCursor);
   }
+
   animateCursor();
 
   const interactableSelector = 'a, button, .project-card, .skill-group, .edu-card, .case-panel';
   
   document.addEventListener('mouseover', (e) => {
     if (e.target.closest(interactableSelector)) {
-      cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.8)';
-      cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.8)';
+      UI.cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.8)';
+      UI.cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.8)';
     }
   });
 
@@ -194,157 +315,199 @@ if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
     const parentContainer = e.target.closest(interactableSelector);
     if (parentContainer) {
       if (!e.relatedTarget || !parentContainer.contains(e.relatedTarget)) {
-        cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
-        cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.5)';
+        UI.cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+        UI.cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.5)';
       }
     }
   });
+
 }
+
+// ─── DYNAMIC INTERACTABLES INIT ────────────────────────
+function initPage2() {
 
 // ─── MAGNETIC BUTTONS ──────────────────────────────────
 document.querySelectorAll('.btn, .social-icon, .nav__link').forEach(btn => {
-  btn.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
-  btn.addEventListener('mousemove', (e) => {
-    const rect = btn.getBoundingClientRect();
-    const x = (e.clientX - rect.left - rect.width / 2) * 0.18;
-    const y = (e.clientY - rect.top - rect.height / 2) * 0.18;
-    btn.style.transform = `translate(${x}px, ${y}px)`;
+  if (btn.dataset.magBound) return;
+  btn.dataset.magBound = 'true';
+  
+  let magRafId = null;
+  let mx = 0, my = 0;
+  let isMagHovered = false;
+
+  btn.addEventListener('mouseenter', () => {
+    isMagHovered = true;
+    btn.style.transition = 'none';
   });
+
+  btn.addEventListener('mousemove', (e) => {
+    mx = e.clientX;
+    my = e.clientY;
+    if (!magRafId) {
+      magRafId = requestAnimationFrame(function updateMagnetic() {
+        if (!isMagHovered) {
+          magRafId = null;
+          return;
+        }
+        const rect = btn.getBoundingClientRect();
+        const x = (mx - rect.left - rect.width / 2) * 0.18;
+        const y = (my - rect.top - rect.height / 2) * 0.18;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+        magRafId = requestAnimationFrame(updateMagnetic);
+      });
+    }
+  });
+
   btn.addEventListener('mouseleave', () => {
+    isMagHovered = false;
+    btn.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
     btn.style.transform = `translate(0px, 0px)`;
   });
 });
 
 // ─── SPOTLIGHT CARDS ───────────────────────────────────
 document.querySelectorAll('.project-card, .skill-card, .case-panel, .stat-card').forEach(card => {
+  if (card.dataset.spotBound) return;
+  card.dataset.spotBound = 'true';
+  
+  let spotlightRafId = null;
+  let mx = 0, my = 0;
+  let isSpotHovered = false;
+
+  card.addEventListener('mouseenter', () => isSpotHovered = true);
+  card.addEventListener('mouseleave', () => isSpotHovered = false);
+
   card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    card.style.setProperty('--spot-x', `${x}px`);
-    card.style.setProperty('--spot-y', `${y}px`);
+    mx = e.clientX;
+    my = e.clientY;
+    if (!spotlightRafId) {
+      spotlightRafId = requestAnimationFrame(function updateSpotlight() {
+        if (!isSpotHovered) {
+          spotlightRafId = null;
+          return;
+        }
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--spot-x', `${mx - rect.left}px`);
+        card.style.setProperty('--spot-y', `${my - rect.top}px`);
+        spotlightRafId = requestAnimationFrame(updateSpotlight);
+      });
+    }
   });
 });
 
 // ─── TYPED ROLE EFFECT ─────────────────────────────────
-const roles = [
-  'Software Engineer',
-  'Backend & .NET Developer',
-  'Full-Stack Developer',
-  'Game Developer',
-  'Unity & Interactive Systems',
-  'Games Educator & Lecturer'
-];
-let roleIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-const typedEl = document.getElementById('typedRole');
-
-function typeRole() {
-  if (!typedEl) return;
-
-  const currentRole = roles[roleIndex];
-
-  if (!isDeleting) {
-    typedEl.textContent = currentRole.slice(0, charIndex + 1);
-    charIndex++;
-    if (charIndex === currentRole.length) {
-      isDeleting = true;
-      setTimeout(typeRole, 2200);
-      return;
-    }
-    setTimeout(typeRole, 80);
-  } else {
-    typedEl.textContent = currentRole.slice(0, charIndex - 1);
-    charIndex--;
-    if (charIndex === 0) {
-      isDeleting = false;
-      roleIndex = (roleIndex + 1) % roles.length;
-      setTimeout(typeRole, 400);
-      return;
-    }
-    setTimeout(typeRole, 40);
-  }
+if (typeof Typed !== 'undefined' && document.getElementById('typedRole')) {
+  if (window.typedInstance) window.typedInstance.destroy();
+  window.typedInstance = new Typed('#typedRole', {
+    strings: [
+      'Software Engineer',
+      'Backend & .NET Developer',
+      'Full-Stack Developer',
+      'Game Developer',
+      'Unity & Interactive Systems',
+      'Games Educator & Lecturer'
+    ],
+    typeSpeed: 50,
+    backSpeed: 30,
+    backDelay: 2000,
+    loop: true,
+    showCursor: true,
+    cursorChar: '|',
+    autoInsertCss: true
+  });
 }
-if (typedEl) setTimeout(typeRole, 800);
 
-// ─── HERO CANVAS PARTICLES ─────────────────────────────
-(function () {
-  const canvas = document.getElementById('heroCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+// ─── 3D BACKGROUNDS (VANTA.JS) ─────────────────────────
+const vantaConfigs = [
+  { id: 'vanta-bg', color: 0x7c3aed, backgroundColor: 0x0f0f16, points: 12.0, maxDistance: 22.0, spacing: 16.0 },
+  { id: 'vanta-bg-case', color: 0x14b8a6, backgroundColor: 0x08080c, points: 10.0, maxDistance: 24.0, spacing: 18.0 },
+  { id: 'vanta-bg-contact', color: 0xa855f7, backgroundColor: 0x0f0f16, points: 9.0, maxDistance: 25.0, spacing: 20.0 }
+];
 
-  function resize() {
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const PARTICLE_COUNT = 80;
-  const particles = [];
-
-  class Particle {
-    constructor() {
-      this.reset();
-    }
-    reset() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 2 + 0.5;
-      this.speedX = (Math.random() - 0.5) * 0.5;
-      this.speedY = (Math.random() - 0.5) * 0.5;
-      this.opacity = Math.random() * 0.5 + 0.1;
-      this.color = Math.random() > 0.5 ? '124, 58, 237' : '168, 85, 247';
-    }
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
-      ctx.fill();
-    }
-  }
-
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    particles.push(new Particle());
-  }
-
-  function connectParticles() {
-    for (let a = 0; a < particles.length; a++) {
-      for (let b = a + 1; b < particles.length; b++) {
-        const dx = particles[a].x - particles[b].x;
-        const dy = particles[a].y - particles[b].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 130) {
-          const alpha = (1 - dist / 130) * 0.25;
-          ctx.strokeStyle = `rgba(124, 58, 237, ${alpha})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(particles[a].x, particles[a].y);
-          ctx.lineTo(particles[b].x, particles[b].y);
-          ctx.stroke();
+let vantaObserver;
+if (typeof VANTA !== 'undefined') {
+  vantaObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const config = vantaConfigs.find(c => c.id === entry.target.id);
+      if (!config) return;
+      if (entry.isIntersecting) {
+        if (!entry.target.vantaEffect) {
+          entry.target.vantaEffect = VANTA.NET({
+            el: `#${config.id}`,
+            mouseControls: true, touchControls: true, gyroControls: false,
+            minHeight: 200.0, minWidth: 200.0, scale: 1.0, scaleMobile: 1.0,
+            color: config.color, backgroundColor: config.backgroundColor,
+            points: config.points, maxDistance: config.maxDistance, spacing: config.spacing,
+            showDots: true
+          });
+        }
+      } else {
+        if (entry.target.vantaEffect) {
+          entry.target.vantaEffect.destroy();
+          entry.target.vantaEffect = null;
         }
       }
-    }
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-      p.update();
-      p.draw();
     });
-    connectParticles();
-    requestAnimationFrame(animate);
-  }
-  animate();
-})();
+  }, { rootMargin: '100px 0px' });
+}
+
+// ─── SCROLL SPY NAVIGATION ─────────────────────────────
+let spyObserver;
+if (typeof IntersectionObserver !== 'undefined') {
+  spyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        UI.navLinks.forEach(link => {
+          link.classList.remove('active');
+          const href = link.getAttribute('href');
+          if (href === `#${id}` || href === `index.html#${id}`) link.classList.add('active');
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+}
+
+
+// ─── STATS OBSERVER ────────────────────────────────────
+let statsObserver;
+if (typeof IntersectionObserver !== 'undefined') {
+  statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.stat-card__num').forEach(num => {
+          const text = num.textContent.trim();
+          const match = text.match(/^(\d+)(.*)$/);
+          if (match) animateCounter(num, parseInt(match[1]), match[2]);
+        });
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+}
+
+
+// ─── IMAGE PARALLAX ────────────────────────────────────
+if (typeof gsap !== 'undefined') {
+  gsap.utils.toArray('.project-card__media').forEach(media => {
+    const imgWrap = media.querySelector('.project-card__img-wrap');
+    if (imgWrap) {
+      gsap.to(imgWrap, {
+        yPercent: 15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: media,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    }
+  });
+}
+
+
+
 
 // ─── SKILL BAR ANIMATION ───────────────────────────────
 (function () {
@@ -388,37 +551,48 @@ if (contactForm && formSuccess) {
   });
 }
 
-// ─── SMOOTH ANCHOR SCROLL ──────────────────────────────
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', (e) => {
-    const target = document.querySelector(anchor.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      const navH = parseInt(getComputedStyle(document.documentElement)
-        .getPropertyValue('--nav-h'));
-      lenis.scrollTo(target, { offset: -navH, duration: 1.4 });
-    }
-  });
-});
-
-// ─── PROJECT CARD TILT ─────────────────────────────────
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-if (!prefersReducedMotion.matches) {
-  document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 6;
-      const y = ((e.clientY - rect.top) / rect.height - 0.5) * -6;
-      card.style.transform = `translateY(-4px) rotateX(${y}deg) rotateY(${x}deg)`;
-      card.style.transition = 'transform 0.1s ease';
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-      card.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
+// Custom Global Hash Routing Strategy
+if (typeof Swup !== 'undefined') {
+  document.querySelectorAll('a').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const href = anchor.getAttribute('href');
+      if (!href) return;
+      
+      const hashIndex = href.indexOf('#');
+      if (hashIndex !== -1) {
+        // Exclude external links immediately if target is _blank
+        if (anchor.getAttribute('target') === '_blank') return;
+        
+        const hash = href.substring(hashIndex);
+        const isHome = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
+        
+        // If the hash is ONLY #home, #about, etc. or index.html#about
+        if (href.startsWith('#') || href.startsWith('index.html#')) {
+          e.preventDefault();
+          
+          if (isHome) {
+            // We are already on Home. Smooth scroll to the section.
+            const target = document.querySelector(hash);
+            if (target && typeof lenis !== 'undefined') {
+              const navH = parseInt(getComputedStyle(UI.root).getPropertyValue('--nav-h')) || 80;
+              lenis.scrollTo(target, { offset: -navH, duration: 1.4 });
+            }
+          } else {
+            // We are on a project page trying to access a home section. Fire Swup to navigate there.
+            if (typeof swup !== 'undefined') {
+              swup.navigate('index.html' + hash);
+            } else {
+              window.location.href = 'index.html' + hash;
+            }
+          }
+        }
+      }
     });
   });
 }
+
+// ─── PROJECT CARD TILT ─────────────────────────────────
+// (Project Card 3D Tilt removed to resolve severe FPS drop and stuttering)
 
 // ─── COUNTER ANIMATION (STAT CARDS) ────────────────────
 function animateCounter(el, target, suffix = '') {
@@ -439,21 +613,42 @@ function animateCounter(el, target, suffix = '') {
   requestAnimationFrame(step);
 }
 
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.querySelectorAll('.stat-card__num').forEach(num => {
-        const text = num.textContent.trim();
-        const match = text.match(/^(\d+)(.*)$/);
-        if (match) {
-          animateCounter(num, parseInt(match[1]), match[2]);
-        }
-      });
-      statsObserver.unobserve(entry.target);
+  // Re-observe elements for the new DOM
+  vantaConfigs.forEach(config => {
+    const el = document.getElementById(config.id);
+    if (el && vantaObserver) vantaObserver.observe(el);
+  });
+
+  const spySections = document.querySelectorAll('section[id]');
+  if (spySections.length > 0 && spyObserver) {
+    spySections.forEach(sec => spyObserver.observe(sec));
+  }
+
+  const statsSection = document.querySelector('.about__stats');
+  if (statsSection && statsObserver) statsObserver.observe(statsSection);
+
+
+  // Intercept inline JS routing from project cards and pass directly to Swup
+  document.querySelectorAll('[onclick]').forEach(el => {
+    const script = el.getAttribute('onclick');
+    if (script && script.includes('window.location.href')) {
+      const match = script.match(/window\.location\.href\s*=\s*['"]([^'"]+)['"]/);
+      if (match && match[1]) {
+        el.removeAttribute('onclick'); 
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (typeof swup !== 'undefined') swup.navigate(match[1]);
+          else window.location.href = match[1];
+        });
+      }
     }
   });
-}, { threshold: 0.3 });
 
-const statsSection = document.querySelector('.about__stats');
-if (statsSection) statsObserver.observe(statsSection);
+  // Recalculate heights for the new DOM content
+  if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
 
+} // <--- END initPage2()
+
+// Call initialization immediately on the first hard-load
+initPage();
+initPage2();

@@ -22,11 +22,23 @@
 @import url("components/footer.css");
 @import url("components/back-to-top.css");
 @import url("components/responsive.css");
-@import url("components/aos-overrides.css");
 @import url("components/utility.css");
 @import url("components/page-loader.css");
 @import url("base/section-dividers.css");
-@import url("components/glow-dots.css");
-@import url("components/timeline-last-item-no-margin.css");
-@import url("base/form-button-icon.css");
 @import url("components/motion-preferences.css");
+@import url("components/split-type.css");
+
+/* Custom selection */
+::selection {
+  background: var(--accent);
+  color: var(--white);
+}
+
+/* Swup Transition Fade — pure crossfade, no directional slide */
+.transition-fade {
+  transition: opacity 0.35s ease-out;
+  opacity: 1;
+}
+html.is-animating .transition-fade {
+  opacity: 0;
+}

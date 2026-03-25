@@ -6,12 +6,9 @@
   <title>Shivam Parab | Software Engineer, Game Developer & Educator</title>
   <meta name="description" content="Shivam Parab — Software Engineer and Game Developer based in the UK. Backend &amp; .NET, secure systems, SQL, Unity, and games education. MSc Software Engineering (Staffordshire University, graduated)." />
   
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <!-- Icons -->
   <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
   <!-- AOS animations -->
-  <link rel="stylesheet" href="css/vendor/aos.css" />
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -46,11 +43,12 @@
     </button>
   </nav>
 
+  <!-- ─── SWUP CONTAINER ──────────────────────────────── -->
+  <main id="swup" class="transition-fade">
+
   <!-- ─── HERO ──────────────────────────────────────── -->
   <header class="hero" id="home">
-    <div class="hero__canvas-wrap">
-      <canvas id="heroCanvas"></canvas>
-    </div>
+    <div class="hero__canvas-wrap" id="vanta-bg"></div>
     <div class="hero__content">
       <p class="hero__eyebrow">
         <span class="tag">Based in UK 🇬🇧</span>
@@ -61,7 +59,7 @@
         Shivam<br /><span class="accent">Parab</span>
       </h1>
       <p class="hero__roles">
-        <span id="typedRole"></span><span class="cursor-blink">|</span>
+        <span id="typedRole"></span>
       </p>
       <p class="hero__summary">
         <strong>Software Engineer</strong> and <strong>Game Developer</strong> with a strong foundation in backend and
@@ -92,7 +90,7 @@
     <div class="container">
       <div class="about__grid">
 
-        <div class="about__visual" data-aos="fade-right">
+        <div class="about__visual">
           <div class="about__img-wrap">
             <div class="about__img-placeholder">
               <div class="about__avatar-icon">
@@ -173,7 +171,12 @@
               <span>Secure banking app · .NET MAUI, clean architecture, MFA &amp; fraud detection</span>
             </div>
           </div>
-          <a href="mailto:parabshivam@gmail.com" class="btn btn--primary">Get In Touch</a>
+          <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <a href="mailto:parabshivam@gmail.com" class="btn btn--primary">Get In Touch</a>
+            <a href="assets/Shivam_Parab_CV.pdf" target="_blank" rel="noopener" class="btn btn--outline">
+              <i class="fas fa-file-pdf"></i> Download CV
+            </a>
+          </div>
         </div>
 
       </div>
@@ -292,7 +295,7 @@
 
         <!-- Project 1: Secure Banking Authentication -->
         <article class="project-card project-card--featured">
-          <div class="project-card__media" onclick="window.location.href='secure-banking.html'" style="cursor: pointer;">
+          <a class="project-card__media" href="secure-banking.html">
             <div class="project-card__img-wrap project-card__img-wrap--p-banking">
               <div class="project-card__icon"><i class="fas fa-building-columns"></i></div>
             </div>
@@ -301,7 +304,7 @@
               <span class="tag tag--sm">.NET MAUI</span>
               <span class="tag tag--sm">Clean Architecture</span>
             </div>
-          </div>
+          </a>
           <div class="project-card__body">
             <span class="project-card__number">01</span>
             <h3 class="project-card__title">Secure Banking Authentication System</h3>
@@ -332,7 +335,7 @@
 
         <!-- Project 2 (New): Portfolio Website -->
         <article class="project-card">
-          <div class="project-card__media" onclick="window.location.href='portfolio-case-study.html'" style="cursor: pointer;">
+          <a class="project-card__media" href="portfolio-case-study.html">
             <div class="project-card__img-wrap project-card__img-wrap--p4" style="background: linear-gradient(135deg, var(--bg-2) 0%, rgba(20, 184, 166, 0.1) 100%);">
               <div class="project-card__icon"><i class="fas fa-laptop-code"></i></div>
             </div>
@@ -341,7 +344,7 @@
               <span class="tag tag--sm">Vanilla Tech</span>
               <span class="tag tag--sm">A11y</span>
             </div>
-          </div>
+          </a>
           <div class="project-card__body">
             <span class="project-card__number">02</span>
             <h3 class="project-card__title">Personal Portfolio Website</h3>
@@ -522,7 +525,7 @@
   <!-- ─── EXPERIENCE ─────────────────────────────────── -->
   <section class="section experience" id="experience">
     <div class="container">
-      <div class="section__header" data-aos="fade-up">
+      <div class="section__header">
         <p class="section__eyebrow">Where I've worked</p>
         <h2 class="section__title">Work <span class="accent">Experience</span></h2>
       </div>
@@ -712,8 +715,9 @@
   </section>
 
   <!-- ─── CONTACT ────────────────────────────────────── -->
-  <section class="section contact" id="contact">
-    <div class="container">
+  <section class="section contact" id="contact" style="position: relative; overflow: hidden;">
+    <div id="vanta-bg-contact" style="position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.8;"></div>
+    <div class="container" style="position: relative; z-index: 1;">
       <div class="contact__inner">
         <div class="contact__text">
           <p class="section__eyebrow">Let's connect</p>
@@ -786,6 +790,8 @@
       </div>
     </div>
   </section>
+  
+  </main> <!-- /SWUP CONTAINER -->
 
   <!-- ─── FOOTER ─────────────────────────────────────── -->
   <footer class="footer">
@@ -811,7 +817,14 @@
   <script src="js/vendor/gsap.min.js"></script>
   <script src="js/vendor/ScrollTrigger.min.js"></script>
   <script src="js/vendor/lenis.min.js"></script>
-  <script src="js/vendor/aos.js"></script>
+  <!-- Typed.js for Typewriter Effect -->
+  <script src="js/vendor/typed.umd.js"></script>
+  <!-- SplitType for Text Reveals -->
+  <script src="js/vendor/split-type.min.js"></script>
+  <!-- Three.js + Vanta.js for 3D Background -->
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/vanta.net.min.js"></script>
+  <script src="js/vendor/swup.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

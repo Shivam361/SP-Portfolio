@@ -1,0 +1,18 @@
+/* SPLIT TYPE CSS */
+.char, .word {
+  display: inline-block;
+  transform-style: preserve-3d;
+}
+.line {
+  display: block;
+}
+
+/* Force gradients on split texts */
+.accent .char,
+.accent .word {
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
