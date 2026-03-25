@@ -1,0 +1,122 @@
+/* EXPERIENCE */
+.experience { background: var(--bg); }
+
+.timeline {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+}
+
+.timeline__item {
+  display: flex;
+  gap: 36px;
+  margin-bottom: 48px;
+  position: relative;
+}
+
+.timeline__marker {
+  position: relative;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  background: var(--bg-card2);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  z-index: 1;
+  box-shadow: 0 0 16px var(--accent-glow);
+  transition: var(--transition);
+}
+
+.timeline__item:hover .timeline__marker {
+  background: var(--accent);
+  box-shadow: var(--shadow-glow);
+}
+
+.timeline__content {
+  background: linear-gradient(175deg, var(--bg-card) 0%, rgba(18, 18, 28, 0.92) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  flex: 1;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card);
+}
+
+.timeline__item:hover .timeline__content {
+  border-color: rgba(124, 58, 237, 0.22);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.timeline__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.timeline__role {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.timeline__company {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.timeline__company i { color: var(--accent-2); font-size: 0.75rem; }
+.timeline__accent { color: var(--accent-2); }
+
+.timeline__date {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--accent-2);
+  white-space: nowrap;
+  background: rgba(124, 58, 237, 0.1);
+  padding: 4px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  height: fit-content;
+}
+
+.timeline__bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.timeline__bullets li {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  padding-left: 16px;
+  position: relative;
+}
+.timeline__bullets li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent-2);
+}
+
+.timeline__tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}

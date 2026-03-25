@@ -1,0 +1,2 @@
+/* TIMELINE LAST ITEM NO MARGIN */
+.timeline__item:last-child { margin-bottom: 0; }
