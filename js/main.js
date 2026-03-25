@@ -403,6 +403,74 @@ if (typeof VANTA !== 'undefined') {
   });
 }
 
+// ─── SCROLL SPY NAVIGATION ─────────────────────────────
+const spySections = document.querySelectorAll('section[id]');
+const spyNavLinks = document.querySelectorAll('.nav__links .nav__link');
+
+if (spySections.length > 0 && spyNavLinks.length > 0) {
+  const spyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        spyNavLinks.forEach(link => {
+          link.classList.remove('active');
+          const href = link.getAttribute('href');
+          if (href === `#${id}` || href === `index.html#${id}`) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  spySections.forEach(sec => spyObserver.observe(sec));
+}
+
+// ─── IMAGE PARALLAX ────────────────────────────────────
+if (typeof gsap !== 'undefined') {
+  gsap.utils.toArray('.project-card__media').forEach(media => {
+    const imgWrap = media.querySelector('.project-card__img-wrap');
+    if (imgWrap) {
+      gsap.to(imgWrap, {
+        yPercent: 15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: media,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    }
+  });
+}
+
+// ─── SEAMLESS PAGE TRANSITIONS ─────────────────────────
+document.querySelectorAll('a').forEach(anchor => {
+  if (anchor.host !== window.location.host) return; // Ignore external links
+  if (anchor.getAttribute('target') === '_blank') return;
+  
+  const href = anchor.getAttribute('href');
+  if (!href || href.startsWith('#') || href.includes('index.html#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+  
+  anchor.addEventListener('click', (e) => {
+    e.preventDefault();
+    const loader = document.getElementById('loader');
+    if (loader) {
+      loader.classList.remove('hidden');
+      // Force repaint to ensure transition triggers
+      void loader.offsetWidth;
+      loader.style.opacity = '1';
+      setTimeout(() => {
+        window.location.href = href;
+      }, 500); // Matches the pre-loader CSS transition time
+    } else {
+      window.location.href = href;
+    }
+  });
+});
+
+
 // ─── SKILL BAR ANIMATION ───────────────────────────────
 (function () {
   const skillBars = document.querySelectorAll('.skill-bar__fill');
