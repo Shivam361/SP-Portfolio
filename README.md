@@ -61,7 +61,8 @@ Then visit `http://localhost:8080`.
 
 Update these if your deployment URL changes.
 
-- **GitHub:** [github.com/Shivam361](https://github.com/Shivam361)  
+- **Portfolio:** [sp-portfolio-nine.vercel.app](https://sp-portfolio-nine.vercel.app)
+- **GitHub:** [github.com/Shivam361](https://github.com/Shivam361)
 - **LinkedIn:** [linkedin.com/in/shivam-parab-3b747b150](https://www.linkedin.com/in/shivam-parab-3b747b150/)
 
 ## Notes
