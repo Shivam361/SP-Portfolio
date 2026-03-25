@@ -2,8 +2,22 @@
    SHIVAM PARAB PORTFOLIO — MAIN JS
    ==================================================== */
 
-let heroTl, caseHeroTl, vantaEffect;
-let swup;
+let heroTl, caseHeroTl, vantaEffect, swup;
+
+/**
+ * CACHED UI SINGLETONS
+ * Elements outside the #swup container that persist across page views.
+ */
+const UI = {
+  nav: document.getElementById('nav'),
+  navLinks: document.querySelectorAll('.nav__link'),
+  backToTop: document.getElementById('backToTop'),
+  hamburger: document.getElementById('hamburger'),
+  mobileNav: document.getElementById('navLinks'),
+  cursor: document.getElementById('cursor'),
+  cursorFollower: document.getElementById('cursorFollower'),
+  root: document.documentElement
+};
 
 // ─── PAGE LOADER & SWUP INIT ───────────────────────────
 window.addEventListener('load', () => {
@@ -215,32 +229,25 @@ gsap.utils.toArray('.case-panel, .case-prose, .case-cta-bar').forEach((el, i) =>
 
 } // <--- END initPage()
 
-// ─── NAV SCROLL ────────────────────────────────────────
-const nav = document.getElementById('nav');
-const backToTop = document.getElementById('backToTop');
-
+// ─── NAV & SCROLL EFFECTS ────────────────────────────
 lenis.on('scroll', ({ scroll }) => {
-  if (nav) nav.classList.toggle('scrolled', scroll > 60);
-  if (backToTop) backToTop.classList.toggle('visible', scroll > 400);
-  updateActiveNavLink();
+  if (UI.nav) UI.nav.classList.toggle('scrolled', scroll > 60);
+  if (UI.backToTop) UI.backToTop.classList.toggle('visible', scroll > 400);
 });
 
-if (backToTop) {
-  backToTop.addEventListener('click', () => {
+if (UI.backToTop) {
+  UI.backToTop.addEventListener('click', () => {
     lenis.scrollTo(0, { duration: 1.4 });
   });
 }
 
 // ─── MOBILE NAV ────────────────────────────────────────
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
-
-if (hamburger && navLinks) {
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-    hamburger.classList.toggle('active');
-    const bars = hamburger.querySelectorAll('span');
-    if (navLinks.classList.contains('open')) {
+if (UI.hamburger && UI.mobileNav) {
+  UI.hamburger.addEventListener('click', () => {
+    UI.mobileNav.classList.toggle('open');
+    UI.hamburger.classList.toggle('active');
+    const bars = UI.hamburger.querySelectorAll('span');
+    if (UI.mobileNav.classList.contains('open')) {
       bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
       bars[1].style.opacity = '0';
       bars[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
@@ -249,10 +256,11 @@ if (hamburger && navLinks) {
     }
   });
 
-  navLinks.querySelectorAll('.nav__link').forEach(link => {
+  UI.mobileNav.querySelectorAll('.nav__link').forEach(link => {
     link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      hamburger.querySelectorAll('span').forEach(b => {
+      UI.mobileNav.classList.remove('open');
+      UI.hamburger.classList.remove('active');
+      UI.hamburger.querySelectorAll('span').forEach(b => {
         b.style.transform = '';
         b.style.opacity = '';
       });
@@ -260,24 +268,7 @@ if (hamburger && navLinks) {
   });
 }
 
-// ─── ACTIVE NAV LINK ───────────────────────────────────
-function updateActiveNavLink() {
-  const sections = document.querySelectorAll('section[id], header[id]');
-  const links = document.querySelectorAll('.nav__link');
-  let current = '';
 
-  sections.forEach(section => {
-    const top = section.offsetTop - 120;
-    if (window.scrollY >= top) current = section.getAttribute('id');
-  });
-
-  links.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === `#${current}`) {
-      link.classList.add('active');
-    }
-  });
-}
 
 // ─── CUSTOM CURSOR ─────────────────────────────────────
 const cursor = document.getElementById('cursor');
@@ -286,12 +277,12 @@ const cursorFollower = document.getElementById('cursorFollower');
 let mouseX = 0, mouseY = 0;
 let followerX = 0, followerY = 0;
 
-if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
+if (UI.cursor && UI.cursorFollower && window.matchMedia("(pointer: fine)").matches) {
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top = mouseY + 'px';
+    UI.cursor.style.left = mouseX + 'px';
+    UI.cursor.style.top = mouseY + 'px';
   });
 
   let velX = 0, velY = 0;
@@ -304,18 +295,19 @@ if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
     velY *= friction;
     followerX += velX;
     followerY += velY;
-    cursorFollower.style.left = followerX + 'px';
-    cursorFollower.style.top = followerY + 'px';
+    UI.cursorFollower.style.left = followerX + 'px';
+    UI.cursorFollower.style.top = followerY + 'px';
     requestAnimationFrame(animateCursor);
   }
+
   animateCursor();
 
   const interactableSelector = 'a, button, .project-card, .skill-group, .edu-card, .case-panel';
   
   document.addEventListener('mouseover', (e) => {
     if (e.target.closest(interactableSelector)) {
-      cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.8)';
-      cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.8)';
+      UI.cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.8)';
+      UI.cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.8)';
     }
   });
 
@@ -323,11 +315,12 @@ if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
     const parentContainer = e.target.closest(interactableSelector);
     if (parentContainer) {
       if (!e.relatedTarget || !parentContainer.contains(e.relatedTarget)) {
-        cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
-        cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.5)';
+        UI.cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+        UI.cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.5)';
       }
     }
   });
+
 }
 
 // ─── DYNAMIC INTERACTABLES INIT ────────────────────────
@@ -460,13 +453,12 @@ if (typeof VANTA !== 'undefined') {
 
 // ─── SCROLL SPY NAVIGATION ─────────────────────────────
 let spyObserver;
-const spyNavLinks = document.querySelectorAll('.nav__links .nav__link');
 if (typeof IntersectionObserver !== 'undefined') {
   spyObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const id = entry.target.getAttribute('id');
-        spyNavLinks.forEach(link => {
+        UI.navLinks.forEach(link => {
           link.classList.remove('active');
           const href = link.getAttribute('href');
           if (href === `#${id}` || href === `index.html#${id}`) link.classList.add('active');
@@ -475,6 +467,7 @@ if (typeof IntersectionObserver !== 'undefined') {
     });
   }, { rootMargin: '-20% 0px -70% 0px' });
 }
+
 
 // ─── STATS OBSERVER ────────────────────────────────────
 let statsObserver;
@@ -581,7 +574,7 @@ if (typeof Swup !== 'undefined') {
             // We are already on Home. Smooth scroll to the section.
             const target = document.querySelector(hash);
             if (target && typeof lenis !== 'undefined') {
-              const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
+              const navH = parseInt(getComputedStyle(UI.root).getPropertyValue('--nav-h')) || 80;
               lenis.scrollTo(target, { offset: -navH, duration: 1.4 });
             }
           } else {
