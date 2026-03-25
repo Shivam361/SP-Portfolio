@@ -10,6 +10,7 @@ window.addEventListener('load', () => {
       loader.classList.add('hidden');
       // Start GSAP animations after loader is gone
       if (typeof heroTl !== 'undefined') heroTl.play();
+      if (typeof caseHeroTl !== 'undefined') caseHeroTl.play();
     }, 1000);
   }
 });
@@ -65,6 +66,32 @@ heroTl
   .from('.hero__cta',        { y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
   .from('.hero__socials',    { y: 10, opacity: 0, duration: 0.4 }, '-=0.2')
   .from('.hero__scroll-hint',{ opacity: 0, duration: 0.5 }, '-=0.1');
+
+// ─── CASE STUDY HERO ANIMATION ─────────────────────────
+let caseHeroTl;
+if (document.querySelector('.case-hero')) {
+  caseHeroTl = gsap.timeline({ delay: 0.2, paused: true });
+
+  let caseTitleSplit;
+  if (typeof SplitType !== 'undefined' && document.querySelector('.case-hero__title')) {
+    caseTitleSplit = new SplitType('.case-hero__title', { types: 'chars' });
+  }
+
+  caseHeroTl
+    .from('.case-breadcrumb', { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out' });
+
+  if (caseTitleSplit) {
+    caseHeroTl.from(caseTitleSplit.chars, { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.03 }, '-=0.4');
+  } else {
+    caseHeroTl.from('.case-hero__title', { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4');
+  }
+
+  caseHeroTl
+    .from('.case-hero__icon',    { scale: 0.5, opacity: 0, duration: 0.6, ease: 'back.out(1.7)' }, '-=0.6')
+    .from('.case-hero__lead',    { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+    .from('.case-hero__actions .btn', { y: 20, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' }, '-=0.3')
+    .from('.case-meta .tag',     { scale: 0.8, opacity: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out' }, '-=0.3');
+}
 
 // Section titles slide up as they enter viewport
 if (typeof SplitType !== 'undefined') {
@@ -322,23 +349,57 @@ if (typeof Typed !== 'undefined' && document.getElementById('typedRole')) {
   });
 }
 
-// ─── HERO 3D BACKGROUND (VANTA.JS) ─────────────────────
-if (typeof VANTA !== 'undefined' && document.getElementById('vanta-bg')) {
-  VANTA.NET({
-    el: "#vanta-bg",
-    mouseControls: true,
-    touchControls: true,
-    gyroControls: false,
-    minHeight: 200.00,
-    minWidth: 200.00,
-    scale: 1.00,
-    scaleMobile: 1.00,
-    color: 0x7c3aed, // Brand primary
-    backgroundColor: 0x0f0f16, // Matching var(--bg)
-    points: 12.00,
-    maxDistance: 22.00,
-    spacing: 16.00,
-    showDots: true
+// ─── 3D BACKGROUNDS (VANTA.JS) ─────────────────────────
+if (typeof VANTA !== 'undefined') {
+  const vantaConfigs = [
+    {
+      id: 'vanta-bg',
+      color: 0x7c3aed, // Brand primary
+      backgroundColor: 0x0f0f16,
+      points: 12.0, maxDistance: 22.0, spacing: 16.0
+    },
+    {
+      id: 'vanta-bg-case',
+      color: 0x14b8a6, // Teal for cases
+      backgroundColor: 0x08080c,
+      points: 10.0, maxDistance: 24.0, spacing: 18.0
+    },
+    {
+      id: 'vanta-bg-contact',
+      color: 0xa855f7, // Violet for contact
+      backgroundColor: 0x0f0f16,
+      points: 9.0, maxDistance: 25.0, spacing: 20.0
+    }
+  ];
+
+  const vantaObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const config = vantaConfigs.find(c => c.id === entry.target.id);
+      if (!config) return;
+      
+      if (entry.isIntersecting) {
+        if (!entry.target.vantaEffect) {
+          entry.target.vantaEffect = VANTA.NET({
+            el: `#${config.id}`,
+            mouseControls: true, touchControls: true, gyroControls: false,
+            minHeight: 200.0, minWidth: 200.0, scale: 1.0, scaleMobile: 1.0,
+            color: config.color, backgroundColor: config.backgroundColor,
+            points: config.points, maxDistance: config.maxDistance, spacing: config.spacing,
+            showDots: true
+          });
+        }
+      } else {
+        if (entry.target.vantaEffect) {
+          entry.target.vantaEffect.destroy();
+          entry.target.vantaEffect = null;
+        }
+      }
+    });
+  }, { rootMargin: '100px 0px' });
+
+  vantaConfigs.forEach(config => {
+    const el = document.getElementById(config.id);
+    if (el) vantaObserver.observe(el);
   });
 }
 

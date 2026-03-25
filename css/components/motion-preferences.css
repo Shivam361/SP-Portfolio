@@ -112,7 +112,11 @@ a.nav__logo {
 }
 
 .case-hero__title .accent {
-  color: #5eead4; /* Bright cyan for maximum readability */
+  background: linear-gradient(125deg, #14b8a6 0%, #0d9488 40%, #5eead4 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
   text-shadow: 0 0 15px rgba(94, 234, 212, 0.5), 0 0 30px rgba(94, 234, 212, 0.25);
 }
 
