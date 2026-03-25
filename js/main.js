@@ -103,7 +103,7 @@ if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
   });
 
   let velX = 0, velY = 0;
-  const spring = 0.15, friction = 0.70;
+  const spring = 0.08, friction = 0.82;
 
   function animateCursor() {
     velX += (mouseX - followerX) * spring;
@@ -140,10 +140,11 @@ if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
 
 // ─── MAGNETIC BUTTONS ──────────────────────────────────
 document.querySelectorAll('.btn, .social-icon, .nav__link').forEach(btn => {
+  btn.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
   btn.addEventListener('mousemove', (e) => {
     const rect = btn.getBoundingClientRect();
-    const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
-    const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+    const x = (e.clientX - rect.left - rect.width / 2) * 0.18;
+    const y = (e.clientY - rect.top - rect.height / 2) * 0.18;
     btn.style.transform = `translate(${x}px, ${y}px)`;
   });
   btn.addEventListener('mouseleave', () => {
