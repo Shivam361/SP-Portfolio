@@ -12,6 +12,14 @@
   font-family: var(--font-mono);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  background-image: linear-gradient(90deg, rgba(124, 58, 237, 0.12) 0%, rgba(124, 58, 237, 0.35) 50%, rgba(124, 58, 237, 0.12) 100%);
+  background-size: 200% auto;
+  animation: shimmerAnim 3.5s linear infinite;
+  color: var(--white);
 }
 
 .tag--sm {

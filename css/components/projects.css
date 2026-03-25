@@ -1,4 +1,26 @@
 /* PROJECTS */
+
+/* ─── SPOTLIGHT EFFECT ─── */
+.project-card, .skill-card, .case-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::before, .skill-card::before, .case-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(650px circle at var(--spot-x, 100px) var(--spot-y, 100px), rgba(168, 85, 247, 0.12), transparent 40%);
+  pointer-events: none;
+  z-index: 15;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.project-card:hover::before, .skill-card:hover::before, .case-panel:hover::before {
+  opacity: 1;
+}
+
 .projects {
   background: var(--bg-2);
   position: relative;

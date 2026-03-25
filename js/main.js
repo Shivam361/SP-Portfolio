@@ -102,9 +102,16 @@ if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
     cursor.style.top = mouseY + 'px';
   });
 
+  let velX = 0, velY = 0;
+  const spring = 0.15, friction = 0.70;
+
   function animateCursor() {
-    followerX += (mouseX - followerX) * 0.12;
-    followerY += (mouseY - followerY) * 0.12;
+    velX += (mouseX - followerX) * spring;
+    velY += (mouseY - followerY) * spring;
+    velX *= friction;
+    velY *= friction;
+    followerX += velX;
+    followerY += velY;
     cursorFollower.style.left = followerX + 'px';
     cursorFollower.style.top = followerY + 'px';
     requestAnimationFrame(animateCursor);
@@ -130,6 +137,30 @@ if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
     }
   });
 }
+
+// ─── MAGNETIC BUTTONS ──────────────────────────────────
+document.querySelectorAll('.btn, .social-icon, .nav__link').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
+    const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = `translate(0px, 0px)`;
+  });
+});
+
+// ─── SPOTLIGHT CARDS ───────────────────────────────────
+document.querySelectorAll('.project-card, .skill-card, .case-panel, .stat-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--spot-x', `${x}px`);
+    card.style.setProperty('--spot-y', `${y}px`);
+  });
+});
 
 // ─── TYPED ROLE EFFECT ─────────────────────────────────
 const roles = [
