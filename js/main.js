@@ -17,8 +17,6 @@ window.addEventListener('load', () => {
 // ─── GSAP + SCROLLTRIGGER ─────────────────────────────
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── AOS INIT (kept for case study pages) ─────────────
-AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 80 });
 
 // ─── LENIS SMOOTH SCROLL ───────────────────────────────
 const lenis = new Lenis({
@@ -45,9 +43,23 @@ window.addEventListener('load', () => {
 // Hero entrance — stagger in on page load
 // Pause by default, will be played by loader event listener
 const heroTl = gsap.timeline({ delay: 0.2, paused: true });
+
+// Split Type for Hero Name
+let heroNameSplit;
+if (typeof SplitType !== 'undefined' && document.querySelector('.hero__name')) {
+  heroNameSplit = new SplitType('.hero__name', { types: 'chars' });
+}
+
 heroTl
-  .from('.hero__eyebrow',    { y: 24, opacity: 0, duration: 0.7, ease: 'power3.out' })
-  .from('.hero__name',       { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4')
+  .from('.hero__eyebrow',    { y: 24, opacity: 0, duration: 0.7, ease: 'power3.out' });
+
+if (heroNameSplit) {
+  heroTl.from(heroNameSplit.chars, { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.05 }, '-=0.4');
+} else {
+  heroTl.from('.hero__name', { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4');
+}
+
+heroTl
   .from('.hero__roles',      { y: 24, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
   .from('.hero__summary',    { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.3')
   .from('.hero__cta',        { y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
@@ -55,7 +67,24 @@ heroTl
   .from('.hero__scroll-hint',{ opacity: 0, duration: 0.5 }, '-=0.1');
 
 // Section titles slide up as they enter viewport
-gsap.utils.toArray('.section__title, .section__eyebrow').forEach(el => {
+if (typeof SplitType !== 'undefined') {
+  gsap.utils.toArray('.section__title').forEach(title => {
+    const splitTitle = new SplitType(title, { types: 'chars' });
+    gsap.from(splitTitle.chars, {
+      y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.02,
+      scrollTrigger: { trigger: title, start: 'top 88%', toggleActions: 'play none none none' }
+    });
+  });
+} else {
+  gsap.utils.toArray('.section__title').forEach(el => {
+    gsap.from(el, {
+      y: 40, opacity: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+    });
+  });
+}
+
+gsap.utils.toArray('.section__eyebrow').forEach(el => {
   gsap.from(el, {
     y: 40, opacity: 0, duration: 0.8, ease: 'power3.out',
     scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
@@ -83,6 +112,14 @@ gsap.utils.toArray('.skill-group, .edu-card').forEach((el, i) => {
   gsap.from(el, {
     y: 30, opacity: 0, scale: 0.97, duration: 0.65, ease: 'power2.out', delay: (i % 3) * 0.08,
     scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
+  });
+});
+
+// Case study items fade up
+gsap.utils.toArray('.case-panel, .case-prose, .case-cta-bar').forEach((el, i) => {
+  gsap.from(el, {
+    y: 40, opacity: 0, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 92%', toggleActions: 'play none none none' }
   });
 });
 
@@ -227,124 +264,45 @@ document.querySelectorAll('.project-card, .skill-card, .case-panel, .stat-card')
 });
 
 // ─── TYPED ROLE EFFECT ─────────────────────────────────
-const roles = [
-  'Software Engineer',
-  'Backend & .NET Developer',
-  'Full-Stack Developer',
-  'Game Developer',
-  'Unity & Interactive Systems',
-  'Games Educator & Lecturer'
-];
-let roleIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-const typedEl = document.getElementById('typedRole');
-
-function typeRole() {
-  if (!typedEl) return;
-
-  const currentRole = roles[roleIndex];
-
-  if (!isDeleting) {
-    typedEl.textContent = currentRole.slice(0, charIndex + 1);
-    charIndex++;
-    if (charIndex === currentRole.length) {
-      isDeleting = true;
-      setTimeout(typeRole, 2200);
-      return;
-    }
-    setTimeout(typeRole, 80);
-  } else {
-    typedEl.textContent = currentRole.slice(0, charIndex - 1);
-    charIndex--;
-    if (charIndex === 0) {
-      isDeleting = false;
-      roleIndex = (roleIndex + 1) % roles.length;
-      setTimeout(typeRole, 400);
-      return;
-    }
-    setTimeout(typeRole, 40);
-  }
+if (typeof Typed !== 'undefined' && document.getElementById('typedRole')) {
+  new Typed('#typedRole', {
+    strings: [
+      'Software Engineer',
+      'Backend & .NET Developer',
+      'Full-Stack Developer',
+      'Game Developer',
+      'Unity & Interactive Systems',
+      'Games Educator & Lecturer'
+    ],
+    typeSpeed: 50,
+    backSpeed: 30,
+    backDelay: 2000,
+    loop: true,
+    showCursor: true,
+    cursorChar: '|',
+    autoInsertCss: true
+  });
 }
-if (typedEl) setTimeout(typeRole, 800);
 
-// ─── HERO CANVAS PARTICLES ─────────────────────────────
-(function () {
-  const canvas = document.getElementById('heroCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  function resize() {
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const PARTICLE_COUNT = 80;
-  const particles = [];
-
-  class Particle {
-    constructor() {
-      this.reset();
-    }
-    reset() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 2 + 0.5;
-      this.speedX = (Math.random() - 0.5) * 0.5;
-      this.speedY = (Math.random() - 0.5) * 0.5;
-      this.opacity = Math.random() * 0.5 + 0.1;
-      this.color = Math.random() > 0.5 ? '124, 58, 237' : '168, 85, 247';
-    }
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
-      ctx.fill();
-    }
-  }
-
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    particles.push(new Particle());
-  }
-
-  function connectParticles() {
-    for (let a = 0; a < particles.length; a++) {
-      for (let b = a + 1; b < particles.length; b++) {
-        const dx = particles[a].x - particles[b].x;
-        const dy = particles[a].y - particles[b].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 130) {
-          const alpha = (1 - dist / 130) * 0.25;
-          ctx.strokeStyle = `rgba(124, 58, 237, ${alpha})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(particles[a].x, particles[a].y);
-          ctx.lineTo(particles[b].x, particles[b].y);
-          ctx.stroke();
-        }
-      }
-    }
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-      p.update();
-      p.draw();
-    });
-    connectParticles();
-    requestAnimationFrame(animate);
-  }
-  animate();
-})();
+// ─── HERO 3D BACKGROUND (VANTA.JS) ─────────────────────
+if (typeof VANTA !== 'undefined' && document.getElementById('vanta-bg')) {
+  VANTA.NET({
+    el: "#vanta-bg",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    scale: 1.00,
+    scaleMobile: 1.00,
+    color: 0x7c3aed, // Brand primary
+    backgroundColor: 0x0f0f16, // Matching var(--bg)
+    points: 12.00,
+    maxDistance: 22.00,
+    spacing: 16.00,
+    showDots: true
+  });
+}
 
 // ─── SKILL BAR ANIMATION ───────────────────────────────
 (function () {

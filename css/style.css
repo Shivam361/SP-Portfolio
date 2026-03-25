@@ -22,7 +22,6 @@
 @import url("components/footer.css");
 @import url("components/back-to-top.css");
 @import url("components/responsive.css");
-@import url("components/aos-overrides.css");
 @import url("components/utility.css");
 @import url("components/page-loader.css");
 @import url("base/section-dividers.css");
@@ -30,3 +29,4 @@
 @import url("components/timeline-last-item-no-margin.css");
 @import url("base/form-button-icon.css");
 @import url("components/motion-preferences.css");
+@import url("components/split-type.css");

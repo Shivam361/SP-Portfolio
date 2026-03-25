@@ -103,7 +103,7 @@
         <h2 class="section__title">What the app <span class="accent">includes</span></h2>
       </div>
       <div class="case-two-col">
-        <div class="case-panel" data-aos="fade-up" data-aos-delay="40">
+        <div class="case-panel">
           <h3 class="case-panel__title"><i class="fas fa-user-shield"></i> Identity &amp; access</h3>
           <ul>
             <li>User registration and login</li>
@@ -112,7 +112,7 @@
             <li>Input validation and structured error handling</li>
           </ul>
         </div>
-        <div class="case-panel" data-aos="fade-up" data-aos-delay="90">
+        <div class="case-panel">
           <h3 class="case-panel__title"><i class="fas fa-chart-line"></i> Operations &amp; fraud</h3>
           <ul>
             <li>Transaction handling and history</li>
@@ -131,13 +131,13 @@
         <p class="section__eyebrow">Structure</p>
         <h2 class="section__title">Architecture &amp; <span class="accent">services</span></h2>
       </div>
-      <div class="case-prose" data-aos="fade-up" data-aos-delay="60">
+      <div class="case-prose">
         <p>
           The app follows a <strong>modular, MVC-inspired separation</strong>: MAUI pages and shell for the presentation
           layer, with <strong>service classes</strong> encapsulating domain behaviour. Core examples from the repository:
         </p>
       </div>
-      <div class="case-panel" data-aos="fade-up" data-aos-delay="100">
+      <div class="case-panel">
         <h3 class="case-panel__title"><i class="fas fa-layer-group"></i> Key components</h3>
         <ul>
           <li><strong>AuthService</strong> — authentication flow, credential verification, and OTP generation/validation.</li>
@@ -155,7 +155,7 @@
         <p class="section__eyebrow">Flow</p>
         <h2 class="section__title">Typical <span class="accent">login path</span></h2>
       </div>
-      <div class="case-panel case-prose" data-aos="fade-up" data-aos-delay="60">
+      <div class="case-panel case-prose">
         <ol class="case-flow">
           <li>User signs in with username and password; credentials are checked through <strong>AuthService</strong>.</li>
           <li>An <strong>OTP</strong> is issued and must be confirmed before the session is treated as trusted.</li>
@@ -174,11 +174,11 @@
         <h2 class="section__title">Security <span class="accent">highlights</span></h2>
       </div>
       <div class="case-two-col">
-        <div class="case-panel" data-aos="fade-up" data-aos-delay="40">
+        <div class="case-panel">
           <h3 class="case-panel__title"><i class="fas fa-key"></i> Authentication</h3>
           <p>Passwords are hashed; MFA adds a second factor. Failed attempts can be tracked to resist brute-force style abuse in the simulated environment.</p>
         </div>
-        <div class="case-panel" data-aos="fade-up" data-aos-delay="90">
+        <div class="case-panel">
           <h3 class="case-panel__title"><i class="fas fa-user-secret"></i> Fraud rules</h3>
           <p>Rules cover unfamiliar locations, repeated failures, and suspicious transaction shapes—mirroring how policy engines often start before ML is introduced.</p>
         </div>
@@ -192,7 +192,7 @@
         <p class="section__eyebrow">Risks</p>
         <h2 class="section__title">Sample threat <span class="accent">mitigations</span></h2>
       </div>
-      <div class="case-table-wrap case-panel" data-aos="fade-up" data-aos-delay="60">
+      <div class="case-table-wrap case-panel">
         <table class="case-table">
           <thead>
             <tr>
@@ -233,7 +233,7 @@
         <p class="section__eyebrow">Stack</p>
         <h2 class="section__title">Technologies &amp; <span class="accent">artifacts</span></h2>
       </div>
-      <div class="case-panel" data-aos="fade-up" data-aos-delay="60">
+      <div class="case-panel">
         <h3 class="case-panel__title"><i class="fas fa-code"></i> Build &amp; delivery</h3>
         <ul>
           <li>C# and <strong>.NET MAUI</strong> for cross-platform UI</li>
@@ -242,14 +242,14 @@
           <li>UML, ERD, and written design docs shipped alongside code in the repo</li>
         </ul>
       </div>
-      <p class="case-prose" style="margin-top: 24px; text-align: center; font-size: 0.88rem; color: var(--text-dim);" data-aos="fade-up">
+      <p class="case-prose" style="margin-top: 24px; text-align: center; font-size: 0.88rem; color: var(--text-dim);">
         <strong>Disclaimer:</strong> This system is for <strong>education and demonstration</strong> only. It is not audited
         for production banking use and should not handle real customer data or funds.
       </p>
     </div>
   </section>
 
-  <div class="case-cta-bar" data-aos="fade-up">
+  <div class="case-cta-bar">
     <p>Explore the implementation, database scripts, and documentation in the public repository.</p>
     <div class="case-cta-bar__actions">
       <a href="https://github.com/Shivam361/secure-banking-authentication-system" target="_blank" rel="noopener" class="btn btn--primary">
