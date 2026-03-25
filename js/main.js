@@ -36,10 +36,6 @@ window.addEventListener('load', () => {
     });
     
     swup.hooks.on('visit:start', () => {
-      // Forcibly snap to top instantly when a link is clicked to prevent "jumping to bottom" bugs
-      window.scrollTo(0, 0);
-      if (typeof lenis !== 'undefined') lenis.scrollTo(0, { immediate: true });
-
       try {
         document.querySelectorAll('[id^="vanta-bg"]').forEach(el => {
           if (el.vantaEffect) { el.vantaEffect.destroy(); el.vantaEffect = null; }
