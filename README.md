@@ -1,25 +1,24 @@
-# Shivam Parab — Professional Portfolio
+# Shivam Parab — Professional Portfolio (SPA)
 
-A high-performance, cinematic, dark-themed personal site for Shivam Parab — Software Engineer, Game Developer, and Educator based in the UK. 
+A high-performance, cinematic **Single Page Application (SPA)**, dark-themed personal site for Shivam Parab — Software Engineer, Game Developer, and Educator based in the UK. 
 
-This portfolio is engineered with a modern WebGL and GSAP architecture to deliver a cutting-edge, visually rich 60FPS immersive experience. It maintains strict accessibility and responsive design standards while providing an optimal developer experience.
+This portfolio is engineered with a modern **Swup.js + WebGL + GSAP** architecture to deliver a cutting-edge, visually rich 60FPS immersive experience. It features seamless page transitions, persistent UI elements, and robust memory management for a flawlessly smooth user journey.
 
 ## Technical Architecture & Key Features
 
-### Cinematic Micro-Interactions
-- **GSAP & ScrollTrigger** — Fluid, hardware-accelerated stagger reveals for all sections, completely replacing legacy CSS animation libraries.
-- **Lenis Smooth Scroll** — Perfectly synced scroll momentum tied directly to the GSAP Ticker for jitter-free navigation.
-- **SplitType Reveals** — Character-by-character cascading text effects mapping precise CSS gradients to the geometry of the text.
-- **Magnetic Physics** — UI buttons, navigational links, and social icons utilize `requestAnimationFrame` spring physics to magnetically track the user's cursor.
-- **Dynamic Spotlights** — Project and skill cards feature a radial gradient tracking system that illuminates borders and surfaces based on cursor proximity, avoiding expensive DOM reflows.
+### Cinematic Single Page Application (SPA)
+- **Swup.js Core** — Powering a true SPA experience where only the content swaps, leaving the 3D backgrounds, smooth scroll, and custom cursors running uninterrupted.
+- **GSAP & ScrollTrigger** — Fluid, hardware-accelerated stagger reveals for all sections, perfectly re-indexed on every page view.
+- **Lenis Smooth Scroll** — Persistent scroll momentum across navigations, synced directly to the GSAP Ticker for jitter-free movement.
+- **Cinematic Fade Transitions** — High-performance opacity crossfades that eliminate "page blink" and harsh reloads.
+- **Magnetic Physics & Spotlights** — UI elements utilize spring physics and radial tracking to follow the user's cursor across all pages.
 
-### 3D WebGL Environments
+### Intelligent Resource & Memory Management
 - **Vanta.js / Three.js** — Interactive, neural-network-inspired particle canvases rendered in real-time.
-- **IntersectionObserver Engine** — Multiple WebGL instances (Hero, Contact, and Case Studies) are orchestrated by a custom `IntersectionObserver` that automatically mounts and destroys canvas rendering contexts when exiting the viewport. This preserves GPU cycles and battery life.
-
-### Robust Dependency Management
-- **Zero CDN Dependency** — All CSS and JS libraries (GSAP, Three, Vanta, Typed, SplitType, Lenis) are shipped locally in the `/vendor` directory. This guarantees 100% uptime, offline availability during development, and blazing fast Time-to-Interactive (TTI).
-- **Modular CSS Components** — Styling is aggressively scoped into the `/components` directory, adhering to a strict BEM-styled naming convention. Global tokens are managed via CSS Custom Properties (Variables).
+- **Smart Lifecycle Hooks** — Manual destruction and cleanup of WebGL contexts and Typed.js instances during transitions to prevent memory leaks and ensure peak performance.
+- **Global Hash Router** — A custom navigation interceptor that intelligently routes between local smooth-scrolls (on Home) and SPA navigations (from project pages).
+- **Zero CDN Dependency** — All assets are shipped locally in `/vendor` for 100% uptime and blazing fast Time-to-Interactive (TTI).
+- **UI Singleton Architecture** — Persistent elements like the Navbar and Cursor are cached as singletons, reducing DOM overhead and ensuring zero layout shift during page swaps.
 
 ## Repository Structure
 
@@ -63,14 +62,13 @@ It can be deployed seamlessly to any static hosting provider natively:
 
 ## Tech Stack
 
-- **Structure**: HTML5, Semantic HTML
-- **Styling**: Vanilla CSS3 (Custom Properties, Grid, Flexbox, hardware-accelerated transforms, mix-blend-modes)
-- **Logic**: Vanilla JavaScript (ES6+), custom `IntersectionObserver` & `requestAnimationFrame` engines
+- **Routing**: [Swup.js](https://swup.js.org/) (Custom SPA Lifecycle)
 - **Animation**: [GSAP](https://gsap.com/) & ScrollTrigger
 - **Scrolling**: [Lenis](https://lenis.studiofreight.com/)
-- **Text Engines**: [SplitType](https://github.com/lukePeavey/SplitType) & [Typed.js](https://github.com/mattboldt/typed.js/)
 - **WebGL Rendering**: [Three.js](https://threejs.org/) + [Vanta.js](https://www.vantajs.com/)
-- **Typography/Iconography**: Google Fonts (Space Grotesk, JetBrains Mono) & Font Awesome 6.4
+- **Text Engines**: [SplitType](https://github.com/lukePeavey/SplitType) & [Typed.js](https://github.com/mattboldt/typed.js/)
+- **Styling**: Vanilla CSS3 (Modular Architecture, Hardware-Accelerated Transforms)
+- **Typography/Iconography**: Google Fonts & Font Awesome 6.4 (Self-Hosted Vendor)
 
 ## Links
 
