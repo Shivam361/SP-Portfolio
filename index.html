@@ -6,18 +6,6 @@
   <title>Shivam Parab | Software Engineer, Game Developer & Educator</title>
   <meta name="description" content="Shivam Parab — Software Engineer and Game Developer based in the UK. Backend &amp; .NET, secure systems, SQL, Unity, and games education. MSc Software Engineering (Staffordshire University, graduated)." />
   
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-  <script>
-    if(sessionStorage.getItem('internalLoad')==='true'){
-      document.documentElement.classList.add('is-internal');
-      var bg = sessionStorage.getItem('transitionBg');
-      var color = sessionStorage.getItem('transitionColor');
-      if(bg || color) {
-        document.write('<div id="t-curtain" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999999;background-color:'+(color||'transparent')+';background-image:'+(bg||'none')+';background-size:cover;background-position:center;"></div>');
-      }
-    }
-  </script>
   <!-- Icons -->
   <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
   <!-- AOS animations -->
@@ -55,6 +43,9 @@
       <span></span><span></span><span></span>
     </button>
   </nav>
+
+  <!-- ─── SWUP CONTAINER ──────────────────────────────── -->
+  <main id="swup" class="transition-fade">
 
   <!-- ─── HERO ──────────────────────────────────────── -->
   <header class="hero" id="home">
@@ -305,7 +296,7 @@
 
         <!-- Project 1: Secure Banking Authentication -->
         <article class="project-card project-card--featured">
-          <div class="project-card__media" onclick="window.location.href='secure-banking.html'" style="cursor: pointer;">
+          <a class="project-card__media" href="secure-banking.html">
             <div class="project-card__img-wrap project-card__img-wrap--p-banking">
               <div class="project-card__icon"><i class="fas fa-building-columns"></i></div>
             </div>
@@ -314,7 +305,7 @@
               <span class="tag tag--sm">.NET MAUI</span>
               <span class="tag tag--sm">Clean Architecture</span>
             </div>
-          </div>
+          </a>
           <div class="project-card__body">
             <span class="project-card__number">01</span>
             <h3 class="project-card__title">Secure Banking Authentication System</h3>
@@ -345,7 +336,7 @@
 
         <!-- Project 2 (New): Portfolio Website -->
         <article class="project-card">
-          <div class="project-card__media" onclick="window.location.href='portfolio-case-study.html'" style="cursor: pointer;">
+          <a class="project-card__media" href="portfolio-case-study.html">
             <div class="project-card__img-wrap project-card__img-wrap--p4" style="background: linear-gradient(135deg, var(--bg-2) 0%, rgba(20, 184, 166, 0.1) 100%);">
               <div class="project-card__icon"><i class="fas fa-laptop-code"></i></div>
             </div>
@@ -354,7 +345,7 @@
               <span class="tag tag--sm">Vanilla Tech</span>
               <span class="tag tag--sm">A11y</span>
             </div>
-          </div>
+          </a>
           <div class="project-card__body">
             <span class="project-card__number">02</span>
             <h3 class="project-card__title">Personal Portfolio Website</h3>
@@ -800,6 +791,8 @@
       </div>
     </div>
   </section>
+  
+  </main> <!-- /SWUP CONTAINER -->
 
   <!-- ─── FOOTER ─────────────────────────────────────── -->
   <footer class="footer">
@@ -832,6 +825,7 @@
   <!-- Three.js + Vanta.js for 3D Background -->
   <script src="js/vendor/three.min.js"></script>
   <script src="js/vendor/vanta.net.min.js"></script>
+  <script src="js/vendor/swup.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

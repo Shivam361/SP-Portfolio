@@ -2,40 +2,83 @@
    SHIVAM PARAB PORTFOLIO — MAIN JS
    ==================================================== */
 
-// ─── PAGE LOADER ───────────────────────────────────────
+let heroTl, caseHeroTl, vantaEffect;
+let swup;
+
+// ─── PAGE LOADER & SWUP INIT ───────────────────────────
 window.addEventListener('load', () => {
   const loader = document.getElementById('loader');
   if (loader) {
-    const isInternal = sessionStorage.getItem('internalLoad') === 'true';
-    const delay = isInternal ? 50 : 1000;
-
-    if (isInternal) {
-      sessionStorage.removeItem('internalLoad');
-    } else {
-      const loaderText = loader.querySelector('.loader__text');
-      if (loaderText && typeof gsap !== 'undefined') {
-        const counter = { val: 0 };
-        gsap.to(counter, {
-          val: 100,
-          duration: 0.9,
-          ease: 'power2.out',
-          onUpdate: () => { loaderText.innerText = Math.round(counter.val) + '%'; }
-        });
-      }
+    const loaderText = loader.querySelector('.loader__text');
+    if (loaderText && typeof gsap !== 'undefined') {
+      const counter = { val: 0 };
+      gsap.to(counter, {
+        val: 100,
+        duration: 0.9,
+        ease: 'power2.out',
+        onUpdate: () => { loaderText.innerText = Math.round(counter.val) + '%'; }
+      });
     }
 
     setTimeout(() => {
       loader.classList.add('hidden');
-      
-      const tCurtain = document.getElementById('t-curtain');
-      if (tCurtain && typeof gsap !== 'undefined') {
-        gsap.to(tCurtain, { opacity: 0, duration: 0.8, ease: 'power2.inOut', onComplete: () => tCurtain.remove() });
-      }
-
-      if (typeof heroTl !== 'undefined') heroTl.play();
-      if (typeof caseHeroTl !== 'undefined') caseHeroTl.play();
-    }, delay);
+      if (heroTl) heroTl.play();
+      if (caseHeroTl) caseHeroTl.play();
+    }, 1000);
   }
+
+  // Bind Swup Framework — only on http/https (Swup uses fetch() which is blocked on file://)
+  const isServed = window.location.protocol.startsWith('http');
+  if (typeof Swup !== 'undefined' && isServed) {
+    swup = new Swup({
+      containers: ['#swup'],
+      animationSelector: '[class*="transition-"]',
+    });
+    
+    swup.hooks.on('visit:start', () => {
+      // Forcibly snap to top instantly when a link is clicked to prevent "jumping to bottom" bugs
+      window.scrollTo(0, 0);
+      if (typeof lenis !== 'undefined') lenis.scrollTo(0, { immediate: true });
+
+      try {
+        document.querySelectorAll('[id^="vanta-bg"]').forEach(el => {
+          if (el.vantaEffect) { el.vantaEffect.destroy(); el.vantaEffect = null; }
+        });
+        if (window.typedInstance) { window.typedInstance.destroy(); window.typedInstance = null; }
+      } catch (err) {
+        console.warn('Silent cleanup error:', err);
+      }
+    });
+
+    swup.hooks.on('content:replace', (visit) => {
+      // If the user navigated to a #hash (e.g. index.html#about), scroll there instantly
+      if (visit.to.hash) {
+        const target = document.querySelector(visit.to.hash);
+        if (target && typeof lenis !== 'undefined') {
+          const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
+          lenis.scrollTo(target, { offset: -navH, immediate: true });
+          return;
+        }
+      }
+      // Otherwise, snap to the absolute top of the new page
+      window.scrollTo(0, 0);
+      if (typeof lenis !== 'undefined') lenis.scrollTo(0, { immediate: true });
+    });
+
+    swup.hooks.on('page:view', () => {
+      // Clean previous scroll states & listeners
+      ScrollTrigger.getAll().forEach(t => t.kill());
+      window.scrollTo(0, 0);
+      
+      initPage();  // Re-arm GSAP staggered entrances
+      initPage2(); // Re-arm dynamic interactive DOM states
+      
+      // Play immediately (loader is bypassed by Swup)
+      if (heroTl) heroTl.play();
+      if (caseHeroTl) caseHeroTl.play();
+    });
+  }
+
 });
 
 // ─── GSAP + SCROLLTRIGGER ─────────────────────────────
@@ -63,13 +106,15 @@ window.addEventListener('load', () => {
 });
 
 // ─── GSAP SCROLL ANIMATIONS ────────────────────────────
+function initPage() {
+  if (vantaEffect) { vantaEffect.destroy(); vantaEffect = null; }
 
-// Hero entrance — stagger in on page load
-// Pause by default, will be played by loader event listener
-const heroTl = gsap.timeline({ delay: 0.2, paused: true });
+  // Hero entrance — stagger in on page load
+  // Pause by default, will be played by loader event listener
+  heroTl = gsap.timeline({ delay: 0.2, paused: true });
 
-// Split Type for Hero Name
-let heroNameSplit;
+  // Split Type for Hero Name
+  let heroNameSplit;
 if (typeof SplitType !== 'undefined' && document.querySelector('.hero__name')) {
   heroNameSplit = new SplitType('.hero__name', { types: 'chars' });
 }
@@ -91,9 +136,8 @@ heroTl
   .from('.hero__scroll-hint',{ opacity: 0, duration: 0.5 }, '-=0.1');
 
 // ─── CASE STUDY HERO ANIMATION ─────────────────────────
-let caseHeroTl;
-if (document.querySelector('.case-hero')) {
-  caseHeroTl = gsap.timeline({ delay: 0.2, paused: true });
+  if (document.querySelector('.case-hero')) {
+    caseHeroTl = gsap.timeline({ delay: 0.2, paused: true });
 
   let caseTitleSplit;
   if (typeof SplitType !== 'undefined' && document.querySelector('.case-hero__title')) {
@@ -173,6 +217,8 @@ gsap.utils.toArray('.case-panel, .case-prose, .case-cta-bar').forEach((el, i) =>
   });
 });
 
+} // <--- END initPage()
+
 // ─── NAV SCROLL ────────────────────────────────────────
 const nav = document.getElementById('nav');
 const backToTop = document.getElementById('backToTop');
@@ -218,113 +264,6 @@ if (hamburger && navLinks) {
   });
 }
 
-// ─── SEAMLESS PAGE TRANSITIONS ─────────────────────────
-window.navigateWithShutter = function(href, e) {
-  sessionStorage.setItem('internalLoad', 'true');
-  
-  if (typeof gsap !== 'undefined') {
-    let sourceEl = null;
-
-    if (e && e.currentTarget) {
-      // Find if we clicked anything inside a project card
-      const card = e.currentTarget.closest('.project-card');
-      if (card) {
-        sourceEl = card.querySelector('.project-card__img-wrap');
-      }
-    }
-
-    if (sourceEl) {
-      // EXPANDING CARD TRANSITION
-      const rect = sourceEl.getBoundingClientRect();
-      const style = window.getComputedStyle(sourceEl);
-      
-      const expander = document.createElement('div');
-      expander.style.position = 'fixed';
-      expander.style.top = rect.top + 'px';
-      expander.style.left = rect.left + 'px';
-      expander.style.width = rect.width + 'px';
-      expander.style.height = rect.height + 'px';
-      expander.style.backgroundImage = style.backgroundImage;
-      expander.style.backgroundColor = style.backgroundColor;
-      expander.style.backgroundSize = style.backgroundSize || 'cover';
-      expander.style.backgroundPosition = style.backgroundPosition || 'center';
-      expander.style.borderRadius = style.borderRadius || '20px';
-      expander.style.zIndex = '999999';
-      expander.style.overflow = 'hidden';
-      
-      sessionStorage.setItem('transitionBg', style.backgroundImage);
-      sessionStorage.setItem('transitionColor', style.backgroundColor);
-
-      sourceEl.style.opacity = '0';
-      document.body.appendChild(expander);
-
-      gsap.to(expander, {
-        top: 0, left: 0, width: '100vw', height: '100vh', borderRadius: 0,
-        duration: 0.85, ease: 'expo.inOut',
-        onComplete: () => { window.location.href = href; }
-      });
-      
-      gsap.to('.main, .nav, .footer, .contact, .hero', { opacity: 0, duration: 0.6, ease: 'power2.inOut' });
-
-    } else {
-      // STANDARD WIPING SHUTTER
-      sessionStorage.removeItem('transitionBg');
-      sessionStorage.removeItem('transitionColor');
-      
-      const shutter = document.createElement('div');
-      shutter.style.position = 'fixed';
-      shutter.style.top = '0';
-      shutter.style.left = '0';
-      shutter.style.width = '100vw';
-      shutter.style.height = '100vh';
-      shutter.style.backgroundColor = '#020205';
-      shutter.style.zIndex = '999999';
-      shutter.style.transform = 'translateY(100%)';
-      document.body.appendChild(shutter);
-      
-      gsap.to(shutter, {
-        y: '0%', duration: 0.7, ease: 'expo.inOut',
-        onComplete: () => { window.location.href = href; }
-      });
-    }
-  } else {
-    window.location.href = href;
-  }
-};
-
-document.querySelectorAll('a').forEach(anchor => {
-  if (anchor.host !== window.location.host && anchor.host !== '') return; // Catch local files smoothly
-  if (anchor.getAttribute('target') === '_blank') return;
-  
-  const href = anchor.getAttribute('href');
-  if (!href || href.startsWith('mailto:') || href.startsWith('tel:')) return;
-  
-  const isSamePageHash = 
-    href.startsWith('#') || 
-    (href.includes('index.html#') && (window.location.pathname.endsWith('index.html') || window.location.pathname === '/'));
-    
-  if (isSamePageHash) return; 
-  
-  anchor.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.navigateWithShutter(href, e);
-  });
-});
-
-// Intercept completely inline JS routing from project cards
-document.querySelectorAll('[onclick]').forEach(el => {
-  const script = el.getAttribute('onclick');
-  if (script && script.includes('window.location.href')) {
-    const match = script.match(/window\.location\.href\s*=\s*['"]([^'"]+)['"]/);
-    if (match && match[1]) {
-      el.removeAttribute('onclick'); 
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.navigateWithShutter(match[1], e);
-      });
-    }
-  }
-});
 // ─── ACTIVE NAV LINK ───────────────────────────────────
 function updateActiveNavLink() {
   const sections = document.querySelectorAll('section[id], header[id]');
@@ -395,8 +334,14 @@ if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
   });
 }
 
+// ─── DYNAMIC INTERACTABLES INIT ────────────────────────
+function initPage2() {
+
 // ─── MAGNETIC BUTTONS ──────────────────────────────────
 document.querySelectorAll('.btn, .social-icon, .nav__link').forEach(btn => {
+  if (btn.dataset.magBound) return;
+  btn.dataset.magBound = 'true';
+  
   let magRafId = null;
   let mx = 0, my = 0;
   let isMagHovered = false;
@@ -433,6 +378,9 @@ document.querySelectorAll('.btn, .social-icon, .nav__link').forEach(btn => {
 
 // ─── SPOTLIGHT CARDS ───────────────────────────────────
 document.querySelectorAll('.project-card, .skill-card, .case-panel, .stat-card').forEach(card => {
+  if (card.dataset.spotBound) return;
+  card.dataset.spotBound = 'true';
+  
   let spotlightRafId = null;
   let mx = 0, my = 0;
   let isSpotHovered = false;
@@ -460,7 +408,8 @@ document.querySelectorAll('.project-card, .skill-card, .case-panel, .stat-card')
 
 // ─── TYPED ROLE EFFECT ─────────────────────────────────
 if (typeof Typed !== 'undefined' && document.getElementById('typedRole')) {
-  new Typed('#typedRole', {
+  if (window.typedInstance) window.typedInstance.destroy();
+  window.typedInstance = new Typed('#typedRole', {
     strings: [
       'Software Engineer',
       'Backend & .NET Developer',
@@ -480,33 +429,18 @@ if (typeof Typed !== 'undefined' && document.getElementById('typedRole')) {
 }
 
 // ─── 3D BACKGROUNDS (VANTA.JS) ─────────────────────────
-if (typeof VANTA !== 'undefined') {
-  const vantaConfigs = [
-    {
-      id: 'vanta-bg',
-      color: 0x7c3aed, // Brand primary
-      backgroundColor: 0x0f0f16,
-      points: 12.0, maxDistance: 22.0, spacing: 16.0
-    },
-    {
-      id: 'vanta-bg-case',
-      color: 0x14b8a6, // Teal for cases
-      backgroundColor: 0x08080c,
-      points: 10.0, maxDistance: 24.0, spacing: 18.0
-    },
-    {
-      id: 'vanta-bg-contact',
-      color: 0xa855f7, // Violet for contact
-      backgroundColor: 0x0f0f16,
-      points: 9.0, maxDistance: 25.0, spacing: 20.0
-    }
-  ];
+const vantaConfigs = [
+  { id: 'vanta-bg', color: 0x7c3aed, backgroundColor: 0x0f0f16, points: 12.0, maxDistance: 22.0, spacing: 16.0 },
+  { id: 'vanta-bg-case', color: 0x14b8a6, backgroundColor: 0x08080c, points: 10.0, maxDistance: 24.0, spacing: 18.0 },
+  { id: 'vanta-bg-contact', color: 0xa855f7, backgroundColor: 0x0f0f16, points: 9.0, maxDistance: 25.0, spacing: 20.0 }
+];
 
-  const vantaObserver = new IntersectionObserver((entries) => {
+let vantaObserver;
+if (typeof VANTA !== 'undefined') {
+  vantaObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const config = vantaConfigs.find(c => c.id === entry.target.id);
       if (!config) return;
-      
       if (entry.isIntersecting) {
         if (!entry.target.vantaEffect) {
           entry.target.vantaEffect = VANTA.NET({
@@ -526,35 +460,43 @@ if (typeof VANTA !== 'undefined') {
       }
     });
   }, { rootMargin: '100px 0px' });
-
-  vantaConfigs.forEach(config => {
-    const el = document.getElementById(config.id);
-    if (el) vantaObserver.observe(el);
-  });
 }
 
 // ─── SCROLL SPY NAVIGATION ─────────────────────────────
-const spySections = document.querySelectorAll('section[id]');
+let spyObserver;
 const spyNavLinks = document.querySelectorAll('.nav__links .nav__link');
-
-if (spySections.length > 0 && spyNavLinks.length > 0) {
-  const spyObserver = new IntersectionObserver((entries) => {
+if (typeof IntersectionObserver !== 'undefined') {
+  spyObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const id = entry.target.getAttribute('id');
         spyNavLinks.forEach(link => {
           link.classList.remove('active');
           const href = link.getAttribute('href');
-          if (href === `#${id}` || href === `index.html#${id}`) {
-            link.classList.add('active');
-          }
+          if (href === `#${id}` || href === `index.html#${id}`) link.classList.add('active');
         });
       }
     });
   }, { rootMargin: '-20% 0px -70% 0px' });
-
-  spySections.forEach(sec => spyObserver.observe(sec));
 }
+
+// ─── STATS OBSERVER ────────────────────────────────────
+let statsObserver;
+if (typeof IntersectionObserver !== 'undefined') {
+  statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.stat-card__num').forEach(num => {
+          const text = num.textContent.trim();
+          const match = text.match(/^(\d+)(.*)$/);
+          if (match) animateCounter(num, parseInt(match[1]), match[2]);
+        });
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+}
+
 
 // ─── IMAGE PARALLAX ────────────────────────────────────
 if (typeof gsap !== 'undefined') {
@@ -575,46 +517,7 @@ if (typeof gsap !== 'undefined') {
   });
 }
 
-// ─── SEAMLESS PAGE TRANSITIONS ─────────────────────────
-document.querySelectorAll('a').forEach(anchor => {
-  if (anchor.host !== window.location.host) return; // Ignore external links
-  if (anchor.getAttribute('target') === '_blank') return;
-  
-  const href = anchor.getAttribute('href');
-  if (!href || href.startsWith('mailto:') || href.startsWith('tel:')) return;
-  
-  // Only ignore hash navigation if we are ALREADY on the target page
-  const isSamePageHash = 
-    href.startsWith('#') || 
-    (href.includes('index.html#') && (window.location.pathname.endsWith('index.html') || window.location.pathname === '/'));
-    
-  if (isSamePageHash) return; // Let browser/Lenis handle anchor scrolling
-  
-  anchor.addEventListener('click', (e) => {
-    e.preventDefault();
-    sessionStorage.setItem('internalNav', 'true');
-    
-    if (typeof gsap !== 'undefined') {
-      const shutter = document.createElement('div');
-      shutter.style.position = 'fixed';
-      shutter.style.top = '0';
-      shutter.style.left = '0';
-      shutter.style.width = '100vw';
-      shutter.style.height = '100vh';
-      shutter.style.backgroundColor = '#020205';
-      shutter.style.zIndex = '999999';
-      shutter.style.transform = 'translateY(100%)';
-      document.body.appendChild(shutter);
-      
-      gsap.to(shutter, {
-        y: '0%', duration: 0.6, ease: 'power3.inOut',
-        onComplete: () => { window.location.href = href; }
-      });
-    } else {
-      window.location.href = href;
-    }
-  });
-});
+
 
 
 // ─── SKILL BAR ANIMATION ───────────────────────────────
@@ -659,60 +562,48 @@ if (contactForm && formSuccess) {
   });
 }
 
-// ─── SMOOTH ANCHOR SCROLL ──────────────────────────────
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', (e) => {
-    const target = document.querySelector(anchor.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      const navH = parseInt(getComputedStyle(document.documentElement)
-        .getPropertyValue('--nav-h'));
-      lenis.scrollTo(target, { offset: -navH, duration: 1.4 });
-    }
-  });
-});
-
-// ─── PROJECT CARD TILT ─────────────────────────────────
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-if (!prefersReducedMotion.matches) {
-  document.querySelectorAll('.project-card').forEach(card => {
-    let rafId = null;
-    let mx = 0, my = 0;
-    let isHovering = false;
-
-    card.addEventListener('mouseenter', () => {
-      isHovering = true;
-      card.style.transition = 'none';
-      card.style.willChange = 'transform';
-    });
-
-    card.addEventListener('mousemove', (e) => {
-      mx = e.clientX;
-      my = e.clientY;
-      if (!rafId) {
-        rafId = requestAnimationFrame(function updateTilt() {
-          if (!isHovering) {
-            rafId = null;
-            return;
+// Custom Global Hash Routing Strategy
+if (typeof Swup !== 'undefined') {
+  document.querySelectorAll('a').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const href = anchor.getAttribute('href');
+      if (!href) return;
+      
+      const hashIndex = href.indexOf('#');
+      if (hashIndex !== -1) {
+        // Exclude external links immediately if target is _blank
+        if (anchor.getAttribute('target') === '_blank') return;
+        
+        const hash = href.substring(hashIndex);
+        const isHome = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
+        
+        // If the hash is ONLY #home, #about, etc. or index.html#about
+        if (href.startsWith('#') || href.startsWith('index.html#')) {
+          e.preventDefault();
+          
+          if (isHome) {
+            // We are already on Home. Smooth scroll to the section.
+            const target = document.querySelector(hash);
+            if (target && typeof lenis !== 'undefined') {
+              const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
+              lenis.scrollTo(target, { offset: -navH, duration: 1.4 });
+            }
+          } else {
+            // We are on a project page trying to access a home section. Fire Swup to navigate there.
+            if (typeof swup !== 'undefined') {
+              swup.navigate('index.html' + hash);
+            } else {
+              window.location.href = 'index.html' + hash;
+            }
           }
-          const rect = card.getBoundingClientRect();
-          const x = ((mx - rect.left) / rect.width - 0.5) * 6;
-          const y = ((my - rect.top) / rect.height - 0.5) * -6;
-          card.style.transform = `perspective(1000px) translateY(-4px) rotateX(${y}deg) rotateY(${x}deg)`;
-          rafId = requestAnimationFrame(updateTilt);
-        });
+        }
       }
-    });
-
-    card.addEventListener('mouseleave', () => {
-      isHovering = false;
-      card.style.willChange = 'auto';
-      card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
-      card.style.transform = 'perspective(1000px) translateY(0) rotateX(0deg) rotateY(0deg)';
     });
   });
 }
+
+// ─── PROJECT CARD TILT ─────────────────────────────────
+// (Project Card 3D Tilt removed to resolve severe FPS drop and stuttering)
 
 // ─── COUNTER ANIMATION (STAT CARDS) ────────────────────
 function animateCounter(el, target, suffix = '') {
@@ -733,21 +624,42 @@ function animateCounter(el, target, suffix = '') {
   requestAnimationFrame(step);
 }
 
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.querySelectorAll('.stat-card__num').forEach(num => {
-        const text = num.textContent.trim();
-        const match = text.match(/^(\d+)(.*)$/);
-        if (match) {
-          animateCounter(num, parseInt(match[1]), match[2]);
-        }
-      });
-      statsObserver.unobserve(entry.target);
+  // Re-observe elements for the new DOM
+  vantaConfigs.forEach(config => {
+    const el = document.getElementById(config.id);
+    if (el && vantaObserver) vantaObserver.observe(el);
+  });
+
+  const spySections = document.querySelectorAll('section[id]');
+  if (spySections.length > 0 && spyObserver) {
+    spySections.forEach(sec => spyObserver.observe(sec));
+  }
+
+  const statsSection = document.querySelector('.about__stats');
+  if (statsSection && statsObserver) statsObserver.observe(statsSection);
+
+
+  // Intercept inline JS routing from project cards and pass directly to Swup
+  document.querySelectorAll('[onclick]').forEach(el => {
+    const script = el.getAttribute('onclick');
+    if (script && script.includes('window.location.href')) {
+      const match = script.match(/window\.location\.href\s*=\s*['"]([^'"]+)['"]/);
+      if (match && match[1]) {
+        el.removeAttribute('onclick'); 
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (typeof swup !== 'undefined') swup.navigate(match[1]);
+          else window.location.href = match[1];
+        });
+      }
     }
   });
-}, { threshold: 0.3 });
 
-const statsSection = document.querySelector('.about__stats');
-if (statsSection) statsObserver.observe(statsSection);
+  // Recalculate heights for the new DOM content
+  if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
 
+} // <--- END initPage2()
+
+// Call initialization immediately on the first hard-load
+initPage();
+initPage2();
