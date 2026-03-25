@@ -111,15 +111,23 @@ if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
   }
   animateCursor();
 
-  document.querySelectorAll('a, button, .project-card, .skill-group, .edu-card, .case-panel').forEach(el => {
-    el.addEventListener('mouseenter', () => {
+  const interactableSelector = 'a, button, .project-card, .skill-group, .edu-card, .case-panel';
+  
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest(interactableSelector)) {
       cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.8)';
       cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.8)';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
-      cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.5)';
-    });
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    const parentContainer = e.target.closest(interactableSelector);
+    if (parentContainer) {
+      if (!e.relatedTarget || !parentContainer.contains(e.relatedTarget)) {
+        cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.5)';
+      }
+    }
   });
 }
 
@@ -127,7 +135,7 @@ if (cursor && cursorFollower && window.matchMedia("(pointer: fine)").matches) {
 const roles = [
   'Software Engineer',
   'Backend & .NET Developer',
-  'Full-Stack Collaborator',
+  'Full-Stack Developer',
   'Game Developer',
   'Unity & Interactive Systems',
   'Games Educator & Lecturer'
