@@ -51,3 +51,9 @@
   from { width: 0; }
   to   { width: 100%; }
 }
+
+/* Bypass rendering for seamless transitions */
+html.is-internal .loader__logo,
+html.is-internal .loader__bar {
+  display: none !important;
+}

@@ -6,12 +6,35 @@
 window.addEventListener('load', () => {
   const loader = document.getElementById('loader');
   if (loader) {
+    const isInternal = sessionStorage.getItem('internalLoad') === 'true';
+    const delay = isInternal ? 50 : 1000;
+
+    if (isInternal) {
+      sessionStorage.removeItem('internalLoad');
+    } else {
+      const loaderText = loader.querySelector('.loader__text');
+      if (loaderText && typeof gsap !== 'undefined') {
+        const counter = { val: 0 };
+        gsap.to(counter, {
+          val: 100,
+          duration: 0.9,
+          ease: 'power2.out',
+          onUpdate: () => { loaderText.innerText = Math.round(counter.val) + '%'; }
+        });
+      }
+    }
+
     setTimeout(() => {
       loader.classList.add('hidden');
-      // Start GSAP animations after loader is gone
+      
+      const tCurtain = document.getElementById('t-curtain');
+      if (tCurtain && typeof gsap !== 'undefined') {
+        gsap.to(tCurtain, { opacity: 0, duration: 0.8, ease: 'power2.inOut', onComplete: () => tCurtain.remove() });
+      }
+
       if (typeof heroTl !== 'undefined') heroTl.play();
       if (typeof caseHeroTl !== 'undefined') caseHeroTl.play();
-    }, 1000);
+    }, delay);
   }
 });
 
@@ -195,6 +218,113 @@ if (hamburger && navLinks) {
   });
 }
 
+// ─── SEAMLESS PAGE TRANSITIONS ─────────────────────────
+window.navigateWithShutter = function(href, e) {
+  sessionStorage.setItem('internalLoad', 'true');
+  
+  if (typeof gsap !== 'undefined') {
+    let sourceEl = null;
+
+    if (e && e.currentTarget) {
+      // Find if we clicked anything inside a project card
+      const card = e.currentTarget.closest('.project-card');
+      if (card) {
+        sourceEl = card.querySelector('.project-card__img-wrap');
+      }
+    }
+
+    if (sourceEl) {
+      // EXPANDING CARD TRANSITION
+      const rect = sourceEl.getBoundingClientRect();
+      const style = window.getComputedStyle(sourceEl);
+      
+      const expander = document.createElement('div');
+      expander.style.position = 'fixed';
+      expander.style.top = rect.top + 'px';
+      expander.style.left = rect.left + 'px';
+      expander.style.width = rect.width + 'px';
+      expander.style.height = rect.height + 'px';
+      expander.style.backgroundImage = style.backgroundImage;
+      expander.style.backgroundColor = style.backgroundColor;
+      expander.style.backgroundSize = style.backgroundSize || 'cover';
+      expander.style.backgroundPosition = style.backgroundPosition || 'center';
+      expander.style.borderRadius = style.borderRadius || '20px';
+      expander.style.zIndex = '999999';
+      expander.style.overflow = 'hidden';
+      
+      sessionStorage.setItem('transitionBg', style.backgroundImage);
+      sessionStorage.setItem('transitionColor', style.backgroundColor);
+
+      sourceEl.style.opacity = '0';
+      document.body.appendChild(expander);
+
+      gsap.to(expander, {
+        top: 0, left: 0, width: '100vw', height: '100vh', borderRadius: 0,
+        duration: 0.85, ease: 'expo.inOut',
+        onComplete: () => { window.location.href = href; }
+      });
+      
+      gsap.to('.main, .nav, .footer, .contact, .hero', { opacity: 0, duration: 0.6, ease: 'power2.inOut' });
+
+    } else {
+      // STANDARD WIPING SHUTTER
+      sessionStorage.removeItem('transitionBg');
+      sessionStorage.removeItem('transitionColor');
+      
+      const shutter = document.createElement('div');
+      shutter.style.position = 'fixed';
+      shutter.style.top = '0';
+      shutter.style.left = '0';
+      shutter.style.width = '100vw';
+      shutter.style.height = '100vh';
+      shutter.style.backgroundColor = '#020205';
+      shutter.style.zIndex = '999999';
+      shutter.style.transform = 'translateY(100%)';
+      document.body.appendChild(shutter);
+      
+      gsap.to(shutter, {
+        y: '0%', duration: 0.7, ease: 'expo.inOut',
+        onComplete: () => { window.location.href = href; }
+      });
+    }
+  } else {
+    window.location.href = href;
+  }
+};
+
+document.querySelectorAll('a').forEach(anchor => {
+  if (anchor.host !== window.location.host && anchor.host !== '') return; // Catch local files smoothly
+  if (anchor.getAttribute('target') === '_blank') return;
+  
+  const href = anchor.getAttribute('href');
+  if (!href || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+  
+  const isSamePageHash = 
+    href.startsWith('#') || 
+    (href.includes('index.html#') && (window.location.pathname.endsWith('index.html') || window.location.pathname === '/'));
+    
+  if (isSamePageHash) return; 
+  
+  anchor.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.navigateWithShutter(href, e);
+  });
+});
+
+// Intercept completely inline JS routing from project cards
+document.querySelectorAll('[onclick]').forEach(el => {
+  const script = el.getAttribute('onclick');
+  if (script && script.includes('window.location.href')) {
+    const match = script.match(/window\.location\.href\s*=\s*['"]([^'"]+)['"]/);
+    if (match && match[1]) {
+      el.removeAttribute('onclick'); 
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.navigateWithShutter(match[1], e);
+      });
+    }
+  }
+});
 // ─── ACTIVE NAV LINK ───────────────────────────────────
 function updateActiveNavLink() {
   const sections = document.querySelectorAll('section[id], header[id]');
@@ -451,19 +581,35 @@ document.querySelectorAll('a').forEach(anchor => {
   if (anchor.getAttribute('target') === '_blank') return;
   
   const href = anchor.getAttribute('href');
-  if (!href || href.startsWith('#') || href.includes('index.html#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+  if (!href || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+  
+  // Only ignore hash navigation if we are ALREADY on the target page
+  const isSamePageHash = 
+    href.startsWith('#') || 
+    (href.includes('index.html#') && (window.location.pathname.endsWith('index.html') || window.location.pathname === '/'));
+    
+  if (isSamePageHash) return; // Let browser/Lenis handle anchor scrolling
   
   anchor.addEventListener('click', (e) => {
     e.preventDefault();
-    const loader = document.getElementById('loader');
-    if (loader) {
-      loader.classList.remove('hidden');
-      // Force repaint to ensure transition triggers
-      void loader.offsetWidth;
-      loader.style.opacity = '1';
-      setTimeout(() => {
-        window.location.href = href;
-      }, 500); // Matches the pre-loader CSS transition time
+    sessionStorage.setItem('internalNav', 'true');
+    
+    if (typeof gsap !== 'undefined') {
+      const shutter = document.createElement('div');
+      shutter.style.position = 'fixed';
+      shutter.style.top = '0';
+      shutter.style.left = '0';
+      shutter.style.width = '100vw';
+      shutter.style.height = '100vh';
+      shutter.style.backgroundColor = '#020205';
+      shutter.style.zIndex = '999999';
+      shutter.style.transform = 'translateY(100%)';
+      document.body.appendChild(shutter);
+      
+      gsap.to(shutter, {
+        y: '0%', duration: 0.6, ease: 'power3.inOut',
+        onComplete: () => { window.location.href = href; }
+      });
     } else {
       window.location.href = href;
     }

@@ -7,6 +7,16 @@
   <meta name="description" content="Case study: The development, design, and accessibility considerations behind this responsive, dark-themed personal portfolio website." />
 
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script>
+    if(sessionStorage.getItem('internalLoad')==='true'){
+      document.documentElement.classList.add('is-internal');
+      var bg = sessionStorage.getItem('transitionBg');
+      var color = sessionStorage.getItem('transitionColor');
+      if(bg || color) {
+        document.write('<div id="t-curtain" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999999;background-color:'+(color||'transparent')+';background-image:'+(bg||'none')+';background-size:cover;background-position:center;"></div>');
+      }
+    }
+  </script>
   <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
   <link rel="stylesheet" href="css/vendor/aos.css" />
   <link rel="stylesheet" href="css/style.css" />
