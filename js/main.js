@@ -329,11 +329,13 @@ if (!prefersReducedMotion.matches) {
 // ─── COUNTER ANIMATION (STAT CARDS) ────────────────────
 function animateCounter(el, target, suffix = '') {
   let start = 0;
-  const duration = 1200;
+  // Dynamic duration: finish small numbers faster so they don't 'hang' and stutter
+  const duration = target < 20 ? 800 : 1500; 
   const step = (timestamp) => {
     if (!start) start = timestamp;
     const progress = Math.min((timestamp - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
+    // Quartic ease-out for a much smoother deceleration curve
+    const eased = 1 - Math.pow(1 - progress, 4); 
     if (typeof target === 'number') {
       el.textContent = Math.floor(eased * target) + suffix;
     }

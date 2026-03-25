@@ -19,12 +19,17 @@ A static, dark-themed personal site for **Shivam Parab** — **Software Engineer
 
 ## File structure
 
-```
-index.html           Main portfolio (all sections)
-secure-banking.html  Case study: Secure Banking Authentication System
-css/style.css        Stylesheet (includes project detail layout)
-js/main.js           Shared interactions (safe on subpages)
-README.md            This file
+```text
+index.html                  Main portfolio
+secure-banking.html         Case study: Secure Banking Auth
+portfolio-case-study.html   Case study: Personal Portfolio
+css/style.css               Main stylesheet orchestrator
+css/components/             CSS layouts and feature styles
+css/base/                   CSS global resets and variables
+css/vendor/                 Local CSS dependencies (AOS, FontAwesome)
+js/main.js                  Shared interactions
+js/vendor/                  Local JS dependencies (AOS)
+README.md                   This file
 ```
 
 ## Run locally
