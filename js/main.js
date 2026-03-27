@@ -529,27 +529,53 @@ if (typeof gsap !== 'undefined') {
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
+// Temporarily disabled AJAX interceptor.
+// FormSubmit requires the VERY FIRST submission to go through standard native HTML POST
+// so it can serve its mandatory CAPTCHA and explicitly send the Activation Email.
+// Once activated, we can uncomment this to restore the seamless AJAX UI.
+/*
 if (contactForm && formSuccess) {
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const btn = contactForm.querySelector('button[type="submit"]');
+    const originalText = btn.innerHTML;
+    
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
-    setTimeout(() => {
+    const formData = new FormData(contactForm);
+
+    fetch('https://formsubmit.co/ajax/parabshivam@gmail.com', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
       btn.innerHTML = '<span>Message Sent!</span> <i class="fas fa-check"></i>';
       btn.style.background = 'var(--success)';
+      
+      formSuccess.querySelector('span').innerHTML = 'Message sent securely via FormSubmit. I will get back to you soon!';
       formSuccess.classList.add('visible');
       contactForm.reset();
 
       setTimeout(() => {
         btn.disabled = false;
-        btn.innerHTML = '<span>Send Message</span> <i class="fas fa-paper-plane"></i>';
+        btn.innerHTML = originalText;
+        btn.style.background = '';
+      }, 5000);
+    })
+    .catch(error => {
+      btn.innerHTML = '<span>Error Sending</span> <i class="fas fa-times"></i>';
+      btn.style.background = '#e53e3e';
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
         btn.style.background = '';
       }, 4000);
-    }, 900);
+    });
   });
 }
+*/
 
 // Custom Global Hash Routing Strategy
 if (typeof Swup !== 'undefined') {
