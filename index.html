@@ -349,14 +349,14 @@
           <div class="project-card__body">
             <span class="project-card__number">02</span>
             <h3 class="project-card__title">Personal Portfolio Website</h3>
-            <p class="project-card__sub">HTML5 · CSS3 · Vanilla JS · Performance &amp; Accessibility</p>
+            <p class="project-card__sub">Swup.js · GSAP · WebGL · SPA Architecture</p>
             <p class="project-card__desc">
-              The meticulously crafted personal portfolio you are currently viewing. Built entirely without heavy frontend frameworks to guarantee maximum visual fidelity, completely custom styling tokens, and perfect loading performance. Engineered with a unified deep neon aesthetic and strict WCAG tracking.
+              The meticulously crafted personal portfolio you are currently viewing. Engineered as a seamless <strong>Single Page Application (SPA)</strong> to guarantee zero layout shift, continuous WebGL backgrounds, and instant page transitions using a custom JavaScript architecture and Swup.js routing.
             </p>
             <ul class="project-card__bullets">
-              <li><i class="fas fa-check-circle"></i> Custom Canvas particle matrix &amp; 3D card tilt features</li>
-              <li><i class="fas fa-check-circle"></i> System-level respects for prefers-reduced-motion APIs</li>
-              <li><i class="fas fa-check-circle"></i> High-performance CSS architectures &amp; accessibility audits</li>
+              <li><i class="fas fa-check-circle"></i> High-performance SPA routing & cinematic crossfades</li>
+              <li><i class="fas fa-check-circle"></i> Custom Canvas particle matrix (WebGL)</li>
+              <li><i class="fas fa-check-circle"></i> UI Singleton architecture for optimized memory management</li>
             </ul>
             <div class="project-card__links">
               <a href="portfolio-case-study.html" class="btn btn--sm btn--primary">
@@ -371,7 +371,7 @@
 
         <!-- Project 3: Theatre Seat Reservation -->
         <article class="project-card">
-          <div class="project-card__media">
+          <a class="project-card__media" href="theatre-booking.html">
             <div class="project-card__img-wrap project-card__img-wrap--p-theatre">
               <div class="project-card__icon"><i class="fas fa-masks-theater"></i></div>
             </div>
@@ -380,7 +380,7 @@
               <span class="tag tag--sm">Full-Stack</span>
               <span class="tag tag--sm">SQL</span>
             </div>
-          </div>
+          </a>
           <div class="project-card__body">
             <span class="project-card__number">03</span>
             <h3 class="project-card__title">Theatre Seat Reservation System</h3>
@@ -392,15 +392,21 @@
             </p>
             <ul class="project-card__bullets">
               <li><i class="fas fa-check-circle"></i> Relational schema &amp; data modelling</li>
-              <li><i class="fas fa-check-circle"></i> End-to-end booking UX and validation</li>
-              <li><i class="fas fa-check-circle"></i> Simulated transactional integrity</li>
             </ul>
+            <div class="project-card__links">
+              <a href="theatre-booking.html" class="btn btn--sm btn--primary">
+                <i class="fas fa-book-open"></i> Case study
+              </a>
+              <a href="https://github.com/Shivam361/theatre-booking" target="_blank" rel="noopener" class="btn btn--sm btn--outline">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </div>
           </div>
         </article>
 
-        <!-- Project 3: DevQuest Dissertation -->
+        <!-- Project 4: DevQuest Dissertation -->
         <article class="project-card project-card--research">
-          <div class="project-card__media">
+          <a class="project-card__media" href="devquest.html">
             <div class="project-card__img-wrap project-card__img-wrap--p4">
               <div class="project-card__icon"><i class="fas fa-brain"></i></div>
             </div>
@@ -409,11 +415,11 @@
               <span class="tag tag--sm">Unity</span>
               <span class="tag tag--sm">ML-Agents</span>
             </div>
-          </div>
+          </a>
           <div class="project-card__body">
             <span class="project-card__number">04</span>
             <h3 class="project-card__title">DevQuest — Adaptive Learning &amp; Gamification</h3>
-            <p class="project-card__sub">MSc dissertation · AI × education × engagement</p>
+            <p class="project-card__sub">MSc Computer Science Dissertation · 2024</p>
             <p class="project-card__desc">
               Explores the integration of <strong>AI</strong> and <strong>gamification in education</strong> through a
               <strong>Unity</strong>-based adaptive learning system powered by <strong>ML-Agents</strong>. Combines software
@@ -424,39 +430,54 @@
               <li><i class="fas fa-check-circle"></i> Gamified progression &amp; motivational design</li>
               <li><i class="fas fa-check-circle"></i> Bridges intelligent systems with robust application architecture</li>
             </ul>
+            <div class="project-card__links">
+              <a href="devquest.html" class="btn btn--sm btn--primary">
+                <i class="fas fa-book-open"></i> Case study
+              </a>
+              <a href="#" class="btn btn--sm btn--outline">
+                <i class="fab fa-github"></i> Paper
+              </a>
+            </div>
           </div>
         </article>
 
-        <!-- Project 4: Monster Slayer -->
+        <!-- Project 5: Unity 2D Platformer -->
         <article class="project-card">
-          <div class="project-card__media">
+          <a class="project-card__media" href="monster-slayer.html">
             <div class="project-card__img-wrap project-card__img-wrap--p1">
-              <div class="project-card__icon"><i class="fas fa-khanda"></i></div>
+              <div class="project-card__icon"><i class="fas fa-ghost"></i></div>
             </div>
             <div class="project-card__tags">
               <span class="tag tag--sm">Solo Project</span>
               <span class="tag tag--sm">Unity</span>
               <span class="tag tag--sm">C#</span>
+              <span class="tag tag--sm">Game Dev</span>
             </div>
-          </div>
+          </a>
           <div class="project-card__body">
             <span class="project-card__number">05</span>
-            <h3 class="project-card__title">Monster Slayer</h3>
-            <p class="project-card__sub">2D Hack n' Slash Platformer · Game Programmer &amp; Designer</p>
+            <h3 class="project-card__title">Monster Slayer 2D</h3>
+            <p class="project-card__sub">Unity 2D Platformer · Procedural Generation</p>
             <p class="project-card__desc">
-              A challenging 2D platformer requiring players to defeat all enemies and bosses to progress through levels.
-              Features distinct themes, enemy varieties, obstacle courses, and strategic pick-up systems. Developed entirely
-              solo — designed the levels, coded the combat system, and balanced gameplay difficulty.
+              A high-adrenaline 2D platformer engineered in Unity. Focused on creating tight, responsive character controller physics, optimized state machines for varied enemy AI, and complex level design requiring players to master dynamic attack strategies.
             </p>
             <ul class="project-card__bullets">
-              <li><i class="fas fa-check-circle"></i> Custom AI enemy pathfinding</li>
-              <li><i class="fas fa-check-circle"></i> Multiple boss encounter designs</li>
-              <li><i class="fas fa-check-circle"></i> Animated combat system with combo attacks</li>
+              <li><i class="fas fa-check-circle"></i> Custom physics and collision detection</li>
+              <li><i class="fas fa-check-circle"></i> State-machine driven enemy AI routines</li>
+              <li><i class="fas fa-check-circle"></i> Dynamic attack and resource inventory systems</li>
             </ul>
+            <div class="project-card__links">
+              <a href="monster-slayer.html" class="btn btn--sm btn--primary">
+                <i class="fas fa-book-open"></i> Case study
+              </a>
+              <a href="https://github.com/Shivam361/" target="_blank" rel="noopener" class="btn btn--sm btn--outline">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </div>
           </div>
         </article>
 
-        <!-- Project 5: Samsara - Leech Blade -->
+        <!-- Project 6: Samsara - Leech Blade -->
         <article class="project-card">
           <div class="project-card__media" onclick="window.open('https://store.steampowered.com/app/2065700/Samsara_Spell/', '_blank')" style="cursor: pointer;">
             <div class="project-card__img-wrap project-card__img-wrap--p2">
@@ -490,9 +511,9 @@
           </div>
         </article>
 
-        <!-- Project 6: Rogue-like Dungeon Crawler -->
+        <!-- Project 7: Rogue-like Dungeon Crawler -->
         <article class="project-card">
-          <div class="project-card__media">
+          <a class="project-card__media" href="soulitude.html">
             <div class="project-card__img-wrap project-card__img-wrap--p3">
               <div class="project-card__icon"><i class="fas fa-dungeon"></i></div>
             </div>
@@ -501,21 +522,27 @@
               <span class="tag tag--sm">Unreal Engine</span>
               <span class="tag tag--sm">UI Programming</span>
             </div>
-          </div>
+          </a>
           <div class="project-card__body">
             <span class="project-card__number">07</span>
-            <h3 class="project-card__title">Rogue-like 3D Dungeon Crawler</h3>
+            <h3 class="project-card__title">Soulitude (Rogue-like 3D)</h3>
             <p class="project-card__sub">Senior Programmer · CGD 22 Game Jam · Staffordshire University</p>
             <p class="project-card__desc">
-              Led UI programming for a collaborative game jam project made in Unreal Engine. Focused on building
-              robust HUD systems, minimap functionality, and navigation menus, while also conducting extensive
-              QA testing and design iterations.
+              Led UI programming for a collaborative game jam project made in Unreal Engine. Focused on building robust HUD systems, complex minimap functionality, and navigation menus, whilst concurrently running extensive QA testing loops and balancing design iterations.
             </p>
             <ul class="project-card__bullets">
               <li><i class="fas fa-check-circle"></i> Minimap system design &amp; implementation</li>
               <li><i class="fas fa-check-circle"></i> Full HUD &amp; menu UI programming</li>
               <li><i class="fas fa-check-circle"></i> QA testing &amp; cross-team collaboration</li>
             </ul>
+            <div class="project-card__links">
+              <a href="soulitude.html" class="btn btn--sm btn--primary">
+                <i class="fas fa-book-open"></i> Case study
+              </a>
+              <a href="https://itch.io/jam/cgd22-goty-public/rate/1561178" target="_blank" rel="noopener" class="btn btn--sm btn--outline">
+                <i class="fab fa-itch-io"></i> Itch.io
+              </a>
+            </div>
           </div>
         </article>
 
@@ -760,7 +787,12 @@
         </div>
 
         <div class="contact__form-wrap">
-          <form class="contact__form" id="contactForm" novalidate>
+          <form class="contact__form" id="contactForm" action="https://formsubmit.co/parabshivam@gmail.com" method="POST">
+            <!-- FormSubmit Meta Tags -->
+            <input type="text" name="_honey" style="display:none">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="New Inquiry from Portfolio Website!">
+
             <div class="form__group">
               <label class="form__label" for="name">Your Name</label>
               <input class="form__input" type="text" id="name" name="name" placeholder="Jane Doe" required />

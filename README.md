@@ -87,3 +87,21 @@ It can be deployed seamlessly to any static hosting provider natively:
 - Configure a canonical URL within the `<head>` to prevent SEO duplication penalties.
 - Replace the About section profile placeholder with a high-resolution portrait photograph.
 - Expand the `portfolio-case-study.html` template to support additional projects as your career progresses.
+
+## 📋 Upcoming Action Items (To-Do)
+
+Based on a holistic review of the portfolio against standard hiring requirements, the following tasks still remain:
+
+1. **My Role & Contributions**:
+   - Explicitly list my individual engineering contributions in the "Theatre Booking" and "Secure Banking" case studies to clarify team impact to recruiters.
+
+2. **Visual Proof (Case Study Media)**:
+   - Add high-quality screenshots, device mockups, or short GIFs to the case study pages to provide visual evidence of the complex CSS grids and checkout flows discussed in the text.
+
+3. **Remaining Case Studies**:
+   - Build out dedicated `.html` pages for Project 4 (**DevQuest**) and Project 5 (**Monster Slayer**), which are currently unlinked on the `index.html`.
+
+4. **Functional Gaps in `index.html`**:
+   - Integrate the **Contact Form** with a backend email service (like EmailJS or Formspree) so it actually sends messages.
+   - Point the **Download CV** button to the actual PDF file of my resume.
+   - Add **SEO / Open Graph `<meta>` Tags** for polished link previews on LinkedIn, Twitter, and Slack.

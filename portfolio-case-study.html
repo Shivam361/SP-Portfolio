@@ -7,7 +7,7 @@
   <meta name="description" content="Case study: The development, design, and accessibility considerations behind this responsive, dark-themed personal portfolio website." />
 
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-
+  <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -99,21 +99,21 @@
       </div>
       <div class="case-two-col">
         <div class="case-panel">
-          <h3 class="case-panel__title"><i class="fas fa-palette"></i> Design System</h3>
+          <h3 class="case-panel__title"><i class="fas fa-rocket"></i> SPA Architecture</h3>
           <ul>
-            <li>Unified CSS Custom Properties (Variables) architecture for seamless thematic scaling</li>
-            <li>Custom grid layouts, flexbox structures, and clamp() fluid typography</li>
-            <li>Complex overlapping CSS gradients and mesh backgrounds to simulate deep space/neon vibes</li>
-            <li>Hand-tuned text-shadows generating hardware-accelerated "neon glows"</li>
+            <li><strong>Swup.js Seamless Routing</strong> for cinematic page transitions with zero layout shift.</li>
+            <li><strong>Smart Hash Routing</strong> enabling intelligent navigation between deep-linked sections and distinct pages.</li>
+            <li><strong>UI Singleton Pattern</strong> caching persistent DOM elements to eliminate redundant queries.</li>
+            <li><strong>Lifecycle Destructors</strong> ensuring WebGL backgrounds and event listeners are safely destroyed and recreated to prevent memory leaks.</li>
           </ul>
         </div>
         <div class="case-panel">
-          <h3 class="case-panel__title"><i class="fas fa-bolt"></i> Dynamic Interactions</h3>
+          <h3 class="case-panel__title"><i class="fas fa-bolt"></i> Performance & Interactions</h3>
           <ul>
-            <li>Vanilla JavaScript HTML5 Canvas particle network optimized with `requestAnimationFrame`</li>
-            <li>3D rotational card tilt effects utilizing client mouse tracking</li>
-            <li>Custom magnetic cursor with dynamic pointer-detection to prevent mobile issues</li>
-            <li>IntersectionObserver APIs driving high-performance stat counter animations</li>
+            <li><strong>Consolidated IntersectionObservers</strong> driving scroll-spy navigation and staggered reveals without performance overhead.</li>
+            <li><strong>Vanilla JS HTML5 Canvas</strong> particle networks maintaining consistent 60FPS.</li>
+            <li>Custom magnetic cursor with dynamic <strong>pointer-detection</strong> to enhance desktop UX while preserving mobile battery life.</li>
+            <li>Render-blocking libraries (like AOS) were entirely <strong>purged</strong> in favor of native GSAP and CSS-accelerated transforms.</li>
           </ul>
         </div>
       </div>
@@ -142,7 +142,7 @@
           <tbody>
             <tr>
               <td>Vestibular Safety</td>
-              <td><code>window.matchMedia('(prefers-reduced-motion: reduce)')</code> actively disables 3D tilts and intensive animations.</td>
+              <td><code>window.matchMedia('(prefers-reduced-motion: reduce)')</code> actively disables intensive CSS/JS animations and parallax effects.</td>
             </tr>
             <tr>
               <td>WCAG Contrast</td>
@@ -171,10 +171,12 @@
       <div class="case-panel">
         <h3 class="case-panel__title"><i class="fas fa-code"></i> Build &amp; Delivery</h3>
         <ul>
-          <li><strong>HTML5</strong> Document hierarchy and semantic sectioning </li>
-          <li><strong>CSS3</strong> Advanced selectors, variable tokenization, Grid, and Animations</li>
-          <li><strong>JavaScript (ES6+)</strong> Dynamic rendering, API observers, and logic loops (0 external heavyweight JS frameworks utilized)</li>
-          <li><strong>Vercel &amp; GitHub Pages</strong> Continuous Deployment pipelines ensuring highly available static asset delivery</li>
+          <li><strong>Swup.js</strong> for true Single Page Application (SPA) routing and cinematic view transitions.</li>
+          <li><strong>Lenis & GSAP</strong> providing the foundation for custom tick loops and fluid scroll synchronization.</li>
+          <li><strong>Three.js & Vanta.js</strong> orchestrating the interactive webGL particle environments.</li>
+          <li><strong>SplitType & Typed.js</strong> for robust, accessible text manipulation and typewriting engines.</li>
+          <li><strong>Modular CSS3</strong> for highly targeted, component-scoped styling and Custom Properties tracking.</li>
+          <li><strong>Zero CDN Runtime dependencies</strong> — all assets are bundled and served locally for ultra-fast Time-to-Interactive (TTI).</li>
         </ul>
       </div>
     </div>

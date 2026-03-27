@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevQuest: Adaptive Gamification | Shivam Parab</title>
+  <meta name="description" content="Case study: DevQuest, an academic dissertation exploring adaptive gamification through Unity ML-Agents and Reinforcement Learning — by Shivam Parab." />
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="loader" id="loader">
+    <p class="loader__logo">SP<span class="accent">.</span></p>
+    <div class="loader__bar"><div class="loader__fill"></div></div>
+  </div>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__logo" aria-label="Shivam Parab portfolio home">
+      <span class="nav__logo-text">SP<span class="accent">.</span></span>
+    </a>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="index.html#about" class="nav__link">About</a></li>
+      <li><a href="index.html#skills" class="nav__link">Skills</a></li>
+      <li><a href="index.html#projects" class="nav__link">Projects</a></li>
+      <li><a href="index.html#experience" class="nav__link">Experience</a></li>
+      <li><a href="index.html#education" class="nav__link">Education</a></li>
+      <li><a href="index.html#contact" class="nav__link">Contact</a></li>
+    </ul>
+    <a href="index.html#contact" class="btn btn--nav">Hire Me</a>
+    <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main id="swup" class="transition-fade">
+
+  <header class="case-hero" id="case-home">
+    <div class="case-hero__bg" id="vanta-bg-case" aria-hidden="true"></div>
+    <div class="case-hero__grid" aria-hidden="true"></div>
+    <div class="case-hero__veil" aria-hidden="true"></div>
+    <div class="case-hero__inner">
+      <p class="case-breadcrumb">
+        <a href="index.html#projects">Projects</a> <span>/</span> Case study
+      </p>
+      <div class="case-hero__icon" aria-hidden="true">
+        <i class="fas fa-brain"></i>
+      </div>
+      <h1 class="case-hero__title">Dev<span class="accent">Quest</span></h1>
+      <p class="case-hero__lead">
+        My MSc Computer Science <strong>Dissertation</strong> exploring how <strong>adaptive difficulty scaling</strong> using <strong>Reinforcement Learning (ML-Agents)</strong> can drastically improve player retention and educational outcomes in serious learning gamification paradigms.
+      </p>
+      <div class="case-hero__actions">
+        <!-- Placeholder for actual paper link if available -->
+        <a href="#" target="_blank" rel="noopener" class="btn btn--primary">
+          <i class="fas fa-file-pdf"></i> Read Dissertation
+        </a>
+        <a href="index.html#projects" class="btn btn--outline">
+          <i class="fas fa-arrow-left"></i> All projects
+        </a>
+      </div>
+      <div class="case-meta">
+        <span class="tag tag--sm tag--research">Academic Research</span>
+        <span class="tag tag--sm">Unity & ML-Agents</span>
+        <span class="tag tag--sm">Machine Learning</span>
+        <span class="tag tag--sm">Gamification</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="section case-section" id="overview">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">The Hypothesis</p>
+        <h2 class="section__title">Overview &amp; <span class="accent">Academic Scope</span></h2>
+      </div>
+      <div class="case-prose">
+        <p>
+          [Placeholder] Provide a brief overview of the dissertation thesis. Explain the problem with static difficulty curves in educational games and how adaptive learning systems can bridge the gap in neurodivergent or varying skill-level classrooms.
+        </p>
+      </div>
+
+      <div class="case-panel" style="margin-top: 32px; border-left: 3px solid var(--neon-accent);">
+        <h3 class="case-panel__title" style="margin-bottom: 12px;"><i class="fas fa-microscope"></i> Research Focus</h3>
+        <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 16px;">
+          The study concentrated on the following execution pillars:
+        </p>
+        <ul style="margin: 0; padding-left: 1.2rem; display: grid; gap: 0.5rem;">
+          <li><strong>Agent Training:</strong> [Placeholder] Explain how the ML-Agents were trained in Unity, mentioning the neural network training environments and reward signals.</li>
+          <li><strong>Adaptive Systems:</strong> [Placeholder] Detail how the game runtime actively monitored player struggle and adjusted enemy spawn rates, health pools, or puzzle complexity automatically.</li>
+        </ul>
+      </div>
+
+      <div class="case-panel" style="margin-top: 24px;">
+        <h3 class="case-panel__title"><i class="fas fa-layer-group"></i> Core Technology Stack</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+          <ul style="margin: 0; padding-left: 1.2rem;">
+            <li><strong>Unity ML-Agents:</strong> PyTorch-backed reinforcement learning toolkit for game agents.</li>
+            <li><strong>C# Architecture:</strong> Observer patterns for data telemetry collection.</li>
+          </ul>
+          <ul style="margin: 0; padding-left: 1.2rem;">
+            <li><strong>Python Scripting:</strong> Data analysis and trajectory graphing.</li>
+            <li><strong>Academic Formatting:</strong> IEEE/Harvard standard technical writing.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section case-section--alt" id="conclusion">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">The Results</p>
+        <h2 class="section__title">Findings &amp; <span class="accent">Conclusion</span></h2>
+      </div>
+      <div class="case-two-col">
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-chart-line"></i> Quantitative Data</h3>
+          <ul>
+            <li><strong>Retention Metrics:</strong> [Placeholder] Detail the statistical improvement in player testing groups utilizing the adaptive difficulty over the control group.</li>
+          </ul>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-lightbulb"></i> Key Takeaways</h3>
+          <ul>
+            <li><strong>Future Viability:</strong> [Placeholder] Summarize the potential for applying these small-scale ML models to AAA learning or accessibility configurations.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="case-cta-bar">
+    <p>Read the full academic dissertation paper to review the methodology and mathematical findings.</p>
+    <div class="case-cta-bar__actions">
+      <!-- Placeholder link to the PDF -->
+      <a href="#" target="_blank" rel="noopener" class="btn btn--primary">
+        <i class="fas fa-file-pdf"></i> Download PDF
+      </a>
+      <a href="index.html#contact" class="btn btn--outline">
+        <i class="fas fa-envelope"></i> Contact Shivam
+      </a>
+    </div>
+  </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <a href="index.html" class="footer__logo">SP<span class="accent">.</span></a>
+        <p class="footer__copy">&copy; 2026 Shivam Parab. Crafted with passion &amp; pixels.</p>
+        <div class="footer__socials">
+          <a href="https://github.com/Shivam361" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/shivam-parab-3b747b150/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:parabshivam@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/vendor/split-type.min.js"></script>
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/vanta.net.min.js"></script>
+  <script src="js/vendor/swup.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

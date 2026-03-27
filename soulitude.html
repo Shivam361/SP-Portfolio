@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soulitude | Shivam Parab</title>
+  <meta name="description" content="Case study: Soulitude, a Rogue-like 3D dungeon crawler developed in Unreal Engine targeting robust UI mechanics and minimap arrays — by Shivam Parab." />
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="loader" id="loader">
+    <p class="loader__logo">SP<span class="accent">.</span></p>
+    <div class="loader__bar"><div class="loader__fill"></div></div>
+  </div>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__logo" aria-label="Shivam Parab portfolio home">
+      <span class="nav__logo-text">SP<span class="accent">.</span></span>
+    </a>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="index.html#about" class="nav__link">About</a></li>
+      <li><a href="index.html#skills" class="nav__link">Skills</a></li>
+      <li><a href="index.html#projects" class="nav__link">Projects</a></li>
+      <li><a href="index.html#experience" class="nav__link">Experience</a></li>
+      <li><a href="index.html#education" class="nav__link">Education</a></li>
+      <li><a href="index.html#contact" class="nav__link">Contact</a></li>
+    </ul>
+    <a href="index.html#contact" class="btn btn--nav">Hire Me</a>
+    <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main id="swup" class="transition-fade">
+
+  <header class="case-hero" id="case-home">
+    <div class="case-hero__bg" id="vanta-bg-case" aria-hidden="true"></div>
+    <div class="case-hero__grid" aria-hidden="true"></div>
+    <div class="case-hero__veil" aria-hidden="true"></div>
+    <div class="case-hero__inner">
+      <p class="case-breadcrumb">
+        <a href="index.html#projects">Projects</a> <span>/</span> Case study
+      </p>
+      <div class="case-hero__icon" aria-hidden="true">
+        <i class="fas fa-dungeon"></i>
+      </div>
+      <h1 class="case-hero__title">Soul<span class="accent">itude</span></h1>
+      <p class="case-hero__lead">
+        A <strong>Rogue-like 3D dungeon crawler</strong> engineered under tight constraints during the <strong>CGD22 Game Jam</strong>. Developed collaboratively using <strong>Unreal Engine</strong>, focusing heavily on rigorous UI programming and minimap spatial matrices.
+      </p>
+      <div class="case-hero__actions">
+        <a href="https://itch.io/jam/cgd22-goty-public/rate/1561178" target="_blank" rel="noopener" class="btn btn--primary">
+          <i class="fab fa-itch-io"></i> Rate on Itch.io
+        </a>
+        <a href="index.html#projects" class="btn btn--outline">
+          <i class="fas fa-arrow-left"></i> All projects
+        </a>
+      </div>
+      <div class="case-meta">
+        <span class="tag tag--sm">Team Project (2022)</span>
+        <span class="tag tag--sm">Unreal Engine</span>
+        <span class="tag tag--sm">UI Programming</span>
+        <span class="tag tag--sm">QA Testing</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="section case-section" id="overview">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">The Challenge</p>
+        <h2 class="section__title">Overview &amp; <span class="accent">Scope</span></h2>
+      </div>
+      <div class="case-prose">
+        <p>
+          Conceived and pushed to release during the intensive Staffordshire University CGD22 Game Jam, <strong>Soulitude</strong> tests a player's endurance as they navigate procedurally generated, rogue-like 3D dungeons. Game jams inherently challenge developers to optimize architecture immediately, preventing bloated codebases while collaborating in parallel across multi-disciplinary teams.
+        </p>
+      </div>
+
+      <div class="case-panel" style="margin-top: 32px; border-left: 3px solid var(--neon-accent);">
+        <h3 class="case-panel__title" style="margin-bottom: 12px;"><i class="fas fa-user-astronaut"></i> My Role: Senior Programmer</h3>
+        <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 16px;">
+          Operating as the Senior Programmer among a collaborative group, I took ownership of the entire <strong>UI Architecture and Quality Assurance</strong> pipelines:
+        </p>
+        <ul style="margin: 0; padding-left: 1.2rem; display: grid; gap: 0.5rem;">
+          <li><strong>Minimap Systems:</strong> Programmed real-time orthographic minimap matrices that bind actively to player positional data against the dungeon layout, providing vital navigation info without memory hemorrhage.</li>
+          <li><strong>HUD & Widget Blueprints:</strong> Engineered all User Interfaces (HUDs, Menus, health/stamina tracking bars) using Unreal Motion Graphics (UMG), ensuring multi-resolution responsiveness.</li>
+          <li><strong>QA & Iteration:</strong> Instituted rigorous, high-frequency gameplay logic integration tests to pinpoint clipping errors, logic overlaps, and UI desynchronization amidst team commits.</li>
+        </ul>
+      </div>
+
+      <div class="case-panel" style="margin-top: 24px;">
+        <h3 class="case-panel__title"><i class="fas fa-layer-group"></i> Core Technology Stack</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+          <ul style="margin: 0; padding-left: 1.2rem;">
+            <li><strong>Unreal Engine:</strong> Core engine runtime, Blueprint visual scripting logic.</li>
+            <li><strong>UMG (Unreal Motion Graphics):</strong> State-bound widget components and dynamic anchors.</li>
+          </ul>
+          <ul style="margin: 0; padding-left: 1.2rem;">
+            <li><strong>Version Control (Git/Perforce):</strong> Multi-developer repository branching.</li>
+            <li><strong>Agile Collaboration:</strong> Rapid-sprint iteration loops during the strict 48-hour jam constraints.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="case-cta-bar">
+    <p>Explore the dungeon and see the project outcomes on the official Game Jam submission page.</p>
+    <div class="case-cta-bar__actions">
+      <a href="https://itch.io/jam/cgd22-goty-public/rate/1561178" target="_blank" rel="noopener" class="btn btn--primary">
+        <i class="fab fa-itch-io"></i> View Jam Entry
+      </a>
+      <a href="index.html#contact" class="btn btn--outline">
+        <i class="fas fa-envelope"></i> Contact Shivam
+      </a>
+    </div>
+  </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <a href="index.html" class="footer__logo">SP<span class="accent">.</span></a>
+        <p class="footer__copy">&copy; 2026 Shivam Parab. Crafted with passion &amp; pixels.</p>
+        <div class="footer__socials">
+          <a href="https://github.com/Shivam361" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/shivam-parab-3b747b150/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:parabshivam@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/vendor/split-type.min.js"></script>
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/vanta.net.min.js"></script>
+  <script src="js/vendor/swup.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
