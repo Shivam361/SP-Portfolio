@@ -529,11 +529,6 @@ if (typeof gsap !== 'undefined') {
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
-// Temporarily disabled AJAX interceptor.
-// FormSubmit requires the VERY FIRST submission to go through standard native HTML POST
-// so it can serve its mandatory CAPTCHA and explicitly send the Activation Email.
-// Once activated, we can uncomment this to restore the seamless AJAX UI.
-/*
 if (contactForm && formSuccess) {
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -575,7 +570,6 @@ if (contactForm && formSuccess) {
     });
   });
 }
-*/
 
 // Custom Global Hash Routing Strategy
 if (typeof Swup !== 'undefined') {

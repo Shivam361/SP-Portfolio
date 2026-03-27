@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume | Shivam Parab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/vendor/fontawesome.min.css">
+  <style>
+    :root {
+      --bg: #0a0a0c;
+      --bg-card: #121218;
+      --accent: #a855f7;
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+      --border: rgba(255, 255, 255, 0.1);
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space+Grotesk', sans-serif;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .resume-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 60px;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 30px;
+      margin-bottom: 40px;
+    }
+
+    .header-left h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .header-left p {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+
+    .header-right a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .header-right a:hover { color: var(--accent); }
+
+    .section { margin-bottom: 40px; }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title i {
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .exp-item { margin-bottom: 25px; }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .exp-role {
+      font-weight: 700;
+      color: var(--white);
+      font-size: 1.1rem;
+    }
+
+    .exp-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+
+    .exp-company {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .exp-bullets li {
+      position: relative;
+      padding-left: 20px;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      color: var(--text-dim);
+    }
+
+    .exp-bullets li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill-tag {
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .project-item {
+      padding: 20px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .project-title {
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .project-desc {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .print-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 10px 20px rgba(168, 85, 247, 0.3);
+      transition: transform 0.2s;
+      z-index: 100;
+    }
+
+    .print-btn:hover { transform: translateY(-2px); }
+
+    @media print {
+      .print-btn { display: none; }
+      body { background: white; color: black; padding: 0; }
+      .resume-container { 
+        box-shadow: none; 
+        border: none; 
+        max-width: 100%; 
+        padding: 0;
+        background: white;
+      }
+      header { border-bottom: 2px solid #000; }
+      .exp-role, .section-title, .project-title, .header-left h1 { color: #000; }
+      .exp-date, .header-left p { color: #666; }
+      .exp-bullets li, .project-desc, .header-right { color: #333; }
+      .skill-tag { border: 1px solid #ddd; color: black; background: #f5f5f5; }
+      .project-item { background: #f9f9f9; border: 1px solid #ddd; }
+    }
+
+    @media (max-width: 768px) {
+      .resume-container { padding: 30px; }
+      header { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .header-right { text-align: left; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="print-btn" onclick="window.print()">
+    <i class="fas fa-print"></i> Print to PDF
+  </button>
+
+  <div class="resume-container">
+    <header>
+      <div class="header-left">
+        <h1>Shivam Parab</h1>
+        <p>Software Engineer & Game Developer</p>
+      </div>
+      <div class="header-right">
+        <p><i class="fas fa-envelope"></i> <a href="mailto:parabshivam@gmail.com">parabshivam@gmail.com</a></p>
+        <p><i class="fas fa-phone"></i> +44 7448 102288</p>
+        <p><i class="fab fa-linkedin"></i> <a href="https://linkedin.com/in/shivam-parab-3b747b150/">shivam-parab-3b747b150</a></p>
+        <p><i class="fab fa-github"></i> <a href="https://github.com/Shivam361">Shivam361</a></p>
+      </div>
+    </header>
+
+    <div class="section">
+      <h2 class="section-title"><i class="fas fa-user"></i> Summary</h2>
+      <p>High-performance Software Engineer and Game Developer (MSc) with expertise in building architectural scalable systems and AI-driven gameplay. Proven leader in engineering education and professional studios, specializing in Unreal Engine 5, Unity, C++, and Full-Stack development.</p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="fas fa-briefcase"></i> Experience</h2>
+      
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Module Leader — BA Games Development</span>
+          <span class="exp-date">2024 – 2025</span>
+        </div>
+        <p class="exp-company">dBs Institute Manchester (Accredited by Falmouth University)</p>
+        <ul class="exp-bullets">
+          <li>Designed and delivered **Advanced Game Programming** modules focusing on Unity and AI optimization.</li>
+          <li>Led practical lectures on engine architecture, pathfinding, and state machines for over 100+ students.</li>
+          <li>Supervised complex technical prototypes and technical documentation standards.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Lecturer — Games & Interactive Media</span>
+          <span class="exp-date">2023 – 2024</span>
+        </div>
+        <p class="exp-company">Stafford College – NSCG</p>
+        <ul class="exp-bullets">
+          <li>Achieved **Grade 1 Ofsted review** for excellence in game design education and curriculum development.</li>
+          <li>Architected the integration of industry-standard tools (Unity/Maya) into academic workflows.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Junior Game Developer Intern</span>
+          <span class="exp-date">2023</span>
+        </div>
+        <p class="exp-company">Infinity27 Studio</p>
+        <ul class="exp-bullets">
+          <li>Engineered 'Leech Blade' spell logic for **Samsara** on Steam using **Unreal Engine 5**.</li>
+          <li>Implemented professional industry scripting standards and Agile/Scrum collaboration.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="fas fa-tools"></i> Technical Skills</h2>
+      <div class="grid-2">
+        <div>
+          <h3 style="margin-bottom: 15px; font-size: 1rem; color: var(--accent);">Languages & Engines</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">C++</span>
+            <span class="skill-tag">C#</span>
+            <span class="skill-tag">JavaScript (ES6+)</span>
+            <span class="skill-tag">Unreal Engine 5</span>
+            <span class="skill-tag">Unity</span>
+            <span class="skill-tag">.NET MAUI</span>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom: 15px; font-size: 1rem; color: var(--accent);">DevOps & Testing</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Firebase</span>
+            <span class="skill-tag">Webpack</span>
+            <span class="skill-tag">Selenium</span>
+            <span class="skill-tag">k6 Testing</span>
+            <span class="skill-tag">Git / Perforce</span>
+            <span class="skill-tag">Agile / Scrum</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="fas fa-code-branch"></i> Selected Projects</h2>
+      <div class="grid-2">
+        <div class="project-item">
+          <div class="project-title">Theatre Booking System</div>
+          <p class="project-desc">Full-stack reservation engine with procedural JS matrices and Firebase real-time persistence.</p>
+        </div>
+        <div class="project-item">
+          <div class="project-title">DevQuest MSc Dissertation</div>
+          <p class="project-desc">Explored Adaptive Difficulty Scaling using Reinforcement Learning and Unity ML-Agents.</p>
+        </div>
+        <div class="project-item">
+          <div class="project-title">Soulitude (CGD22 Jam)</div>
+          <p class="project-desc">Led UI/UX programming in UE5, creating orthographic minimap matrices and navigation widgets.</p>
+        </div>
+        <div class="project-item">
+          <div class="project-title">Monster Slayer 2D</div>
+          <p class="project-desc">Physics-driven solo platformer in Unity utilizing advanced C# Finite State Machines.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Education</h2>
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">MSc Software Engineering</span>
+          <span class="exp-date">2025</span>
+        </div>
+        <p class="exp-company">Staffordshire University, UK</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">BSc (Hons.) Games Design & Programming</span>
+          <span class="exp-date">2022</span>
+        </div>
+        <p class="exp-company">Staffordshire University, UK</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
