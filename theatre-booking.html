@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Theatre Seat Reservation System | Shivam Parab</title>
+  <meta name="description" content="Case study: A collaborative full-stack application managing theatre bookings, real-time seat tracking, and transactional flows using Firebase and Webpack — by Shivam Parab." />
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="loader" id="loader">
+    <p class="loader__logo">SP<span class="accent">.</span></p>
+    <div class="loader__bar"><div class="loader__fill"></div></div>
+  </div>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__logo" aria-label="Shivam Parab portfolio home">
+      <span class="nav__logo-text">SP<span class="accent">.</span></span>
+    </a>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="index.html#about" class="nav__link">About</a></li>
+      <li><a href="index.html#skills" class="nav__link">Skills</a></li>
+      <li><a href="index.html#projects" class="nav__link">Projects</a></li>
+      <li><a href="index.html#experience" class="nav__link">Experience</a></li>
+      <li><a href="index.html#education" class="nav__link">Education</a></li>
+      <li><a href="index.html#contact" class="nav__link">Contact</a></li>
+    </ul>
+    <a href="index.html#contact" class="btn btn--nav">Hire Me</a>
+    <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main id="swup" class="transition-fade">
+
+  <header class="case-hero" id="case-home">
+    <div class="case-hero__bg" id="vanta-bg-case" aria-hidden="true"></div>
+    <div class="case-hero__grid" aria-hidden="true"></div>
+    <div class="case-hero__veil" aria-hidden="true"></div>
+    <div class="case-hero__inner">
+      <p class="case-breadcrumb">
+        <a href="index.html#projects">Projects</a> <span>/</span> Case study
+      </p>
+      <div class="case-hero__icon" aria-hidden="true">
+        <i class="fas fa-masks-theater"></i>
+      </div>
+      <h1 class="case-hero__title">Theatre <span class="accent">Booking</span></h1>
+      <p class="case-hero__lead">
+        A vast collaborative <strong>full-stack e-commerce system</strong> handling complex seating matrices, 
+        <strong>concurrent transactional flows</strong>, and <strong>tiered subscription models</strong>. 
+        Engineered with a robust Selenium testing pipeline and custom Webpack bundling.
+      </p>
+      <div class="case-hero__actions">
+        <a href="https://github.com/Shivam361/theatre-booking" target="_blank" rel="noopener" class="btn btn--primary">
+          <i class="fab fa-github"></i> Source on GitHub
+        </a>
+        <a href="index.html#projects" class="btn btn--outline">
+          <i class="fas fa-arrow-left"></i> All projects
+        </a>
+      </div>
+      <div class="case-meta">
+        <span class="tag tag--sm">Team Project</span>
+        <span class="tag tag--sm">Firebase / Firestore</span>
+        <span class="tag tag--sm">Webpack</span>
+        <span class="tag tag--sm">Selenium WebDriver</span>
+        <span class="tag tag--sm">Jest E2E Testing</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="section case-section" id="overview">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">The Challenge</p>
+        <h2 class="section__title">Overview &amp; <span class="accent">Scope</span></h2>
+      </div>
+      <div class="case-prose">
+        <p>
+          Moving beyond a simple reservation prototype, this project evolved into a comprehensive <strong>event management and e-commerce platform</strong>. Handling concurrent ticket reservations in a live environment requires tight database rules, stateful client routing, and an impregnable checkout flow.
+        </p>
+        <p>
+          Architected as a highly optimized <strong>Multi-Page Application (MPA)</strong>, the system isolates execution contexts across pages using advanced Webpack bundling. We established an <strong>end-to-end booking UX</strong> spanning multiple state-dependent pages (Seat Selection &rarr; Discounts &rarr; Summary &rarr; Checkout), supported by secure Firebase authentication and rigorous automated testing.
+        </p>
+      </div>
+
+      <div class="case-panel" style="margin-top: 32px; border-left: 3px solid var(--neon-accent);">
+        <h3 class="case-panel__title" style="margin-bottom: 12px;"><i class="fas fa-user-astronaut"></i> My Role & Contributions</h3>
+        <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 16px;">
+          As a core engineer on this 4-person team, I took ownership of the testing infrastructure and the complex e-commerce state management:
+        </p>
+        <ul style="margin: 0; padding-left: 1.2rem; display: grid; gap: 0.5rem;">
+          <li><strong>Automated Testing Pipeline:</strong> Configured and executed the <code>k6</code> load-testing suite to simulate concurrent traffic, and implemented Jest unit-testing for the checkout pricing logic.</li>
+          <li><strong>Dynamic Pricing Engine:</strong> Built the algorithmic backend for ticket pricing, linking it securely to Firebase Auth to apply tiered Loyalty Discounts dynamically based on active user sessions.</li>
+          <li><strong>UI & Asset Management:</strong> Engineered the promotional DOM slideshows and resolved complex CSS layout shifts within the Webpack asset pipeline to ensure pixel-perfect rendering across varying viewports.</li>
+        </ul>
+      </div>
+
+      <div class="case-panel" style="margin-top: 24px;">
+        <h3 class="case-panel__title"><i class="fas fa-layer-group"></i> Core Technology Stack</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+          <ul style="margin: 0; padding-left: 1.2rem;">
+            <li><strong>Firebase Backend (BaaS):</strong> Auth (`connectAuthEmulator`), Firestore CRUD, real-time listeners.</li>
+            <li><strong>Webpack Bundler Engine:</strong> Minifies ES6+ JS, transpiles SCSS, custom asset chunking.</li>
+          </ul>
+          <ul style="margin: 0; padding-left: 1.2rem;">
+            <li><strong>jQuery UI Control:</strong> Heavy dynamic DOM manipulation for physical theatre seating grids.</li>
+            <li><strong>Test Driven Dev:</strong> Firebase Emulators isolate tests from production datasets.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section case-section--alt" id="architecture">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Architecture</p>
+        <h2 class="section__title">E-Commerce &amp; <span class="accent">Data Ops</span></h2>
+      </div>
+      <div class="case-two-col">
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-shopping-cart"></i> Stateful E-Commerce Flow</h3>
+          <ul>
+            <li><strong>Sequential Checkout:</strong> Users traverse a strict path from Event Selection to Seat Maps, Category Discounts, and final Payment.</li>
+            <li><strong>Subscription Engine:</strong> Tiered membership models (`SubscriptionCheckout`) granting specific account privileges and discounts.</li>
+            <li><strong>Stateless Session Cart:</strong> Because MPAs destroy true JS state on navigation, we leverage the Web Storage API (<code>localStorage</code>) to serialize, cryptographically sign, and safely pass cart data between independent pages.</li>
+          </ul>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-database"></i> Database & Admin Ops</h3>
+          <ul>
+            <li><strong>Concurrency Control:</strong> Firebase Firestore documents securely track seat IDs to prevent race-condition double bookings.</li>
+            <li><strong>Admin Event Creation:</strong> Built-in management portals (`CreateEvent`) for administrators to dynamically deploy new shows into the database.</li>
+            <li><strong>Relational Mapping:</strong> NoSQL associations linking user UUIDs to booking histories, active subscriptions, and payment receipts.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section" id="engineering">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Deep Dive</p>
+        <h2 class="section__title">Advanced <span class="accent">Engineering</span></h2>
+      </div>
+      <div class="case-prose">
+        <p>To deliver a truly robust system, the underlying codebase tackles non-trivial computer science and application state challenges.</p>
+      </div>
+      <div class="case-two-col" style="margin-top: 32px;">
+        <div class="case-panel">
+          <h3 class="case-panel__title" style="margin-bottom: 12px;"><i class="fas fa-project-diagram"></i> Procedural UI Matrices</h3>
+          <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 0;">
+            The physical theatre layout is asymmetrical. Instead of hardcoding HTML, the DOM is <strong>procedurally generated</strong> using multi-dimensional array algorithms (e.g., <code>seatConfigStall</code>). The script calculates dynamic rows and intersections, binding unique <code>data-seatValue</code> IDs and instantly cross-referencing them against Firebase collision maps to lock occupied nodes before rendering.
+          </p>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title" style="margin-bottom: 12px;"><i class="fas fa-boxes"></i> MPA Asset Pipeline</h3>
+          <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 0;">
+            A custom <code>webpack.config.js</code> iterates through 13 unique Application Entry Points. Using <code>HtmlWebpackPlugin</code> and <code>MiniCssExtractPlugin</code>, it injects precisely scoped JavaScript and compiled CSS into individual HTML templates. This ensures a user logging in never downloads the exhaustive 23kb script required for the Booking Form, drastically minimizing Time-To-Interactive (TTI).
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section case-section--alt" id="qa">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Assurance</p>
+        <h2 class="section__title">Quality <span class="accent">Assurance Pipeline</span></h2>
+      </div>
+      <div class="case-prose">
+        <p>Given the complexity of simulated financial transactions, membership discounts, and seating state-management, we implemented a rigorous set of test boundaries.</p>
+      </div>
+      <div class="case-table-wrap case-panel" style="margin-top: 32px;">
+        <table class="case-table">
+          <thead>
+            <tr>
+              <th>Testing Methodology</th>
+              <th>Technical Implementation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>End-to-End Blackbox Testing</td>
+              <td><strong>Selenium WebDriver</strong> and <strong>ChromeDriver</strong> execute programmatic UI workflows, driving an automated Chrome instance through the entire funnel (Seat selection &rarr; Discount &rarr; Summary verification).</td>
+            </tr>
+            <tr>
+              <td>Unit & Integration Testing</td>
+              <td><strong>Jest</strong> and <strong>Babel</strong> validate the algorithmic outcomes of the booking summaries, pricing calculators, and component interactions.</td>
+            </tr>
+            <tr>
+              <td>Load Stress Testing</td>
+              <td><strong>k6</strong> deployed to bombard the application infrastructure with concurrent simulated users to test Firebase response latency and connection limits.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="case-cta-bar">
+    <p>Explore the architecture, test suites, and documentation in the public repository.</p>
+    <div class="case-cta-bar__actions">
+      <a href="https://github.com/Shivam361/theatre-booking" target="_blank" rel="noopener" class="btn btn--primary">
+        <i class="fab fa-github"></i> Open repository
+      </a>
+      <a href="index.html#contact" class="btn btn--outline">
+        <i class="fas fa-envelope"></i> Contact Shivam
+      </a>
+    </div>
+  </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <a href="index.html" class="footer__logo">SP<span class="accent">.</span></a>
+        <p class="footer__copy">&copy; 2026 Shivam Parab. Crafted with passion &amp; pixels.</p>
+        <div class="footer__socials">
+          <a href="https://github.com/Shivam361" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/shivam-parab-3b747b150/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:parabshivam@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/vendor/split-type.min.js"></script>
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/vanta.net.min.js"></script>
+  <script src="js/vendor/swup.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
