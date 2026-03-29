@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume | Shivam Parab — Software Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/vendor/fontawesome.min.css">
+  <style>
+    :root {
+      --bg: #0a0a0c;
+      --bg-card: #111116;
+      --accent: #a855f7;
+      --accent-dim: rgba(168, 85, 247, 0.12);
+      --success: #22c55e;
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+      --text-xdim: #64748b;
+      --border: rgba(255, 255, 255, 0.08);
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.65;
+      padding: 40px 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .resume {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 48px 56px;
+      border-radius: 10px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+    }
+
+    /* ── HEADER ── */
+    .r-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+
+    .r-header__name {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .r-header__subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .r-header__location {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .r-header__contact {
+      text-align: right;
+      font-size: 0.84rem;
+      color: var(--text-dim);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .r-header__contact a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .r-header__contact a:hover { color: var(--accent); }
+
+    .r-header__contact i {
+      width: 16px;
+      text-align: center;
+      margin-right: 6px;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+
+    /* ── SECTIONS ── */
+    .r-section { margin-bottom: 28px; }
+
+    .r-section__title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--accent);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── SUMMARY ── */
+    .r-summary {
+      font-size: 0.92rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    /* ── SKILLS ── */
+    .r-skills-grid {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 6px 16px;
+      font-size: 0.85rem;
+    }
+
+    .r-skills-grid dt {
+      font-weight: 600;
+      color: var(--white);
+      padding: 4px 0;
+    }
+
+    .r-skills-grid dd {
+      color: var(--text-dim);
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── EXPERIENCE ── */
+    .r-exp { margin-bottom: 22px; }
+
+    .r-exp__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2px;
+    }
+
+    .r-exp__role {
+      font-weight: 700;
+      color: var(--white);
+      font-size: 1rem;
+    }
+
+    .r-exp__date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .r-exp__company {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    .r-exp__bullets {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .r-exp__bullets li {
+      position: relative;
+      padding-left: 16px;
+      font-size: 0.87rem;
+      margin-bottom: 5px;
+      color: var(--text-dim);
+      line-height: 1.55;
+    }
+
+    .r-exp__bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.7rem;
+      top: 3px;
+    }
+
+    .r-exp__tech {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .r-tag {
+      background: var(--accent-dim);
+      border: 1px solid rgba(168, 85, 247, 0.18);
+      padding: 2px 10px;
+      border-radius: 3px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.3px;
+    }
+
+    /* ── PROJECTS ── */
+    .r-project { margin-bottom: 18px; }
+
+    .r-project__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2px;
+    }
+
+    .r-project__title {
+      font-weight: 700;
+      color: var(--white);
+      font-size: 0.95rem;
+    }
+
+    .r-project__stack {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-xdim);
+    }
+
+    /* ── EDUCATION ── */
+    .r-edu { margin-bottom: 14px; }
+
+    .r-edu__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .r-edu__degree {
+      font-weight: 700;
+      color: var(--white);
+      font-size: 0.95rem;
+    }
+
+    .r-edu__school {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .r-edu__detail {
+      font-size: 0.82rem;
+      color: var(--text-xdim);
+      margin-top: 2px;
+    }
+
+    /* ── FOOTER ── */
+    .r-footer {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-xdim);
+    }
+
+    /* ── PRINT BUTTON ── */
+    .print-btn-group {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+    }
+
+    .print-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+      box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .print-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(168, 85, 247, 0.4);
+    }
+
+    .back-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover { background: rgba(255,255,255,0.1); }
+
+    /* ── PRINT ── */
+    @media print {
+      .print-btn-group { display: none; }
+
+      body {
+        background: white;
+        color: #1a1a1a;
+        padding: 0;
+        font-size: 10pt;
+      }
+
+      .resume {
+        box-shadow: none;
+        border: none;
+        max-width: 100%;
+        padding: 0;
+        background: white;
+        border-radius: 0;
+      }
+
+      .r-header { border-bottom: 2px solid #1a1a1a; }
+      .r-header__name { color: #000; font-size: 22pt; }
+      .r-header__subtitle { color: #444; }
+      .r-header__contact a { color: #333; }
+      .r-header__contact i { color: #666; }
+      .r-section__title { color: #333; border-bottom-color: #ddd; }
+      .r-summary { color: #333; }
+      .r-exp__role, .r-project__title, .r-edu__degree { color: #000; }
+      .r-exp__date, .r-edu__date { color: #555; }
+      .r-exp__company, .r-exp__bullets li, .r-edu__school, .r-project__stack { color: #333; }
+      .r-skills-grid dt { color: #000; }
+      .r-skills-grid dd { color: #333; border-bottom-color: #eee; }
+      .r-tag { color: #333; background: #f0f0f0; border-color: #ddd; }
+      .r-footer { color: #999; border-top-color: #eee; }
+
+      .r-section { margin-bottom: 18px; }
+      .r-exp { margin-bottom: 16px; }
+    }
+
+    @media (max-width: 700px) {
+      .resume { padding: 28px 24px; }
+      .r-header { flex-direction: column; gap: 16px; }
+      .r-header__contact { text-align: left; }
+      .r-skills-grid { grid-template-columns: 1fr; }
+      .r-exp__header, .r-project__header, .r-edu__header { flex-direction: column; gap: 2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-btn-group">
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Portfolio</a>
+    <button class="print-btn" onclick="window.print()"><i class="fas fa-print"></i> Print / Save PDF</button>
+  </div>
+
+  <div class="resume">
+
+    <!-- HEADER -->
+    <header class="r-header">
+      <div>
+        <h1 class="r-header__name">Shivam Parab</h1>
+        <p class="r-header__subtitle">Software Engineer · Full-Stack Developer</p>
+        <p class="r-header__location"><i class="fas fa-map-marker-alt"></i> Manchester, UK · Graduate Route Visa</p>
+      </div>
+      <div class="r-header__contact">
+        <span><i class="fas fa-envelope"></i><a href="mailto:parabshivam@gmail.com">parabshivam@gmail.com</a></span>
+        <span><i class="fas fa-phone"></i> +44 7448 102288</span>
+        <span><i class="fab fa-linkedin"></i><a href="https://linkedin.com/in/shivam-parab-3b747b150/" target="_blank">linkedin.com/in/shivam-parab</a></span>
+        <span><i class="fab fa-github"></i><a href="https://github.com/Shivam361" target="_blank">github.com/Shivam361</a></span>
+        <span><i class="fas fa-globe"></i><a href="https://shivam361.github.io/SP-Portfolio/" target="_blank">shivam361.github.io/SP-Portfolio</a></span>
+      </div>
+    </header>
+
+    <!-- SUMMARY -->
+    <div class="r-section">
+      <h2 class="r-section__title">Professional Summary</h2>
+      <p class="r-summary">
+        Results-driven Software Engineer with an MSc in Software Engineering and 4+ years of professional experience spanning full-stack development, backend systems, and interactive application development. Proven expertise in designing secure, scalable applications using C#, .NET, SQL, JavaScript, and Python. Strong track record in clean architecture, automated testing (Selenium, Jest, k6), CI/CD practices, and Agile/Scrum delivery. Adept at translating complex requirements into production-ready software while mentoring teams and leading technical workshops.
+      </p>
+    </div>
+
+    <!-- TECHNICAL SKILLS -->
+    <div class="r-section">
+      <h2 class="r-section__title">Technical Skills</h2>
+      <dl class="r-skills-grid">
+        <dt>Languages</dt>
+        <dd>C#, C++, JavaScript (ES6+), TypeScript, Python, SQL, Kotlin, HTML/CSS</dd>
+        <dt>Frameworks</dt>
+        <dd>.NET / .NET MAUI, ASP.NET, Node.js, Firebase (Auth · Firestore · Cloud Functions), REST APIs</dd>
+        <dt>Databases</dt>
+        <dd>SQL Server, PostgreSQL, Firebase Firestore (NoSQL), SQLite</dd>
+        <dt>Testing</dt>
+        <dd>Selenium WebDriver (E2E), Jest (Unit), k6 (Load/Performance), TDD, QA Automation</dd>
+        <dt>DevOps</dt>
+        <dd>Git, GitHub, Perforce, Webpack, Visual Studio, VS Code, Jira, CI/CD Pipelines</dd>
+        <dt>Architecture</dt>
+        <dd>Clean Architecture, SOLID, OOP, Design Patterns (Singleton · Observer · State Machine · Object Pooling), MVC, MVVM</dd>
+        <dt>Methods</dt>
+        <dd>Agile, Scrum, Kanban, Code Review, Pair Programming, Technical Documentation</dd>
+      </dl>
+    </div>
+
+    <!-- WORK EXPERIENCE -->
+    <div class="r-section">
+      <h2 class="r-section__title">Work Experience</h2>
+
+      <div class="r-exp">
+        <div class="r-exp__header">
+          <span class="r-exp__role">Module Leader — BA Games Development</span>
+          <span class="r-exp__date">Nov 2024 – Sep 2025</span>
+        </div>
+        <p class="r-exp__company">dBs Institute Manchester (Accredited by Falmouth University)</p>
+        <ul class="r-exp__bullets">
+          <li>Designed and delivered the Advanced Game Programming module covering software architecture, AI algorithms (A*, FSMs), and performance optimisation in Unity.</li>
+          <li>Led technical workshops and lectures for 100+ students on object-oriented design patterns, clean code practices, and debugging methodologies.</li>
+          <li>Supervised 15+ student engineering projects, enforcing code review standards, version control discipline, and technical documentation best practices.</li>
+          <li>Embedded AI ethics, privacy compliance, and secure software development principles into the curriculum framework.</li>
+        </ul>
+        <div class="r-exp__tech">
+          <span class="r-tag">Unity</span><span class="r-tag">C#</span><span class="r-tag">OOP</span><span class="r-tag">AI Systems</span><span class="r-tag">Git</span><span class="r-tag">Curriculum Design</span>
+        </div>
+      </div>
+
+      <div class="r-exp">
+        <div class="r-exp__header">
+          <span class="r-exp__role">Lecturer — Games & Interactive Media</span>
+          <span class="r-exp__date">Sep 2023 – Aug 2024</span>
+        </div>
+        <p class="r-exp__company">Stafford College – NSCG</p>
+        <ul class="r-exp__bullets">
+          <li>Developed and delivered a comprehensive Level 3 curriculum integrating Unity, Maya, and industry-standard development pipelines — contributing to a <strong>Grade 1 Ofsted review</strong>.</li>
+          <li>Managed technical logistics and event coordination for Global Game Jam 2024, guiding cross-functional teams of 40+ participants through rapid prototyping sprints.</li>
+          <li>Modernised assessment frameworks to align with current industry standards, integrating Agile workflows and collaborative development tools.</li>
+        </ul>
+        <div class="r-exp__tech">
+          <span class="r-tag">Unity</span><span class="r-tag">Maya</span><span class="r-tag">Agile</span><span class="r-tag">Event Coordination</span>
+        </div>
+      </div>
+
+      <div class="r-exp">
+        <div class="r-exp__header">
+          <span class="r-exp__role">Junior Game Developer (Internship)</span>
+          <span class="r-exp__date">Jul 2023</span>
+        </div>
+        <p class="r-exp__company">Infinity27 Studio — <em>Samsara</em> (shipped on Steam)</p>
+        <ul class="r-exp__bullets">
+          <li>Engineered the 'Leech Blade' spell system for a commercially published title using Unreal Engine 5 (C++ / Blueprint scripting).</li>
+          <li>Operated within a professional Agile/Scrum workflow with daily standups, sprint planning, and retrospectives.</li>
+          <li>Managed source code via Perforce and task tracking via Hansoft, adhering to studio coding standards.</li>
+          <li>Performed systematic QA testing, identifying and resolving critical gameplay bugs prior to Steam release.</li>
+        </ul>
+        <div class="r-exp__tech">
+          <span class="r-tag">Unreal Engine 5</span><span class="r-tag">C++</span><span class="r-tag">Blueprints</span><span class="r-tag">Perforce</span><span class="r-tag">Agile/Scrum</span><span class="r-tag">QA</span>
+        </div>
+      </div>
+
+      <div class="r-exp">
+        <div class="r-exp__header">
+          <span class="r-exp__role">Finance Officer — Video Games Union</span>
+          <span class="r-exp__date">Sep 2020 – Sep 2022</span>
+        </div>
+        <p class="r-exp__company">Staffordshire University Student Union</p>
+        <ul class="r-exp__bullets">
+          <li>Managed financial operations and transparent budgeting for the university gaming society.</li>
+          <li>Coordinated 50+ events annually, engaging 100+ active members and improving resource allocation efficiency.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="r-section">
+      <h2 class="r-section__title">Key Projects</h2>
+
+      <div class="r-project">
+        <div class="r-project__header">
+          <span class="r-project__title">Secure Banking Authentication System</span>
+          <span class="r-project__stack">C# · .NET MAUI · SQLite · MVVM</span>
+        </div>
+        <ul class="r-exp__bullets">
+          <li>Architected a full-stack banking prototype with OTP-based MFA, hashed credential storage, and rule-based fraud detection (location-aware login checks, suspicious transaction alerts).</li>
+          <li>Implemented SOLID principles and service-layer separation (AuthService, FraudDetectionService, TransactionService) with dependency injection.</li>
+          <li>Designed UML diagrams, threat models, and technical documentation supporting the secure software development lifecycle (SSDLC).</li>
+        </ul>
+      </div>
+
+      <div class="r-project">
+        <div class="r-project__header">
+          <span class="r-project__title">Theatre Seat Reservation System</span>
+          <span class="r-project__stack">JavaScript · Firebase · Webpack · Selenium · k6</span>
+        </div>
+        <ul class="r-exp__bullets">
+          <li>Led development of a transactional full-stack web application with dynamic seating grid UI and real-time Firebase Firestore persistence.</li>
+          <li>Built an automated testing pipeline: Selenium WebDriver (E2E), Jest (unit), k6 (load/stress), validating concurrent transactional integrity.</li>
+          <li>Configured Webpack build pipeline with SASS compilation, code splitting, and environment-based configuration management.</li>
+        </ul>
+      </div>
+
+      <div class="r-project">
+        <div class="r-project__header">
+          <span class="r-project__title">DevQuest — Adaptive Gamification (MSc Dissertation)</span>
+          <span class="r-project__stack">Unity · ML-Agents · Python · C#</span>
+        </div>
+        <ul class="r-exp__bullets">
+          <li>Researched and developed an adaptive difficulty scaling system using Reinforcement Learning (ML-Agents) to dynamically adjust gameplay based on real-time player performance telemetry.</li>
+          <li>Implemented Observer patterns for data collection and Python-based analysis pipelines for metrics visualisation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="r-section">
+      <h2 class="r-section__title">Education</h2>
+
+      <div class="r-edu">
+        <div class="r-edu__header">
+          <span class="r-edu__degree">MSc Software Engineering</span>
+          <span class="r-exp__date">2024 – 2025</span>
+        </div>
+        <p class="r-edu__school">Staffordshire University, UK</p>
+        <p class="r-edu__detail">Dissertation: Adaptive Gamification using Reinforcement Learning · Key: Software Architecture, Secure Development, Data-Driven Systems, AI/ML</p>
+      </div>
+
+      <div class="r-edu">
+        <div class="r-edu__header">
+          <span class="r-edu__degree">BSc (Hons.) Computer Games Design & Programming</span>
+          <span class="r-exp__date">2019 – 2022</span>
+        </div>
+        <p class="r-edu__school">Staffordshire University, UK</p>
+        <p class="r-edu__detail">Key: Object-Oriented Programming, Game Engine Architecture, AI Systems, Interactive Media</p>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="r-footer">
+      <span>Languages: English (Fluent), Hindi (Native), Marathi (Native)</span>
+      <span>References available upon request</span>
+    </div>
+
+  </div>
+
+</body>
+</html>
