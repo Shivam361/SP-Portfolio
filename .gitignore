@@ -24,3 +24,4 @@ yarn-error.log*
 .env.local
 .env.*.local
 *.yaml
+SEO_Optimization.md

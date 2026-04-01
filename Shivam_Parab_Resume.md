@@ -1,7 +1,7 @@
 # Shivam Parab
 
 **Software Engineer | Full-Stack Developer | MSc Software Engineering**  
-UK Educated & Experienced | parabshivam@gmail.com | LinkedIn: linkedin.com/in/shivam-parab-3b747b150 | GitHub: github.com/Shivam361 | Portfolio: shivam361.github.io/SP-Portfolio
+UK Educated & Experienced | parabshivam@gmail.com | LinkedIn: linkedin.com/in/shivam-parab-3b747b150 | GitHub: github.com/Shivam361 | Portfolio: sp-portfolio-nine.vercel.app
 
 ---
 
