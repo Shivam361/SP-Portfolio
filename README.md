@@ -1,12 +1,13 @@
 # Shivam Parab — Professional Portfolio (SPA)
 
-A high-performance, cinematic **Single Page Application (SPA)**, dark-themed personal site for Shivam Parab — Software Engineer, Game Developer, and Educator based in the UK. 
+A high-performance, cinematic **Single Page Application (SPA)**, dark-themed personal site for Shivam Parab — Software Engineer, Game Developer, and Educator based in the UK.
 
 This portfolio is engineered with a modern **Swup.js + WebGL + GSAP** architecture to deliver a cutting-edge, visually rich 60FPS immersive experience. It features seamless page transitions, persistent UI elements, and robust memory management for a flawlessly smooth user journey.
 
 ## Technical Architecture & Key Features
 
 ### Cinematic Single Page Application (SPA)
+
 - **Swup.js Core** — Powering a true SPA experience where only the content swaps, leaving the 3D backgrounds, smooth scroll, and custom cursors running uninterrupted.
 - **GSAP & ScrollTrigger** — Fluid, hardware-accelerated stagger reveals for all sections, perfectly re-indexed on every page view.
 - **Lenis Smooth Scroll** — Persistent scroll momentum across navigations, synced directly to the GSAP Ticker for jitter-free movement.
@@ -14,6 +15,7 @@ This portfolio is engineered with a modern **Swup.js + WebGL + GSAP** architectu
 - **Magnetic Physics & Spotlights** — UI elements utilize spring physics and radial tracking to follow the user's cursor across all pages.
 
 ### Intelligent Resource & Memory Management
+
 - **Vanta.js / Three.js** — Interactive, neural-network-inspired particle canvases rendered in real-time.
 - **Smart Lifecycle Hooks** — Manual destruction and cleanup of WebGL contexts and Typed.js instances during transitions to prevent memory leaks and ensure peak performance.
 - **Global Hash Router** — A custom navigation interceptor that intelligently routes between local smooth-scrolls (on Home) and SPA navigations (from project pages).
@@ -40,22 +42,29 @@ SP-Portfolio/
 ## Development & Deployment Guide
 
 ### Local Development
+
 Work from the repository root. Because the site utilizes local module structures and vendor files, it requires an HTTP server to resolve relative paths and prevent CORS violations when fetching local assets.
 
 For the most accurate development experience, serve the directory via Python:
+
 ```bash
 python -m http.server 8080
 ```
+
 Then visit `http://localhost:8080`.
 
 ### Customization & Styling
-All global thematic variables (colors, fonts, sizing, transitions) are defined in `css/base`. 
+
+All global thematic variables (colors, fonts, sizing, transitions) are defined in `css/base`.
+
 - To alter the site's primary neon accent colors, modify the custom properties within `css/base/typography.css` or `css/base/section-base.css` as appropriate.
 - Content modifications should be handled directly within the HTML templates.
 
 ### Deployment
+
 This portfolio is a purely static site consisting of HTML, CSS, and JS. It requires no build step, transpilation, or server-side rendering.
 It can be deployed seamlessly to any static hosting provider natively:
+
 - **Vercel**: Deploy via the Vercel CLI or GitHub integration. Set the framework preset to "Other".
 - **Netlify**: Deploy by linking the repository. No build command is required. Publish directory is the root (`/`).
 - **GitHub Pages**: Go to repository settings > Pages > Deploy from branch (main).
