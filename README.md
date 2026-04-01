@@ -97,20 +97,29 @@ It can be deployed seamlessly to any static hosting provider natively:
 - Replace the About section profile placeholder with a high-resolution portrait photograph.
 - Expand the `portfolio-case-study.html` template to support additional projects as your career progresses.
 
-## 📋 Upcoming Action Items (To-Do)
+## 📋 Professional Recommendations & Roadmap (To-Do)
 
-Based on a holistic review of the portfolio against standard hiring requirements, the following tasks still remain:
+Based on a holistic review of the portfolio against modern **Software Engineering** and **Game Development** hiring standards, the following tasks are recommended to achieve "Senior-Ready" presentation:
 
-1. **My Role & Contributions**:
-   - Explicitly list my individual engineering contributions in the "Theatre Booking" and "Secure Banking" case studies to clarify team impact to recruiters.
+### 1. Visual & Interactive Proof (High Impact)
+- [ ] **Case Study Media**: Add high-fidelity screenshots, device mockups, or short GIFs to the case study pages (e.g., `theatre-booking.html`) to visualize complex layouts and logic.
+- [ ] **Video Walkthroughs**: Record a 30-second silent "Quick Demo" of the major projects (**DevQuest**, **Monster Slayer**) for recruiters who don't have time to clone/run the repo.
+- [ ] **WebP Optimization**: Convert all large images in `/img` to WebP format to reduce LCP (Largest Contentful Paint) and improve Lighthouse SEO scores.
 
-2. **Visual Proof (Case Study Media)**:
-   - Add high-quality screenshots, device mockups, or short GIFs to the case study pages to provide visual evidence of the complex CSS grids and checkout flows discussed in the text.
+### 2. Engineering & Architecture (Technical Depth)
+- [ ] **Unit Testing Visibility**: Link to the Jest/Selenium test folders directly from the respective case studies to showcase **TDD (Test-Driven Development)** discipline.
+- [ ] **CI/CD Integration**: Add a GitHub Action to automate linting or simple tests on push, showcasing professional DevOps awareness.
+- [ ] **Dark/Light Theme Toggle**: Implement a cinematic "Mode Switch" (e.g., *Matrix-Green* vs. *Obsidian-Purple*) using CSS variables to demonstrate UI flexibility.
 
-3. **Remaining Case Studies**:
-   - Build out dedicated `.html` pages for Project 4 (**DevQuest**) and Project 5 (**Monster Slayer**), which are currently unlinked on the `index.html`.
+### 3. Deployment & Analytics (Recruiter Tracking)
+- [ ] **Production Deployment**: Push the final site to `github.io` or `vercel.app`.
+- [ ] **Recruiter Analytics**: Integrate a lightweight, privacy-first analytics tool (e.g., [Plausible](https://plausible.io/) or [Vercel Analytics](https://vercel.com/analytics)) to track visit duration and traffic sources.
+- [ ] **Custom Domain**: Secure a clean domain (e.g., `shivamparab.dev`) for maximum brand authority.
 
-4. **Functional Gaps in `index.html`**:
-   - Integrate the **Contact Form** with a backend email service (like EmailJS or Formspree) so it actually sends messages.
-   - Point the **Download CV** button to the actual PDF file of my resume.
-   - Add **SEO / Open Graph `<meta>` Tags** for polished link previews on LinkedIn, Twitter, and Slack.
+### ✅ Recently Completed
+- [x] **SEO Meta Tags**: Open Graph (OG) and Twitter Card tags integrated for professional social sharing.
+- [x] **Contact Pipeline**: FormSubmit.co AJAX integration finalized and tested.
+- [x] **Digital Resume**: High-fidelity, print-to-PDF ready `resume.html` synced with latest project data.
+- [x] **Address Privacy**: Removed physical location/phone and updated to "UK Educated & Experienced" context.
+- [x] **Link Validation**: Fixed the 404 "Download CV" buttons and redirected to the live resume.
+
