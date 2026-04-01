@@ -25,3 +25,4 @@ yarn-error.log*
 .env.*.local
 *.yaml
 SEO_Optimization.md
+UPGRADE_PROMPTS.md
