@@ -1,7 +1,7 @@
 # Shivam Parab
 
 **Software Engineer | Full-Stack Developer | MSc Software Engineering**  
-Manchester, UK (Graduate Route Visa) | parabshivam@gmail.com | +44 7448 102288  
+UK Educated & Experienced | parabshivam@gmail.com | +44 7448 102288  
 LinkedIn: linkedin.com/in/shivam-parab-3b747b150 | GitHub: github.com/Shivam361 | Portfolio: shivam361.github.io/SP-Portfolio
 
 ---
@@ -114,6 +114,7 @@ Results-driven Software Engineer with an MSc in Software Engineering and 4+ year
 
 ## Additional Information
 
+- **UK-Specific Experience:** 2+ years of education and development context in the United Kingdom.
 - **Languages:** English (Fluent), Hindi (Native), Marathi (Native)
 - **Interests:** Open-source development, AI/ML research, game engine internals, technical mentoring
 

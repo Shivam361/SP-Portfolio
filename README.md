@@ -1,6 +1,6 @@
 # Shivam Parab — Professional Portfolio (SPA)
 
-A high-performance, cinematic **Single Page Application (SPA)**, dark-themed personal site for Shivam Parab — Software Engineer, Game Developer, and Educator based in the UK.
+A high-performance, cinematic **Single Page Application (SPA)**, dark-themed personal site for Shivam Parab — Software Engineer, Game Developer, and Educator (UK Educated & Experienced).
 
 This portfolio is engineered with a modern **Swup.js + WebGL + GSAP** architecture to deliver a cutting-edge, visually rich 60FPS immersive experience. It features seamless page transitions, persistent UI elements, and robust memory management for a flawlessly smooth user journey.
 
