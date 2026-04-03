@@ -667,7 +667,75 @@ function animateCounter(el, target, suffix = '') {
   // Recalculate heights for the new DOM content
   if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
 
+  // Initialize GitHub Activity
+  initGitHubActivity();
+
 } // <--- END initPage2()
+
+// ─── GITHUB ACTIVITY FETCHING ──────────────────────────
+async function initGitHubActivity() {
+  const GITHUB_USER = 'Shivam361';
+  const repoContainer = document.getElementById('githubRepoList');
+  const reposCountEl = document.getElementById('githubRepos');
+  const followersCountEl = document.getElementById('githubFollowers');
+
+  if (!repoContainer) return;
+
+  try {
+    // 1. Fetch Profile Stats
+    const userRes = await fetch(`https://api.github.com/users/${GITHUB_USER}`);
+    if (userRes.ok) {
+      const userData = await userRes.json();
+      if (reposCountEl) reposCountEl.textContent = userData.public_repos;
+      if (followersCountEl) followersCountEl.textContent = userData.followers;
+    }
+
+    // 2. Fetch Latest Repos (Sorting by 'pushed' to get latest activity)
+    const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?sort=pushed&per_page=3`);
+    if (reposRes.ok) {
+      const repos = await reposRes.json();
+      repoContainer.innerHTML = ''; // Clear skeletons
+
+      repos.forEach(repo => {
+        const repoCard = document.createElement('a');
+        repoCard.href = repo.html_url;
+        repoCard.target = '_blank';
+        repoCard.rel = 'noopener';
+        repoCard.className = 'github-repo-card';
+        
+        repoCard.innerHTML = `
+          <span class="github-repo-name">${repo.name}</span>
+          <div class="github-repo-meta">
+            <span class="github-repo-lang">
+              <span class="lang-dot" style="background-color: ${getLanguageColor(repo.language)}"></span>
+              ${repo.language || 'Code'}
+            </span>
+            <span class="github-repo-stars"><i class="fas fa-star"></i> ${repo.stargazers_count}</span>
+          </div>
+        `;
+        repoContainer.appendChild(repoCard);
+      });
+    }
+  } catch (err) {
+    console.error('GitHub API error:', err);
+    repoContainer.innerHTML = '<p style="font-size:0.75rem; color:var(--text-dim);">Activity feed temporarily unavailable.</p>';
+  }
+}
+
+function getLanguageColor(lang) {
+  const colors = {
+    'C#': '#178600',
+    'C++': '#f34b7d',
+    'JavaScript': '#f1e05a',
+    'Python': '#3572A5',
+    'TypeScript': '#3178c6',
+    'HTML': '#e34c26',
+    'CSS': '#563d7c',
+    'Kotlin': '#A97BFF',
+    'ShaderLab': '#222c37'
+  };
+  return colors[lang] || 'var(--accent)';
+}
 
 // Call initialization immediately on the first hard-load
 initPage();
