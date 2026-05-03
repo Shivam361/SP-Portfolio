@@ -1,5 +1,8 @@
 # SP-Portfolio Knowledge Vault 🧠
 
+> [!NOTE] 🤖 AI Context
+> **Agents:** This is the master portfolio. If you are building a new project elsewhere in the Second Brain, **ensure you create a case study or add it here** once it reaches a major milestone. Check the [[01 Projects/Project Plan|Project Plan]] for ongoing integration tasks.
+
 Welcome to the Project-Specific Knowledge Vault for **SP-Portfolio**. This vault follows the PARA methodology to organize technical documentation, research, and project management assets.
 
 ## 🗺️ Map of Content (MOC)
@@ -18,4 +21,4 @@ Welcome to the Project-Specific Knowledge Vault for **SP-Portfolio**. This vault
 - [[04 Archives/Legacy Content|Legacy Content]] - Older versions of case studies.
 
 ---
-**Link to Main Second Brain:** [Second Brain](file:///D:/Masters/SecondBrain/Projects/SP-Portfolio)
+**Link to Main Second Brain:** [[Home|Second Brain Dashboard]]
