@@ -130,6 +130,9 @@
 .project-card__img-wrap--p-theatre {
   background: linear-gradient(135deg, #2d0a14 0%, #7f1d1d 50%, #b45309 100%);
 }
+.project-card__img-wrap--studio-flow {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #312e81 100%);
+}
 
 .project-card__icon {
   font-size: 4rem;
