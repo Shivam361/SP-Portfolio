@@ -148,7 +148,7 @@
               <span class="stat-card__label">Years Exp.</span>
             </div>
             <div class="stat-card">
-              <span class="stat-card__num">8+</span>
+              <span class="stat-card__num">9+</span>
               <span class="stat-card__label">Projects</span>
             </div>
             <div class="stat-card">
@@ -472,9 +472,9 @@
               <a href="devquest.html" class="btn btn--sm btn--primary" aria-label="View DevQuest Dissertation case study">
                 <i class="fas fa-book-open"></i> Case study
               </a>
-              <a href="#" class="btn btn--sm btn--outline" aria-label="Read DevQuest research paper (coming soon)">
-                <i class="fab fa-github"></i> Paper
-              </a>
+              <span class="btn btn--sm btn--outline btn--disabled" aria-label="DevQuest research paper — coming soon" title="Paper coming soon">
+                <i class="fas fa-file-alt"></i> Paper (Soon)
+              </span>
             </div>
           </div>
         </article>
@@ -579,6 +579,44 @@
               </a>
               <a href="https://itch.io/jam/cgd22-goty-public/rate/1561178" target="_blank" rel="noopener" class="btn btn--sm btn--outline" aria-label="View Soulitude on Itch.io">
                 <i class="fab fa-itch-io"></i> Itch.io
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 8: Studio Flow — Design Studio Operations -->
+        <article class="project-card project-card--featured">
+          <a class="project-card__media" href="studio-flow.html">
+            <div class="project-card__img-wrap project-card__img-wrap--studio-flow">
+              <div class="project-card__icon"><i class="fas fa-layer-group"></i></div>
+            </div>
+            <div class="project-card__tags">
+              <span class="tag tag--sm">Solo Project</span>
+              <span class="tag tag--sm">Next.js</span>
+              <span class="tag tag--sm">TypeScript</span>
+              <span class="tag tag--sm">SaaS</span>
+            </div>
+          </a>
+          <div class="project-card__body">
+            <span class="project-card__number">08</span>
+            <h3 class="project-card__title">Studio Flow — Design Studio Operations</h3>
+            <p class="project-card__sub">Next.js · TypeScript · PostgreSQL · Redis · BullMQ · Multi-tenant SaaS</p>
+            <p class="project-card__desc">
+              Full-stack operations platform automating graphic design studio workflows from client intake to final delivery — akin to <strong>Jira/Perforce</strong> for creative teams. Built with <strong>multi-tenant architecture</strong>, distributed background jobs, and role-based dashboards for Admins, Managers, Designers, and Clients.
+            </p>
+            <ul class="project-card__bullets">
+              <li><i class="fas fa-check-circle"></i> Multi-tenant isolation via repository pattern across 50+ API endpoints</li>
+              <li><i class="fas fa-check-circle"></i> Distributed BullMQ/Redis jobs — IMAP ingestion, LAN watcher, OneDrive cloud sync</li>
+              <li><i class="fas fa-check-circle"></i> Role-based dashboards (Admin · Manager · Designer · Client) with RBAC enforcement</li>
+              <li><i class="fas fa-check-circle"></i> Token-based client review portal with annotation &amp; digital sign-off (B2B compliance)</li>
+              <li><i class="fas fa-check-circle"></i> 27/27 tests passing · zero TypeScript errors · Docker/Coolify production deployment</li>
+            </ul>
+            <div class="project-card__links">
+              <a href="studio-flow.html" class="btn btn--sm btn--primary" aria-label="View Studio Flow case study">
+                <i class="fas fa-book-open"></i> Case study
+              </a>
+              <a href="https://github.com/Shivam361/Graphic-Design-Studio-Automation-Tool" target="_blank" rel="noopener" class="btn btn--sm btn--outline" aria-label="View Studio Flow source code on GitHub">
+                <i class="fab fa-github"></i> GitHub
               </a>
             </div>
           </div>
@@ -890,6 +928,10 @@
 
   <!-- ─── BACK TO TOP ───────────────────────────────── -->
   <button class="back-to-top" id="backToTop" aria-label="Scroll back to top of page">
+    <svg class="progress-ring" viewBox="0 0 46 46" aria-hidden="true">
+      <circle class="progress-ring__track" cx="23" cy="23" r="19"/>
+      <circle class="progress-ring__fill" id="progressRingFill" cx="23" cy="23" r="19"/>
+    </svg>
     <i class="fas fa-chevron-up"></i>
   </button>
 

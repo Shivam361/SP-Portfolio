@@ -233,6 +233,13 @@ gsap.utils.toArray('.case-panel, .case-prose, .case-cta-bar').forEach((el, i) =>
 lenis.on('scroll', ({ scroll }) => {
   if (UI.nav) UI.nav.classList.toggle('scrolled', scroll > 60);
   if (UI.backToTop) UI.backToTop.classList.toggle('visible', scroll > 400);
+
+  const progressRing = document.getElementById('progressRingFill');
+  if (progressRing) {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = maxScroll > 0 ? Math.min(scroll / maxScroll, 1) : 0;
+    progressRing.style.strokeDashoffset = 119.38 * (1 - pct);
+  }
 });
 
 if (UI.backToTop) {

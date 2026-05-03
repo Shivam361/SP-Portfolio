@@ -62,6 +62,12 @@
 
 .btn--full { width: 100%; justify-content: center; }
 
+.btn--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* SPINNER ANIMATION */
 .btn .fa-spinner { animation: spin 0.7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }

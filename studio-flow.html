@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio Flow — Design Studio Operations Platform | Shivam Parab</title>
+  <meta name="description" content="Case study: Studio Flow — a multi-tenant SaaS platform automating graphic design studio workflows from client intake to delivery, built with Next.js, TypeScript, PostgreSQL, Redis, and BullMQ." />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Studio Flow — Design Studio Operations Platform | Shivam Parab">
+  <meta property="og:description" content="Deep dive into a full-stack multi-tenant SaaS with distributed background jobs, role-based dashboards, and a token-based client review portal.">
+  <meta property="og:url" content="https://sp-portfolio-nine.vercel.app/studio-flow.html">
+  <meta property="og:image" content="https://sp-portfolio-nine.vercel.app/img/profile.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Studio Flow — Design Studio Operations Platform | Shivam Parab">
+  <meta name="twitter:description" content="Deep dive into a full-stack multi-tenant SaaS with distributed background jobs, role-based dashboards, and a token-based client review portal.">
+  <meta name="twitter:image" content="https://sp-portfolio-nine.vercel.app/img/profile.jpg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="loader" id="loader">
+    <p class="loader__logo">SP<span class="accent">.</span></p>
+    <div class="loader__bar"><div class="loader__fill"></div></div>
+  </div>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__logo" aria-label="Shivam Parab portfolio home">
+      <span class="nav__logo-text">SP<span class="accent">.</span></span>
+    </a>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="index.html#about" class="nav__link">About</a></li>
+      <li><a href="index.html#skills" class="nav__link">Skills</a></li>
+      <li><a href="index.html#projects" class="nav__link">Projects</a></li>
+      <li><a href="index.html#experience" class="nav__link">Experience</a></li>
+      <li><a href="index.html#education" class="nav__link">Education</a></li>
+      <li><a href="index.html#contact" class="nav__link">Contact</a></li>
+    </ul>
+    <a href="index.html#contact" class="btn btn--nav">Hire Me</a>
+    <button class="nav__hamburger" id="hamburger" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main id="swup" class="transition-fade">
+
+  <header class="case-hero" id="case-home">
+    <div class="case-hero__bg" id="vanta-bg-case" aria-hidden="true"></div>
+    <div class="case-hero__grid" aria-hidden="true"></div>
+    <div class="case-hero__veil" aria-hidden="true"></div>
+    <div class="case-hero__inner">
+      <p class="case-breadcrumb">
+        <a href="index.html#projects">Projects</a> <span>/</span> Case study
+      </p>
+      <div class="case-hero__icon" aria-hidden="true">
+        <i class="fas fa-layer-group"></i>
+      </div>
+      <h1 class="case-hero__title">Studio <span class="accent">Flow</span></h1>
+      <p class="case-hero__lead">
+        A <strong>multi-tenant SaaS platform</strong> that automates graphic design studio operations end-to-end — from
+        <strong>client intake and task assignment</strong> through revision cycles to final delivery. Built with
+        <strong>Next.js 14</strong>, <strong>TypeScript</strong>, <strong>PostgreSQL</strong>, <strong>Redis</strong>,
+        and a <strong>distributed BullMQ job system</strong>.
+      </p>
+      <div class="case-hero__actions">
+        <a href="https://github.com/Shivam361/Graphic-Design-Studio-Automation-Tool" target="_blank" rel="noopener" class="btn btn--primary">
+          <i class="fab fa-github"></i> Source on GitHub
+        </a>
+        <a href="index.html#projects" class="btn btn--outline">
+          <i class="fas fa-arrow-left"></i> All projects
+        </a>
+      </div>
+      <div class="case-meta">
+        <span class="tag tag--sm">Solo Project</span>
+        <span class="tag tag--sm">SaaS</span>
+        <span class="tag tag--sm">Next.js 14</span>
+        <span class="tag tag--sm">TypeScript</span>
+        <span class="tag tag--sm">PostgreSQL</span>
+        <span class="tag tag--sm">Redis · BullMQ</span>
+        <span class="tag tag--sm">Docker · Coolify</span>
+        <span class="tag tag--sm">2026</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="section case-section" id="overview">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Context</p>
+        <h2 class="section__title">Overview &amp; <span class="accent">goals</span></h2>
+      </div>
+      <div class="case-prose">
+        <p>
+          Graphic design studios run on shared drives, email threads, and WhatsApp groups — a setup that works until it
+          doesn't. Missed briefs, unclear revision rounds, and no audit trail create friction that scales poorly as a studio grows.
+          <strong>Studio Flow</strong> addresses this with a structured, multi-tenant operations platform akin to
+          <strong>Jira or Perforce</strong> but purpose-built for creative workflows.
+        </p>
+        <p>
+          The platform handles the <strong>full project lifecycle</strong>: automated brief intake via IMAP email ingestion,
+          Kanban-style task management, formal revision cycles with client sign-off, LAN-based asset handling with OneDrive cloud
+          mirroring, multi-channel notifications (email &amp; WhatsApp), and a comprehensive analytics layer for studio profitability
+          and designer performance. <strong>Each studio is a fully isolated tenant</strong> — separate data, subdomain routing,
+          and encrypted credential storage.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section case-section--alt" id="capabilities">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Role-based dashboards</p>
+        <h2 class="section__title">What each role <span class="accent">can do</span></h2>
+      </div>
+      <div class="case-two-col">
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-user-cog"></i> Admin</h3>
+          <ul>
+            <li>User management with role assignment (Admin, Manager, Designer, Client)</li>
+            <li>Brief templates — reusable library for different deliverable types</li>
+            <li>LAN folder configuration (incoming / completed / archive paths)</li>
+            <li>IMAP / SMTP / Twilio credentials setup (AES-256-GCM encrypted at rest)</li>
+            <li>Real-time health monitoring — web, workers, email watcher, LAN watcher</li>
+            <li>Security audit log — all actions with IP, timestamp, and user context</li>
+          </ul>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-tasks"></i> Studio Manager</h3>
+          <ul>
+            <li>Kanban pipeline view — drag projects through Brief → Assigned → In Progress → Review → Delivered</li>
+            <li>Blueprint-based project creation with pre-populated task lists</li>
+            <li>Team workload management and deadline estimation</li>
+            <li>One-click revision round spawning with automated task creation</li>
+            <li>Token-gated client approval workflow with digital sign-off</li>
+            <li>OneDrive cloud sync — automatically mirrors completed deliverables via Microsoft Graph API</li>
+            <li>Performance analytics — on-time rates, revision cycles, profitability metrics</li>
+          </ul>
+        </div>
+      </div>
+      <div class="case-two-col" style="margin-top: 24px;">
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-paint-brush"></i> Designer</h3>
+          <ul>
+            <li>Task dashboard with assigned work, deadlines, and revision context</li>
+            <li>Full revision history and feedback per deliverable</li>
+            <li>Asset upload via web interface (Images, Video, Documents, Source Files, etc.)</li>
+            <li>Personal performance stats — on-time rate, average revision rounds, hours per deliverable type</li>
+          </ul>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-user-tie"></i> Client</h3>
+          <ul>
+            <li>Time-limited token portal — no account required</li>
+            <li>Rich review interface — project brief, deliverables, and full revision history</li>
+            <li>Pixel-level visual annotation on submitted assets</li>
+            <li>Formal digital sign-off for B2B compliance and audit trail</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section" id="architecture">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">System design</p>
+        <h2 class="section__title">Architecture &amp; <span class="accent">multi-tenancy</span></h2>
+      </div>
+      <div class="case-prose">
+        <p>
+          Tenant isolation is enforced end-to-end. Middleware extracts the studio from the <code>Host</code> header on
+          every request, resolves the tenant from a <strong>Redis-cached studio lookup</strong>, and injects it into
+          the request context. Every database query goes through a <strong>repository pattern layer</strong> that
+          mandates a <code>studioId</code> scope — making cross-tenant data leakage structurally impossible rather than
+          a runtime concern.
+        </p>
+      </div>
+      <div class="case-two-col">
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-server"></i> Runtime processes</h3>
+          <ul>
+            <li><strong>Web server</strong> — Next.js App Router with RSC + client components, serving all dashboards and APIs</li>
+            <li><strong>BullMQ workers</strong> — 8 independent queues running as a separate Node.js process</li>
+            <li><strong>IMAP watcher</strong> — polls the studio inbox, parses incoming emails into project briefs</li>
+            <li><strong>LAN watcher</strong> — chokidar monitors the shared drive; attaches completed files to tasks automatically</li>
+          </ul>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-database"></i> Data layer</h3>
+          <ul>
+            <li><strong>PostgreSQL</strong> with Prisma 7 ORM — 20+ models, soft deletes throughout</li>
+            <li><strong>Repository pattern</strong> — strict data-access abstraction across all 50+ API endpoints</li>
+            <li><strong>BlueprintTask model</strong> — first-class Prisma entity that spawns task records on project creation</li>
+            <li><strong>StudioSettings</strong> — per-tenant encrypted SMTP / IMAP / Twilio credentials using AES-256-GCM</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section case-section--alt" id="jobs">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Async processing</p>
+        <h2 class="section__title">Background job <span class="accent">system</span></h2>
+      </div>
+      <div class="case-prose">
+        <p>
+          All heavy or time-sensitive operations are offloaded to a <strong>BullMQ queue system backed by Redis</strong>.
+          Failed jobs are retried up to three times with exponential back-off; after exhausting retries they land in a
+          <strong>Dead Letter Queue</strong> and trigger an email alert to the studio admin — ensuring no notification
+          or sync operation silently disappears.
+        </p>
+      </div>
+      <div class="case-panel">
+        <h3 class="case-panel__title"><i class="fas fa-cogs"></i> Queue inventory</h3>
+        <ul>
+          <li><strong>Notification queue</strong> — dispatches email and WhatsApp messages for 14+ event types (brief submitted, task assigned, revision requested, approval received, deadline approaching, etc.)</li>
+          <li><strong>Performance queue</strong> — recalculates designer stats (on-time rate, revision cycles, hours per type) after each task state change</li>
+          <li><strong>OneDrive queue</strong> — uploads completed deliverables to the studio's OneDrive App Folder via Microsoft Graph API</li>
+          <li><strong>Asset processing queue</strong> — generates Sharp image thumbnails and proxy files for in-browser preview</li>
+          <li><strong>Token rotation queue</strong> — expires and regenerates time-limited client portal access tokens</li>
+          <li><strong>DLQ alert queue</strong> — fires email to admin when any job exhausts its retry budget</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section" id="tech">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Stack</p>
+        <h2 class="section__title">Technologies &amp; <span class="accent">integrations</span></h2>
+      </div>
+      <div class="case-table-wrap case-panel">
+        <table class="case-table">
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>Technologies</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Frontend</td>
+              <td>Next.js 14 (App Router · RSC), React 18, TypeScript, Tailwind CSS 4, Radix UI, Recharts</td>
+            </tr>
+            <tr>
+              <td>Backend</td>
+              <td>Node.js 22, PostgreSQL, Prisma 7 ORM, Redis, Auth.js v5 (credentials provider)</td>
+            </tr>
+            <tr>
+              <td>Async jobs</td>
+              <td>BullMQ 5 (8 queues / workers), chokidar (LAN watcher), imapflow (email ingestion)</td>
+            </tr>
+            <tr>
+              <td>Integrations</td>
+              <td>Microsoft Graph API (OneDrive), Azure MSAL Node (OAuth tokens), Twilio (WhatsApp), Nodemailer (SMTP)</td>
+            </tr>
+            <tr>
+              <td>Media</td>
+              <td>Sharp (image thumbnails), FFmpeg + fluent-ffmpeg (video processing), Puppeteer (PDF export)</td>
+            </tr>
+            <tr>
+              <td>Observability</td>
+              <td>Sentry (client + server error tracking), Pino (structured logging), Redis health heartbeats</td>
+            </tr>
+            <tr>
+              <td>Testing</td>
+              <td>Vitest 4 (unit + integration), @testing-library/react, Supertest (API testing) — 27/27 passing</td>
+            </tr>
+            <tr>
+              <td>Deployment</td>
+              <td>Docker (multi-stage build), Coolify orchestration, Docker Compose (local + production)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section case-section--alt" id="quality">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Delivery</p>
+        <h2 class="section__title">Quality &amp; <span class="accent">production readiness</span></h2>
+      </div>
+      <div class="case-two-col">
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-shield-alt"></i> Security hardening</h3>
+          <ul>
+            <li>AES-256-GCM encryption for all per-tenant credentials stored in <code>StudioSettings</code></li>
+            <li>RBAC enforced at the middleware layer — role matrix covers 5 roles across all pages and API routes</li>
+            <li>Two-step confirmation for destructive operations (revision spawning, project closure)</li>
+            <li>Full security audit log — every user action recorded with IP, timestamp, and actor context</li>
+          </ul>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-check-double"></i> Testing &amp; CI</h3>
+          <ul>
+            <li><strong>27/27</strong> integration tests passing across 7 critical test suites</li>
+            <li>Zero TypeScript errors — strict mode, <code>tsc --noEmit</code> passes cleanly</li>
+            <li>API-level tests via Supertest covering tenant isolation and auth flows</li>
+            <li>Docker multi-stage build validated on Coolify; <code>/api/_ready</code> health endpoint for orchestrator probes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="case-cta-bar">
+    <p>Explore the full implementation — multi-tenant architecture, background job system, and client portal — in the public repository.</p>
+    <div class="case-cta-bar__actions">
+      <a href="https://github.com/Shivam361/Graphic-Design-Studio-Automation-Tool" target="_blank" rel="noopener" class="btn btn--primary">
+        <i class="fab fa-github"></i> Open repository
+      </a>
+      <a href="index.html#contact" class="btn btn--outline">
+        <i class="fas fa-envelope"></i> Contact Shivam
+      </a>
+    </div>
+  </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo">SP<span class="accent">.</span></a>
+          <p class="footer__copy">&copy; 2026 Shivam Parab. Crafted with passion &amp; pixels.</p>
+        </div>
+
+        <div class="footer__github" id="githubActivity">
+          <p class="footer__github-title"><i class="fab fa-github"></i> GitHub Activity</p>
+          <div class="footer__github-stats">
+            <span class="github-stat" title="Public Repositories"><i class="fas fa-code-branch"></i> <span id="githubRepos">--</span> Repos</span>
+            <span class="github-stat" title="Followers"><i class="fas fa-users"></i> <span id="githubFollowers">--</span> Followers</span>
+          </div>
+          <div class="footer__github-repos" id="githubRepoList">
+            <div class="github-repo-skeleton"></div>
+            <div class="github-repo-skeleton"></div>
+          </div>
+        </div>
+
+        <div class="footer__socials">
+          <a href="https://github.com/Shivam361" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/shivam-parab-3b747b150/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:parabshivam@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Scroll back to top of page">
+    <svg class="progress-ring" viewBox="0 0 46 46" aria-hidden="true">
+      <circle class="progress-ring__track" cx="23" cy="23" r="19"/>
+      <circle class="progress-ring__fill" id="progressRingFill" cx="23" cy="23" r="19"/>
+    </svg>
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/vendor/split-type.min.js"></script>
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/vanta.net.min.js"></script>
+  <script src="js/vendor/swup.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
