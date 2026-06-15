@@ -622,6 +622,49 @@
           </div>
         </article>
 
+        <!-- Project 9: Querdle — Live Wordle for Twitch -->
+        <article class="project-card project-card--featured">
+          <a class="project-card__media" href="querdle.html" aria-label="View Querdle case study">
+            <div class="project-card__img-wrap project-card__img-wrap--p-querdle">
+              <div class="project-card__icon"><i class="fab fa-twitch"></i></div>
+            </div>
+            <div class="project-card__tags">
+              <span class="tag tag--sm">Solo Project</span>
+              <span class="tag tag--sm">Next.js</span>
+              <span class="tag tag--sm">Supabase</span>
+              <span class="tag tag--sm">Live</span>
+            </div>
+          </a>
+          <div class="project-card__body">
+            <span class="project-card__number">09</span>
+            <h3 class="project-card__title">Querdle — Live Wordle for Twitch Streams</h3>
+            <p class="project-card__sub">Next.js · Supabase Realtime · IRC Worker on Fly.io · Solo · Mar–Jun 2026</p>
+            <p class="project-card__desc">
+              Live word-guessing game platform wired directly into <strong>Twitch chat</strong> — chatters type
+              <code>!guess</code>, the board plays on stream in real time, and stats build automatically with
+              <strong>no sign-up required</strong>. Twitch IRC needs a persistent WebSocket incompatible with
+              Vercel's serverless model, so the architecture splits: <strong>Next.js on Vercel</strong> +
+              a long-running <strong>IRC worker on Fly.io</strong>, coordinated via HMAC-signed HTTP with
+              Supabase Realtime keeping every client in sync.
+            </p>
+            <ul class="project-card__bullets">
+              <li><i class="fas fa-check-circle"></i> Two-service split (Vercel + Fly.io): serverless and persistent WebSocket can't coexist — constraint drove the architecture</li>
+              <li><i class="fas fa-check-circle"></i> Answer word never sent to client — server returns <code>TileResult[]</code> arrays only; cheating is structurally impossible</li>
+              <li><i class="fas fa-check-circle"></i> Supabase Realtime (<code>postgres_changes</code>) pushes state to board overlay, keyboard overlay &amp; play page — zero polling</li>
+              <li><i class="fas fa-check-circle"></i> Atomic <code>apply_chatter_event</code> Postgres RPC serializes all stat writes — prevents race-condition drift across concurrent channels</li>
+              <li><i class="fas fa-check-circle"></i> Chaos mode: win → Realtime event → 5 s countdown → new session; streamer never clicks between rounds</li>
+            </ul>
+            <div class="project-card__links">
+              <a href="querdle.html" class="btn btn--sm btn--primary" aria-label="View Querdle case study">
+                <i class="fas fa-book-open"></i> Case study
+              </a>
+              <a href="https://querdle.vercel.app" target="_blank" rel="noopener" class="btn btn--sm btn--outline" aria-label="View Querdle live">
+                <i class="fas fa-external-link-alt"></i> Live Site
+              </a>
+            </div>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>

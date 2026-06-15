@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Querdle — Live Wordle for Twitch Streams | Shivam Parab</title>
+  <meta name="description" content="Case study: Querdle — a live word-guessing game platform wired into Twitch chat. Chatters type !guess, the board plays on stream in real time, and player stats build automatically with no sign-up required." />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Querdle — Live Wordle for Twitch Streams | Shivam Parab">
+  <meta property="og:description" content="Deep dive into a two-service architecture (Next.js on Vercel + persistent IRC worker on Fly.io), Supabase Realtime sync, and an answer word that never touches the client.">
+  <meta property="og:url" content="https://sp-portfolio-nine.vercel.app/querdle.html">
+  <meta property="og:image" content="https://sp-portfolio-nine.vercel.app/img/profile.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Querdle — Live Wordle for Twitch Streams | Shivam Parab">
+  <meta name="twitter:description" content="Deep dive into a two-service architecture (Next.js on Vercel + persistent IRC worker on Fly.io), Supabase Realtime sync, and an answer word that never touches the client.">
+  <meta name="twitter:image" content="https://sp-portfolio-nine.vercel.app/img/profile.jpg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="loader" id="loader">
+    <p class="loader__logo">SP<span class="accent">.</span></p>
+    <div class="loader__bar"><div class="loader__fill"></div></div>
+  </div>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__logo" aria-label="Shivam Parab portfolio home">
+      <span class="nav__logo-text">SP<span class="accent">.</span></span>
+    </a>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="index.html#about" class="nav__link">About</a></li>
+      <li><a href="index.html#skills" class="nav__link">Skills</a></li>
+      <li><a href="index.html#projects" class="nav__link">Projects</a></li>
+      <li><a href="index.html#experience" class="nav__link">Experience</a></li>
+      <li><a href="index.html#education" class="nav__link">Education</a></li>
+      <li><a href="index.html#contact" class="nav__link">Contact</a></li>
+    </ul>
+    <a href="index.html#contact" class="btn btn--nav">Hire Me</a>
+    <button class="nav__hamburger" id="hamburger" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main id="swup" class="transition-fade">
+
+  <header class="case-hero" id="case-home">
+    <div class="case-hero__bg" id="vanta-bg-case" aria-hidden="true"></div>
+    <div class="case-hero__grid" aria-hidden="true"></div>
+    <div class="case-hero__veil" aria-hidden="true"></div>
+    <div class="case-hero__inner">
+      <p class="case-breadcrumb">
+        <a href="index.html#projects">Projects</a> <span>/</span> Case study
+      </p>
+      <div class="case-hero__icon" aria-hidden="true">
+        <i class="fab fa-twitch"></i>
+      </div>
+      <h1 class="case-hero__title">Quer<span class="accent">dle</span></h1>
+      <p class="case-hero__lead">
+        A <strong>live word-guessing game platform</strong> wired directly into Twitch chat — chatters type
+        <code>!guess</code>, the board plays on stream in real time, and player stats build automatically with
+        <strong>no sign-up required</strong>. The IRC constraint that breaks serverless led to the defining
+        architectural decision: two separate services, one architecture.
+      </p>
+      <div class="case-hero__actions">
+        <a href="https://querdle.vercel.app" target="_blank" rel="noopener" class="btn btn--primary">
+          <i class="fas fa-external-link-alt"></i> Live Site
+        </a>
+        <a href="index.html#projects" class="btn btn--outline">
+          <i class="fas fa-arrow-left"></i> All projects
+        </a>
+      </div>
+      <div class="case-meta">
+        <span class="tag tag--sm">Solo Project</span>
+        <span class="tag tag--sm">Live</span>
+        <span class="tag tag--sm">Next.js</span>
+        <span class="tag tag--sm">TypeScript</span>
+        <span class="tag tag--sm">Supabase</span>
+        <span class="tag tag--sm">Node.js · Fly.io</span>
+        <span class="tag tag--sm">Tailwind CSS</span>
+        <span class="tag tag--sm">Mar–Jun 2026</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="section case-section" id="overview">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Context</p>
+        <h2 class="section__title">Overview &amp; <span class="accent">problem</span></h2>
+      </div>
+      <div class="case-prose">
+        <p>
+          Twitch streamers run interactive games with their chat, but no off-the-shelf word-guessing game integrates
+          directly with Twitch IRC. The gap: a structured game engine, a streamer dashboard, and persistent player
+          identity — all wired through Twitch's chat protocol without requiring chatters to sign up anywhere.
+        </p>
+        <p>
+          <strong>Querdle</strong> fills that gap. Streamers start a session from their dashboard; chatters join and
+          guess by typing commands in Twitch chat; the board overlay updates live on the stream. Player profiles and
+          stats build automatically across every channel they play — no accounts, no friction. Real streamers run
+          sessions with their communities at
+          <a href="https://querdle.vercel.app" target="_blank" rel="noopener">querdle.vercel.app</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section case-section--alt" id="game-modes">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Gameplay</p>
+        <h2 class="section__title">Two <span class="accent">game modes</span></h2>
+      </div>
+      <div class="case-two-col">
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-list-ol"></i> Suggestion Mode</h3>
+          <ul>
+            <li>Chatters join a queue with <code>!join</code></li>
+            <li>Current player submits a guess with <code>!suggest</code></li>
+            <li>Streamer reviews and accepts or skips from the dashboard</li>
+            <li>Accepted guess scores on the board; queue advances automatically</li>
+            <li>Session ends on a win or after six board rows are filled</li>
+            <li>Session-wide accepted-guess count used for board-row limit — not per-player count</li>
+          </ul>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-bolt"></i> Chaos Mode</h3>
+          <ul>
+            <li>Any chatter can guess at any time with <code>!guess</code></li>
+            <li>First chatter to solve wins — no queue, no streamer approval</li>
+            <li>On a win, a 5-second countdown fires and a new session starts automatically</li>
+            <li>Streamer never has to click between rounds</li>
+            <li>Mode can be toggled mid-session from the dashboard</li>
+            <li>Per-user 3-second cooldown enforced server-side to prevent spam</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section" id="chatter-experience">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Player identity</p>
+        <h2 class="section__title">Chatter <span class="accent">experience</span></h2>
+      </div>
+      <div class="case-prose">
+        <p>
+          Identity is the Twitch username. No registration, no email, no password — a chatter's profile is created
+          automatically on their first interaction. Stats accumulate silently across every channel they play in.
+        </p>
+      </div>
+      <div class="case-two-col">
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-chart-bar"></i> Stats &amp; profile</h3>
+          <ul>
+            <li>Wins, win streak, best streak, average guesses across all sessions</li>
+            <li>Appeal rate and suggestion win % (Suggestion Mode)</li>
+            <li>Clutch saves, channels played, total plays</li>
+            <li>Per-channel leaderboard + global leaderboard</li>
+            <li>Public profile page with dynamically generated OG image card (Satori)</li>
+          </ul>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-trophy"></i> Achievements &amp; titles</h3>
+          <ul>
+            <li>18 achievements with unlock state, requirements, and progress bars</li>
+            <li>Titles earned ("Wordsmith", "Clutch King", "Legend") displayed next to guesses on stream</li>
+            <li>Achievement progress tracks across channels — a win anywhere counts</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section case-section--alt" id="obs">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Broadcast</p>
+        <h2 class="section__title">OBS <span class="accent">integration</span></h2>
+      </div>
+      <div class="case-prose">
+        <p>
+          The game runs inside the stream with no screen-share trickery. Three browser sources cover the full
+          production setup.
+        </p>
+      </div>
+      <div class="case-panel">
+        <h3 class="case-panel__title"><i class="fas fa-tv"></i> Browser sources</h3>
+        <ul>
+          <li>
+            <strong>Board overlay</strong> (<code>/play/overlay/[username]</code>) — transparent background, Wordle
+            tiles only; added as an OBS Browser Source with "Allow transparency" enabled
+          </li>
+          <li>
+            <strong>Keyboard overlay</strong> (<code>/play/overlay/[username]/keyboard</code>) — live letter-colour
+            hints on a separate OBS layer; shows which letters are correct/present/absent at a glance
+          </li>
+          <li>
+            <strong>Screenshare view</strong> — fullscreen branded mode for streamers who prefer to share the play
+            page directly instead of compositing in OBS; word queue panel is automatically hidden in this mode
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section" id="architecture">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">System design</p>
+        <h2 class="section__title">Architecture &amp; <span class="accent">two-service split</span></h2>
+      </div>
+      <div class="case-prose">
+        <p>
+          Twitch IRC requires a <strong>persistent WebSocket connection</strong>. Next.js on Vercel is serverless —
+          no shared memory, requests spawn in isolation. These two constraints are incompatible. The solution is a
+          clean split: the Next.js app handles everything HTTP (dashboard, overlays, API routes, auth), while a
+          separate <strong>long-running Node.js service on Fly.io</strong> owns the IRC connection and all game
+          command logic.
+        </p>
+        <p>
+          The two services coordinate via <strong>HMAC-signed HTTP</strong>: Next.js sends
+          <code>POST /connect</code>, <code>/send</code>, and <code>/disconnect</code> to the worker, each signed
+          with a shared <code>WORKER_SECRET</code> and a 30-second timestamp window to prevent replay attacks.
+          The worker writes game events directly to Supabase; all clients (play page, board overlay, keyboard
+          overlay) receive updates via <strong>Supabase Realtime</strong> (<code>postgres_changes</code>) — push,
+          not poll.
+        </p>
+      </div>
+      <div class="case-two-col">
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-server"></i> Services</h3>
+          <ul>
+            <li><strong>Next.js (Vercel)</strong> — App Router, dashboard, overlays, Twitch OAuth, all API routes</li>
+            <li><strong>IRC worker (Fly.io)</strong> — Fastify 5 + <code>ws</code>, owns Twitch WebSocket, parses IRC, runs game logic</li>
+            <li><strong>Supabase</strong> — PostgreSQL for state; Realtime channel for push updates to all clients</li>
+          </ul>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-shield-alt"></i> Reliability</h3>
+          <ul>
+            <li><strong>Boot reconciliation</strong> — on restart, the worker fetches all <code>status='active'</code> sessions and reconnects to each IRC channel automatically; no manual recovery</li>
+            <li><strong>HMAC replay protection</strong> — all Next.js → worker calls signed + timestamped; 30-second window rejects stale replays</li>
+            <li><strong>Chaos auto-restart</strong> — win → Realtime <code>UPDATE</code> on <code>sessions.status</code> → play page detects it → 5 s countdown → new session; the streamer never clicks between rounds</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section case-section--alt" id="technical">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Engineering</p>
+        <h2 class="section__title">Key technical <span class="accent">decisions</span></h2>
+      </div>
+      <div class="case-two-col">
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-eye-slash"></i> Answer word never sent to client</h3>
+          <ul>
+            <li>The answer lives in <code>sessions.word</code> — stripped from every API response before it leaves the server</li>
+            <li>The client receives only <code>TileResult[]</code> arrays: correct / present / absent states per tile</li>
+            <li>Cheating is structurally impossible, not just discouraged — there is nothing to intercept</li>
+            <li>The word queue panel is hidden in screenshare and OBS overlay modes</li>
+          </ul>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-database"></i> Atomic stat updates via Postgres RPC</h3>
+          <ul>
+            <li>All chatter stat writes go through a single <code>apply_chatter_event</code> Postgres function</li>
+            <li>Before this, six separate <code>UPDATE</code> statements could race when the same chatter played on multiple channels simultaneously, causing drift in win counts and average guesses</li>
+            <li>The RPC serializes everything atomically in one round-trip — also handles guess distribution, appeal rate, clutch-save detection, and skip tracking</li>
+          </ul>
+        </div>
+      </div>
+      <div class="case-two-col" style="margin-top: 24px;">
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-lock"></i> Token encryption at rest</h3>
+          <ul>
+            <li>Twitch OAuth <code>access_token</code> and <code>refresh_token</code> are encrypted with <strong>AES-256-GCM</strong> before being written to Supabase</li>
+            <li>Encryption key is environment-only (<code>TOKEN_ENCRYPTION_KEY</code>) — a Supabase breach exposes ciphertext, not usable tokens</li>
+            <li>All token read/write paths go through <code>lib/twitch/encrypt.ts</code>; nothing touches the raw token outside that module</li>
+          </ul>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-image"></i> OG image constraints (Satori)</h3>
+          <ul>
+            <li>Each chatter's public profile generates a rich social preview card via <code>next/og</code> (Satori)</li>
+            <li>Cards show username, top title, solve count, best streak, and average guesses</li>
+            <li>Required working within Satori's layout constraints: flex-only (no CSS Grid), no <code>gap</code> shorthand, pre-loaded fonts, no external image URLs</li>
+          </ul>
+        </div>
+      </div>
+      <div class="case-two-col" style="margin-top: 24px;">
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-th"></i> Session-wide guess count</h3>
+          <ul>
+            <li>Board-row limit in Suggestion Mode is enforced by <code>getSessionGuessCount(sessionId)</code> — the count of all accepted guesses in the session, not per-player</li>
+            <li>Using per-player count was a subtle bug: a chatter whose single guess happened to be the 6th board row would incorrectly trigger game-over for the entire session</li>
+          </ul>
+        </div>
+        <div class="case-panel">
+          <h3 class="case-panel__title"><i class="fas fa-font"></i> Unicode monospace IRC font</h3>
+          <ul>
+            <li>All outgoing bot messages pass through <code>toMonospace()</code>, converting A–Z, a–z, 0–9 to Unicode Mathematical Monospace codepoints (U+1D670+)</li>
+            <li>Emojis, punctuation, and symbols pass through unchanged</li>
+            <li>Result: announcements have strong visual personality in Twitch chat without requiring a custom font on the viewer's end</li>
+            <li>Example: <code>🟩 𝚜𝚑𝚒𝚟𝚊𝚖 𝚜𝚘𝚕𝚟𝚎𝚍 𝚒𝚝 𝚒𝚗 𝟹 𝚐𝚞𝚎𝚜𝚜𝚎𝚜!</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section" id="tech">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Stack</p>
+        <h2 class="section__title">Technologies &amp; <span class="accent">integrations</span></h2>
+      </div>
+      <div class="case-table-wrap case-panel">
+        <table class="case-table">
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>Technologies</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Framework</td>
+              <td>Next.js 15 (App Router), React 19, TypeScript</td>
+            </tr>
+            <tr>
+              <td>Database</td>
+              <td>Supabase (PostgreSQL + Realtime <code>postgres_changes</code>)</td>
+            </tr>
+            <tr>
+              <td>Auth</td>
+              <td>Twitch OAuth 2.0 → JWT in httpOnly cookie; AES-256-GCM token encryption at rest</td>
+            </tr>
+            <tr>
+              <td>IRC worker</td>
+              <td>Node.js + Fastify 5 + <code>ws</code>, deployed on Fly.io</td>
+            </tr>
+            <tr>
+              <td>Styling</td>
+              <td>Tailwind CSS ("Cozy Pixel Brutalism" custom design system)</td>
+            </tr>
+            <tr>
+              <td>Client state</td>
+              <td>Zustand</td>
+            </tr>
+            <tr>
+              <td>Animations</td>
+              <td>motion/react (Framer Motion v11+)</td>
+            </tr>
+            <tr>
+              <td>OG images</td>
+              <td>next/og (Satori) — dynamic social preview cards per chatter profile</td>
+            </tr>
+            <tr>
+              <td>Analytics</td>
+              <td>PostHog + Vercel Speed Insights</td>
+            </tr>
+            <tr>
+              <td>Hosting</td>
+              <td>Vercel (Next.js app) + Fly.io (IRC worker)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="case-cta-bar">
+    <p>Querdle is live and running with real Twitch streamers. Try it, or reach out to talk through the architecture.</p>
+    <div class="case-cta-bar__actions">
+      <a href="https://querdle.vercel.app" target="_blank" rel="noopener" class="btn btn--primary">
+        <i class="fas fa-external-link-alt"></i> Open Querdle
+      </a>
+      <a href="index.html#contact" class="btn btn--outline">
+        <i class="fas fa-envelope"></i> Contact Shivam
+      </a>
+    </div>
+  </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo">SP<span class="accent">.</span></a>
+          <p class="footer__copy">&copy; 2026 Shivam Parab. Crafted with passion &amp; pixels.</p>
+        </div>
+
+        <div class="footer__github" id="githubActivity">
+          <p class="footer__github-title"><i class="fab fa-github"></i> GitHub Activity</p>
+          <div class="footer__github-stats">
+            <span class="github-stat" title="Public Repositories"><i class="fas fa-code-branch"></i> <span id="githubRepos">--</span> Repos</span>
+            <span class="github-stat" title="Followers"><i class="fas fa-users"></i> <span id="githubFollowers">--</span> Followers</span>
+          </div>
+          <div class="footer__github-repos" id="githubRepoList">
+            <div class="github-repo-skeleton"></div>
+            <div class="github-repo-skeleton"></div>
+          </div>
+        </div>
+
+        <div class="footer__socials">
+          <a href="https://github.com/Shivam361" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/shivam-parab-3b747b150/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:parabshivam@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Scroll back to top of page">
+    <svg class="progress-ring" viewBox="0 0 46 46" aria-hidden="true">
+      <circle class="progress-ring__track" cx="23" cy="23" r="19"/>
+      <circle class="progress-ring__fill" id="progressRingFill" cx="23" cy="23" r="19"/>
+    </svg>
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/vendor/split-type.min.js"></script>
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/vanta.net.min.js"></script>
+  <script src="js/vendor/swup.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
