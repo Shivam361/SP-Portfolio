@@ -292,6 +292,49 @@
       text-align: center;
     }
     .case-hero__repo-note i { margin-right: 5px; color: rgba(255,255,255,0.2); }
+
+    /* SCREENSHOT GALLERY */
+    .ss-gallery {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 16px;
+    }
+    .ss-card {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .ss-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.65), 0 0 0 1px rgba(124,58,237,0.2);
+    }
+    .ss-card--main { grid-row: span 2; }
+    .ss-card__img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: top;
+    }
+    .ss-card--main .ss-card__img { height: 420px; }
+    .ss-card__img--leaderboard { height: 210px; }
+    .ss-card__img--profile { height: 210px; }
+    .ss-card__label {
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      background: var(--bg-card);
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ss-card__label i { color: var(--accent-2); font-size: 0.65rem; }
   </style>
 </head>
 <body>
@@ -545,7 +588,55 @@
     </div>
   </section>
 
-  <section class="section case-section case-section--alt" id="game-modes">
+  <section class="section case-section case-section--alt" id="screenshots">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Live product</p>
+        <h2 class="section__title">Real <span class="accent">screenshots</span></h2>
+        <p class="section__desc">Querdle is live at <a href="https://querdle.vercel.app" target="_blank" rel="noopener" class="accent">querdle.vercel.app</a></p>
+      </div>
+
+      <div class="ss-gallery">
+        <!-- Landing page — large card spanning 2 rows -->
+        <div class="ss-card ss-card--main">
+          <img src="img/querdle/landing.png"
+               alt="Querdle landing page — hero, HOW IT WORKS cards, example game board with SMOKE/UPPER guesses, live Twitch chat feed"
+               class="ss-card__img"
+               loading="lazy">
+          <div class="ss-card__label">
+            <i class="fas fa-home"></i>
+            Landing page · querdle.vercel.app
+          </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="ss-card">
+          <img src="img/querdle/leaderboard.png"
+               alt="Global Leaderboard showing top chatters ranked by wins, plays, best streak and average guesses with achievement badges"
+               class="ss-card__img ss-card__img--leaderboard"
+               loading="lazy">
+          <div class="ss-card__label">
+            <i class="fas fa-trophy"></i>
+            Global Leaderboard · wins · streaks · avg guesses
+          </div>
+        </div>
+
+        <!-- Chatter profile -->
+        <div class="ss-card">
+          <img src="img/querdle/profile.png"
+               alt="Chatter profile page showing solve count, best streak, avg guesses, suggestion win percentage, guess distribution chart and achievements"
+               class="ss-card__img ss-card__img--profile"
+               loading="lazy">
+          <div class="ss-card__label">
+            <i class="fas fa-user"></i>
+            Chatter profile · stats · guess distribution · achievements
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section" id="game-modes">
     <div class="container">
       <div class="section__header">
         <p class="section__eyebrow">Gameplay</p>
