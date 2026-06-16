@@ -18,6 +18,281 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ─── QUERDLE PREVIEW SHOWCASE ────────────────────────── */
+    .qp-mock {
+      max-width: 820px;
+      margin: 0 auto;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(145, 70, 255, 0.25);
+      box-shadow:
+        0 0 0 1px rgba(145, 70, 255, 0.06),
+        0 32px 80px rgba(0, 0, 0, 0.6),
+        0 0 80px -20px rgba(145, 70, 255, 0.18);
+      background: #0d0118;
+      font-family: var(--font-mono);
+    }
+    .qp-chrome {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      background: #140a28;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .qp-chrome__dots { display: flex; gap: 6px; flex-shrink: 0; }
+    .qp-chrome__dots span { width: 11px; height: 11px; border-radius: 50%; }
+    .qp-chrome__dots span:nth-child(1) { background: #ff5f57; }
+    .qp-chrome__dots span:nth-child(2) { background: #febc2e; }
+    .qp-chrome__dots span:nth-child(3) { background: #28c840; }
+    .qp-chrome__url {
+      flex: 1;
+      text-align: center;
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 4px 12px;
+    }
+    .qp-chrome__live {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: #f87171;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .qp-chrome__live-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #ef4444;
+      animation: qp-blink 1.4s ease-in-out infinite;
+    }
+    @keyframes qp-blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+    .qp-layout {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 20px;
+      padding: 22px 24px 14px;
+    }
+    @media (max-width: 600px) {
+      .qp-layout { grid-template-columns: 1fr; }
+      .qp-queue  { display: none; }
+    }
+    .qp-board-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .qp-mode-tag {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #9146ff;
+      border: 1px solid rgba(145, 70, 255, 0.3);
+      border-radius: 4px;
+      padding: 3px 10px;
+      background: rgba(145, 70, 255, 0.07);
+    }
+    .qp-board { display: flex; flex-direction: column; gap: 6px; }
+    .qp-row   { display: flex; gap: 6px; }
+
+    @keyframes qp-in {
+      from { opacity: 0; transform: translateY(6px) scale(0.9); }
+      to   { opacity: 1; transform: none; }
+    }
+    .qp-tile {
+      width: 52px; height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 800;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
+    }
+    .qp-tile--reveal {
+      animation: qp-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0s) both;
+    }
+    .qp-tile--correct {
+      background: #14532d;
+      border: 2px solid #22c55e;
+      color: #86efac;
+      box-shadow: 0 0 14px rgba(34, 197, 94, 0.2), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .qp-tile--present {
+      background: #451a03;
+      border: 2px solid #f59e0b;
+      color: #fde68a;
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.2), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .qp-tile--absent {
+      background: #111127;
+      border: 2px solid #2d2d45;
+      color: #4b5563;
+    }
+    .qp-tile--empty {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .qp-queue {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-self: start;
+    }
+    .qp-queue__hdr {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.3);
+    }
+    .qp-queue__hdr i { color: #9146ff; }
+    .qp-queue__cnt {
+      margin-left: auto;
+      background: rgba(145, 70, 255, 0.15);
+      color: #a78bfa;
+      border-radius: 20px;
+      padding: 1px 7px;
+      font-size: 0.6rem;
+      border: 1px solid rgba(145, 70, 255, 0.2);
+    }
+    .qp-players { display: flex; flex-direction: column; gap: 5px; }
+    .qp-player {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 9px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.018);
+      font-size: 0.72rem;
+    }
+    .qp-player--active {
+      background: rgba(22, 163, 74, 0.08);
+      border-color: rgba(34, 197, 94, 0.2);
+    }
+    .qp-player__dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+      box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+      animation: qp-blink 1.4s ease-in-out infinite;
+    }
+    .qp-player__pos { font-size: 0.58rem; color: rgba(255,255,255,0.18); min-width: 12px; }
+    .qp-player__name { flex: 1; color: rgba(255,255,255,0.8); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .qp-player--active .qp-player__name { color: #fff; }
+    .qp-player__badge {
+      font-size: 0.55rem;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: rgba(145, 70, 255, 0.12);
+      color: #c084fc;
+      border: 1px solid rgba(145, 70, 255, 0.18);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .qp-queue__hint {
+      text-align: center;
+      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.15);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 8px;
+    }
+    .qp-keyboard {
+      padding: 4px 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    .qp-key-row { display: flex; gap: 4px; }
+    .qp-key {
+      min-width: 28px; height: 30px;
+      padding: 0 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 700;
+      border-radius: 4px;
+      background: #1a1a32;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .qp-key--correct { background: #14532d; border-color: rgba(34, 197, 94, 0.4); color: #86efac; }
+    .qp-key--present { background: #451a03; border-color: rgba(245, 158, 11, 0.4); color: #fde68a; }
+    .qp-key--absent  { background: #0c0c18; border-color: rgba(255,255,255,0.03); color: rgba(255,255,255,0.15); }
+    .qp-caption {
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: rgba(255, 255, 255, 0.15);
+      letter-spacing: 0.1em;
+      padding: 6px 0 4px;
+    }
+
+    /* ─── HERO STATS STRIP ───────────────────────────────── */
+    .case-hero__stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto 0;
+      max-width: 480px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      padding: 16px 24px;
+    }
+    .case-hero__stat { flex: 1; text-align: center; }
+    .case-hero__stat-n {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-2);
+      line-height: 1;
+    }
+    .case-hero__stat-l {
+      display: block;
+      font-size: 0.62rem;
+      color: rgba(255, 255, 255, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+    .case-hero__stat-sep { width: 1px; height: 36px; background: rgba(255,255,255,0.07); flex-shrink: 0; }
+
+    /* ─── HERO REPO NOTE ─────────────────────────────────── */
+    .case-hero__repo-note {
+      margin-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.28);
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+    .case-hero__repo-note i { margin-right: 5px; color: rgba(255,255,255,0.2); }
+  </style>
 </head>
 <body>
 
@@ -75,6 +350,30 @@
           <i class="fas fa-arrow-left"></i> All projects
         </a>
       </div>
+      <p class="case-hero__repo-note">
+        <i class="fas fa-lock"></i> Private repo — code samples on request
+      </p>
+      <div class="case-hero__stats">
+        <div class="case-hero__stat">
+          <span class="case-hero__stat-n">985</span>
+          <span class="case-hero__stat-l">Curated words</span>
+        </div>
+        <div class="case-hero__stat-sep"></div>
+        <div class="case-hero__stat">
+          <span class="case-hero__stat-n">18</span>
+          <span class="case-hero__stat-l">Achievements</span>
+        </div>
+        <div class="case-hero__stat-sep"></div>
+        <div class="case-hero__stat">
+          <span class="case-hero__stat-n">3</span>
+          <span class="case-hero__stat-l">OBS overlays</span>
+        </div>
+        <div class="case-hero__stat-sep"></div>
+        <div class="case-hero__stat">
+          <span class="case-hero__stat-n">2</span>
+          <span class="case-hero__stat-l">Services</span>
+        </div>
+      </div>
       <div class="case-meta">
         <span class="tag tag--sm">Solo Project</span>
         <span class="tag tag--sm">Live</span>
@@ -107,6 +406,141 @@
           sessions with their communities at
           <a href="https://querdle.vercel.app" target="_blank" rel="noopener">querdle.vercel.app</a>.
         </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section case-section" id="preview">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow">Product preview</p>
+        <h2 class="section__title">The game, <span class="accent">live</span></h2>
+      </div>
+
+      <div class="qp-mock">
+        <!-- Browser chrome -->
+        <div class="qp-chrome">
+          <div class="qp-chrome__dots"><span></span><span></span><span></span></div>
+          <span class="qp-chrome__url">querdle.vercel.app/play/shivam361</span>
+          <span class="qp-chrome__live"><span class="qp-chrome__live-dot"></span>Live</span>
+        </div>
+
+        <!-- Board + Queue -->
+        <div class="qp-layout">
+          <div class="qp-board-col">
+            <span class="qp-mode-tag">Suggestion Mode · Session #4</span>
+            <div class="qp-board">
+              <!-- Row 1: MOLES — M(present) O(absent) L(present) E(present) S(absent) -->
+              <div class="qp-row">
+                <div class="qp-tile qp-tile--present qp-tile--reveal" style="--d:0.08s">M</div>
+                <div class="qp-tile qp-tile--absent  qp-tile--reveal" style="--d:0.18s">O</div>
+                <div class="qp-tile qp-tile--present qp-tile--reveal" style="--d:0.28s">L</div>
+                <div class="qp-tile qp-tile--present qp-tile--reveal" style="--d:0.38s">E</div>
+                <div class="qp-tile qp-tile--absent  qp-tile--reveal" style="--d:0.48s">S</div>
+              </div>
+              <!-- Row 2: LEFTY — L(present) E(present) F(present) T(absent) Y(absent) -->
+              <div class="qp-row">
+                <div class="qp-tile qp-tile--present qp-tile--reveal" style="--d:0.65s">L</div>
+                <div class="qp-tile qp-tile--present qp-tile--reveal" style="--d:0.75s">E</div>
+                <div class="qp-tile qp-tile--present qp-tile--reveal" style="--d:0.85s">F</div>
+                <div class="qp-tile qp-tile--absent  qp-tile--reveal" style="--d:0.95s">T</div>
+                <div class="qp-tile qp-tile--absent  qp-tile--reveal" style="--d:1.05s">Y</div>
+              </div>
+              <!-- Rows 3–6: empty -->
+              <div class="qp-row">
+                <div class="qp-tile qp-tile--empty"></div><div class="qp-tile qp-tile--empty"></div>
+                <div class="qp-tile qp-tile--empty"></div><div class="qp-tile qp-tile--empty"></div>
+                <div class="qp-tile qp-tile--empty"></div>
+              </div>
+              <div class="qp-row">
+                <div class="qp-tile qp-tile--empty"></div><div class="qp-tile qp-tile--empty"></div>
+                <div class="qp-tile qp-tile--empty"></div><div class="qp-tile qp-tile--empty"></div>
+                <div class="qp-tile qp-tile--empty"></div>
+              </div>
+              <div class="qp-row">
+                <div class="qp-tile qp-tile--empty"></div><div class="qp-tile qp-tile--empty"></div>
+                <div class="qp-tile qp-tile--empty"></div><div class="qp-tile qp-tile--empty"></div>
+                <div class="qp-tile qp-tile--empty"></div>
+              </div>
+              <div class="qp-row">
+                <div class="qp-tile qp-tile--empty"></div><div class="qp-tile qp-tile--empty"></div>
+                <div class="qp-tile qp-tile--empty"></div><div class="qp-tile qp-tile--empty"></div>
+                <div class="qp-tile qp-tile--empty"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Queue panel -->
+          <div class="qp-queue">
+            <div class="qp-queue__hdr">
+              <i class="fas fa-list-ol"></i> Queue
+              <span class="qp-queue__cnt">4</span>
+            </div>
+            <div class="qp-players">
+              <div class="qp-player qp-player--active">
+                <span class="qp-player__dot"></span>
+                <span class="qp-player__pos">1</span>
+                <span class="qp-player__name">xXDragon99Xx</span>
+                <span class="qp-player__badge">Wordsmith</span>
+              </div>
+              <div class="qp-player">
+                <span class="qp-player__pos">2</span>
+                <span class="qp-player__name">speedrunqueen</span>
+              </div>
+              <div class="qp-player">
+                <span class="qp-player__pos">3</span>
+                <span class="qp-player__name">nachtfalter_</span>
+                <span class="qp-player__badge">Legend</span>
+              </div>
+              <div class="qp-player">
+                <span class="qp-player__pos">4</span>
+                <span class="qp-player__name">turtleshell42</span>
+              </div>
+            </div>
+            <div class="qp-queue__hint">type !join to play</div>
+          </div>
+        </div>
+
+        <!-- Keyboard -->
+        <div class="qp-keyboard">
+          <!-- Row 1: Q W E R T Y U I O P -->
+          <div class="qp-key-row">
+            <div class="qp-key">Q</div>
+            <div class="qp-key">W</div>
+            <div class="qp-key qp-key--present">E</div>
+            <div class="qp-key">R</div>
+            <div class="qp-key qp-key--absent">T</div>
+            <div class="qp-key qp-key--absent">Y</div>
+            <div class="qp-key">U</div>
+            <div class="qp-key">I</div>
+            <div class="qp-key qp-key--absent">O</div>
+            <div class="qp-key">P</div>
+          </div>
+          <!-- Row 2: A S D F G H J K L -->
+          <div class="qp-key-row">
+            <div class="qp-key">A</div>
+            <div class="qp-key qp-key--absent">S</div>
+            <div class="qp-key">D</div>
+            <div class="qp-key qp-key--present">F</div>
+            <div class="qp-key">G</div>
+            <div class="qp-key">H</div>
+            <div class="qp-key">J</div>
+            <div class="qp-key">K</div>
+            <div class="qp-key qp-key--present">L</div>
+          </div>
+          <!-- Row 3: Z X C V B N M -->
+          <div class="qp-key-row">
+            <div class="qp-key">Z</div>
+            <div class="qp-key">X</div>
+            <div class="qp-key">C</div>
+            <div class="qp-key">V</div>
+            <div class="qp-key">B</div>
+            <div class="qp-key">N</div>
+            <div class="qp-key qp-key--present">M</div>
+          </div>
+        </div>
+
+        <p class="qp-caption">UI recreation · Suggestion Mode · mid-game state (word: FLAME)</p>
       </div>
     </div>
   </section>
@@ -336,7 +770,7 @@
           <tbody>
             <tr>
               <td>Framework</td>
-              <td>Next.js 15 (App Router), React 19, TypeScript</td>
+              <td>Next.js 16.2.6 (App Router), React 19, TypeScript</td>
             </tr>
             <tr>
               <td>Database</td>
@@ -348,7 +782,7 @@
             </tr>
             <tr>
               <td>IRC worker</td>
-              <td>Node.js + Fastify 5 + <code>ws</code>, deployed on Fly.io</td>
+              <td>Node.js + Fastify 5 + ws, deployed on Fly.io</td>
             </tr>
             <tr>
               <td>Styling</td>
