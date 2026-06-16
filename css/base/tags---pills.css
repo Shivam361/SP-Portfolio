@@ -20,6 +20,8 @@
   background-size: 200% auto;
   animation: shimmerAnim 3.5s linear infinite;
   color: var(--white);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.07);
 }
 
 .tag--sm {

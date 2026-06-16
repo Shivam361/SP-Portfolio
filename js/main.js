@@ -714,6 +714,8 @@ async function initGitHubActivity() {
     const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?sort=pushed&per_page=3`);
     if (reposRes.ok) {
       const repos = await reposRes.json();
+      repoContainer.style.opacity = '0';
+      await new Promise(r => setTimeout(r, 180));
       repoContainer.innerHTML = ''; // Clear skeletons
 
       repos.forEach(repo => {
@@ -735,10 +737,14 @@ async function initGitHubActivity() {
         `;
         repoContainer.appendChild(repoCard);
       });
+      requestAnimationFrame(() => { repoContainer.style.opacity = '1'; });
     }
   } catch (err) {
     console.error('GitHub API error:', err);
+    repoContainer.style.opacity = '0';
+    await new Promise(r => setTimeout(r, 180));
     repoContainer.innerHTML = '<p style="font-size:0.75rem; color:var(--text-dim);">Activity feed temporarily unavailable.</p>';
+    repoContainer.style.opacity = '1';
   }
 }
 

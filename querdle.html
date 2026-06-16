@@ -18,6 +18,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
   <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="loader" id="loader">
+    <p class="loader__logo">SP<span class="accent">.</span></p>
+    <div class="loader__bar"><div class="loader__fill"></div></div>
+  </div>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav__logo" aria-label="Shivam Parab portfolio home">
+      <span class="nav__logo-text">SP<span class="accent">.</span></span>
+    </a>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="index.html#about" class="nav__link">About</a></li>
+      <li><a href="index.html#skills" class="nav__link">Skills</a></li>
+      <li><a href="index.html#projects" class="nav__link">Projects</a></li>
+      <li><a href="index.html#experience" class="nav__link">Experience</a></li>
+      <li><a href="index.html#education" class="nav__link">Education</a></li>
+      <li><a href="index.html#contact" class="nav__link">Contact</a></li>
+    </ul>
+    <a href="index.html#contact" class="btn btn--nav">Hire Me</a>
+    <button class="nav__hamburger" id="hamburger" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main id="swup" class="transition-fade">
+
+  <!-- ─── QUERDLE PAGE STYLES — inside #swup so Swup injects them on SPA nav ── -->
   <style>
     /* ─── QUERDLE PREVIEW SHOWCASE ────────────────────────── */
     .qp-mock {
@@ -488,36 +520,6 @@
     }
     .qp-win-banner.visible { display: block; animation: qp-msg-in 0.3s ease both; }
   </style>
-</head>
-<body>
-
-  <div class="loader" id="loader">
-    <p class="loader__logo">SP<span class="accent">.</span></p>
-    <div class="loader__bar"><div class="loader__fill"></div></div>
-  </div>
-
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-follower" id="cursorFollower"></div>
-
-  <nav class="nav" id="nav">
-    <a href="index.html" class="nav__logo" aria-label="Shivam Parab portfolio home">
-      <span class="nav__logo-text">SP<span class="accent">.</span></span>
-    </a>
-    <ul class="nav__links" id="navLinks">
-      <li><a href="index.html#about" class="nav__link">About</a></li>
-      <li><a href="index.html#skills" class="nav__link">Skills</a></li>
-      <li><a href="index.html#projects" class="nav__link">Projects</a></li>
-      <li><a href="index.html#experience" class="nav__link">Experience</a></li>
-      <li><a href="index.html#education" class="nav__link">Education</a></li>
-      <li><a href="index.html#contact" class="nav__link">Contact</a></li>
-    </ul>
-    <a href="index.html#contact" class="btn btn--nav">Hire Me</a>
-    <button class="nav__hamburger" id="hamburger" aria-label="Open navigation menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <main id="swup" class="transition-fade">
 
   <header class="case-hero" id="case-home">
     <div class="case-hero__bg" id="vanta-bg-case" aria-hidden="true"></div>
@@ -995,56 +997,8 @@
     </div>
   </div>
 
-  </main>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__inner">
-        <div class="footer__brand">
-          <a href="index.html" class="footer__logo">SP<span class="accent">.</span></a>
-          <p class="footer__copy">&copy; 2026 Shivam Parab. Crafted with passion &amp; pixels.</p>
-        </div>
-
-        <div class="footer__github" id="githubActivity">
-          <p class="footer__github-title"><i class="fab fa-github"></i> GitHub Activity</p>
-          <div class="footer__github-stats">
-            <span class="github-stat" title="Public Repositories"><i class="fas fa-code-branch"></i> <span id="githubRepos">--</span> Repos</span>
-            <span class="github-stat" title="Followers"><i class="fas fa-users"></i> <span id="githubFollowers">--</span> Followers</span>
-          </div>
-          <div class="footer__github-repos" id="githubRepoList">
-            <div class="github-repo-skeleton"></div>
-            <div class="github-repo-skeleton"></div>
-          </div>
-        </div>
-
-        <div class="footer__socials">
-          <a href="https://github.com/Shivam361" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-          <a href="https://www.linkedin.com/in/shivam-parab-3b747b150/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-          <a href="mailto:parabshivam@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <button class="back-to-top" id="backToTop" aria-label="Scroll back to top of page">
-    <svg class="progress-ring" viewBox="0 0 46 46" aria-hidden="true">
-      <circle class="progress-ring__track" cx="23" cy="23" r="19"/>
-      <circle class="progress-ring__fill" id="progressRingFill" cx="23" cy="23" r="19"/>
-    </svg>
-    <i class="fas fa-chevron-up"></i>
-  </button>
-
-  <script src="js/vendor/gsap.min.js"></script>
-  <script src="js/vendor/ScrollTrigger.min.js"></script>
-  <script src="js/vendor/lenis.min.js"></script>
-  <script src="js/vendor/split-type.min.js"></script>
-  <script src="js/vendor/three.min.js"></script>
-  <script src="js/vendor/vanta.net.min.js"></script>
-  <script src="js/vendor/swup.min.js"></script>
-  <script src="js/main.js"></script>
-
+  <!-- ─── QUERDLE LIVE DEMO — inside #swup so Swup re-runs it on SPA nav ── -->
   <script>
-  /* ── Querdle Live Demo ─────────────────────────────────────────────── */
   (function qpDemo() {
     var WORD = 'FLAME';
     var timers = [];
@@ -1243,6 +1197,11 @@
     }
 
     function startDemo() {
+      /* Re-bind DOM refs — required after Swup replaces container content */
+      init();
+      /* Guard: bail if demo elements aren't in the DOM (navigated away) */
+      if (!boardEl || !document.contains(boardEl)) { clearAll(); return; }
+
       clearAll();
       keyState = {};
       buildBoard();
@@ -1293,14 +1252,58 @@
       later(startDemo, 14000);
     }
 
-    /* Boot */
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() { init(); startDemo(); });
-    } else {
-      init();
-      startDemo();
-    }
+    /* Boot — DOM elements above this script tag are already parsed */
+    init();
+    startDemo();
   })();
   </script>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <a href="index.html" class="footer__logo">SP<span class="accent">.</span></a>
+          <p class="footer__copy">&copy; 2026 Shivam Parab. Crafted with passion &amp; pixels.</p>
+        </div>
+
+        <div class="footer__github" id="githubActivity">
+          <p class="footer__github-title"><i class="fab fa-github"></i> GitHub Activity</p>
+          <div class="footer__github-stats">
+            <span class="github-stat" title="Public Repositories"><i class="fas fa-code-branch"></i> <span id="githubRepos">--</span> Repos</span>
+            <span class="github-stat" title="Followers"><i class="fas fa-users"></i> <span id="githubFollowers">--</span> Followers</span>
+          </div>
+          <div class="footer__github-repos" id="githubRepoList">
+            <div class="github-repo-skeleton"></div>
+            <div class="github-repo-skeleton"></div>
+          </div>
+        </div>
+
+        <div class="footer__socials">
+          <a href="https://github.com/Shivam361" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/shivam-parab-3b747b150/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:parabshivam@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Scroll back to top of page">
+    <svg class="progress-ring" viewBox="0 0 46 46" aria-hidden="true">
+      <circle class="progress-ring__track" cx="23" cy="23" r="19"/>
+      <circle class="progress-ring__fill" id="progressRingFill" cx="23" cy="23" r="19"/>
+    </svg>
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/vendor/split-type.min.js"></script>
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/vendor/vanta.net.min.js"></script>
+  <script src="js/vendor/swup.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

@@ -641,19 +641,17 @@
             <h3 class="project-card__title">Querdle — Live Wordle for Twitch Streams</h3>
             <p class="project-card__sub">Next.js · Supabase Realtime · IRC Worker on Fly.io · Solo · Mar–Jun 2026</p>
             <p class="project-card__desc">
-              Live word-guessing game platform wired directly into <strong>Twitch chat</strong> — chatters type
-              <code>!guess</code>, the board plays on stream in real time, and stats build automatically with
-              <strong>no sign-up required</strong>. Twitch IRC needs a persistent WebSocket incompatible with
-              Vercel's serverless model, so the architecture splits: <strong>Next.js on Vercel</strong> +
-              a long-running <strong>IRC worker on Fly.io</strong>, coordinated via HMAC-signed HTTP with
-              Supabase Realtime keeping every client in sync.
+              A <strong>live in-stream Wordle game for Twitch</strong> — viewers guess words directly from chat,
+              the board updates on screen in real time, and player stats build automatically with
+              <strong>no sign-up required</strong>. Built solo and <strong>live with real streamer communities</strong>
+              today at querdle.vercel.app.
             </p>
             <ul class="project-card__bullets">
-              <li><i class="fas fa-check-circle"></i> Two-service split (Vercel + Fly.io): serverless and persistent WebSocket can't coexist — constraint drove the architecture</li>
-              <li><i class="fas fa-check-circle"></i> Answer word never sent to client — server returns <code>TileResult[]</code> arrays only; cheating is structurally impossible</li>
-              <li><i class="fas fa-check-circle"></i> Supabase Realtime (<code>postgres_changes</code>) pushes state to board overlay, keyboard overlay &amp; play page — zero polling</li>
-              <li><i class="fas fa-check-circle"></i> Atomic <code>apply_chatter_event</code> Postgres RPC serializes all stat writes — prevents race-condition drift across concurrent channels</li>
-              <li><i class="fas fa-check-circle"></i> Chaos mode: win → Realtime event → 5 s countdown → new session; streamer never clicks between rounds</li>
+              <li><i class="fas fa-check-circle"></i><span> Shipped and live — real Twitch communities play active sessions today, not a prototype</span></li>
+              <li><i class="fas fa-check-circle"></i><span> Zero sign-up friction — player profiles, stats, and leaderboards build automatically from Twitch usernames alone</span></li>
+              <li><i class="fas fa-check-circle"></i><span> Custom OBS browser sources overlay the live game board and keyboard directly onto the stream</span></li>
+              <li><i class="fas fa-check-circle"></i><span> Two modes: structured turn-based queue and Chaos Mode, which auto-resets between rounds without streamer input</span></li>
+              <li><i class="fas fa-check-circle"></i><span> Cheat-proof by design — the answer never reaches the browser; only scored results are sent to each player</span></li>
             </ul>
             <div class="project-card__links">
               <a href="querdle.html" class="btn btn--sm btn--primary" aria-label="View Querdle case study">
