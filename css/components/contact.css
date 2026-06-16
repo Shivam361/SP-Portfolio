@@ -40,7 +40,7 @@
 .contact__link-icon {
   width: 44px;
   height: 44px;
-  background: rgba(124, 58, 237, 0.15);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -69,8 +69,8 @@
 
 /* Contact Form */
 .contact__form-wrap {
-  background: linear-gradient(165deg, var(--bg-card) 0%, rgba(18, 18, 28, 0.97) 100%);
-  border: 1px solid rgba(124, 58, 237, 0.15);
+  background: linear-gradient(165deg, var(--bg-card) 0%, var(--bg-card2) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-lg);
   padding: 36px;
   box-shadow: var(--shadow-card), 0 0 80px -30px var(--accent-glow);

@@ -9,7 +9,7 @@
 }
 
 .edu-card {
-  background: linear-gradient(180deg, var(--bg-card), rgba(18, 18, 28, 0.95));
+  background: linear-gradient(180deg, var(--bg-card), var(--bg-card2));
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 28px;
@@ -21,7 +21,7 @@
   box-shadow: var(--shadow-card);
 }
 .edu-card:hover {
-  border-color: rgba(124, 58, 237, 0.22);
+  border-color: rgba(255, 255, 255, 0.08);
   transform: translateY(-5px);
   box-shadow: var(--shadow-card-hover);
 }
@@ -29,7 +29,7 @@
 .edu-card__icon {
   width: 52px;
   height: 52px;
-  background: rgba(124, 58, 237, 0.15);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -82,7 +82,7 @@
 }
 
 .edu-card__badge--done {
-  background: rgba(124, 58, 237, 0.15);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--accent-2);
   border: 1px solid var(--border);
 }

@@ -16,7 +16,7 @@
 .cursor-follower {
   width: 32px;
   height: 32px;
-  border: 2px solid rgba(168, 85, 247, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   transform: translate(-50%, -50%);
   transition: transform 0.15s ease, opacity var(--transition);
 }

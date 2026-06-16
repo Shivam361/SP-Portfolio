@@ -2,7 +2,7 @@
    SHIVAM PARAB PORTFOLIO — MAIN JS
    ==================================================== */
 
-let heroTl, caseHeroTl, vantaEffect, swup;
+let heroTl, caseHeroTl, swup;
 
 /**
  * CACHED UI SINGLETONS
@@ -51,10 +51,7 @@ window.addEventListener('load', () => {
     
     swup.hooks.on('visit:start', () => {
       try {
-        document.querySelectorAll('[id^="vanta-bg"]').forEach(el => {
-          if (el.vantaEffect) { el.vantaEffect.destroy(); el.vantaEffect = null; }
-        });
-        if (window.typedInstance) { window.typedInstance.destroy(); window.typedInstance = null; }
+        // cleanup placeholder — nothing to destroy
       } catch (err) {
         console.warn('Silent cleanup error:', err);
       }
@@ -79,10 +76,14 @@ window.addEventListener('load', () => {
       // Clean previous scroll states & listeners
       ScrollTrigger.getAll().forEach(t => t.kill());
       window.scrollTo(0, 0);
-      
+
       initPage();  // Re-arm GSAP staggered entrances
       initPage2(); // Re-arm dynamic interactive DOM states
-      
+
+      // Refresh ScrollTrigger so in-viewport elements (e.g. first section
+      // titles on case study pages) fire their animations immediately.
+      setTimeout(() => { ScrollTrigger.refresh(); }, 50);
+
       // Play immediately (loader is bypassed by Swup)
       if (heroTl) heroTl.play();
       if (caseHeroTl) caseHeroTl.play();
@@ -93,6 +94,21 @@ window.addEventListener('load', () => {
 
 // ─── GSAP + SCROLLTRIGGER ─────────────────────────────
 gsap.registerPlugin(ScrollTrigger);
+
+// ─── COUNTER ANIMATION ────────────────────────────────
+function animateCounter(el, target, suffix = '') {
+  let start = 0;
+  const duration = target < 20 ? 800 : 1500;
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 4);
+    if (typeof target === 'number') el.textContent = Math.floor(eased * target) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target + suffix;
+  };
+  requestAnimationFrame(step);
+}
 
 
 // ─── LENIS SMOOTH SCROLL ───────────────────────────────
@@ -110,14 +126,19 @@ lenis.on('scroll', () => {
   ScrollTrigger.update();
 });
 
-// Refresh ScrollTrigger once everything is loaded
+// Refresh ScrollTrigger once everything is loaded.
+// Two passes: immediate + delayed to catch case study pages where the first
+// section is already partially in viewport (hero is only 56vh tall).
 window.addEventListener('load', () => {
   ScrollTrigger.refresh();
+  setTimeout(() => { ScrollTrigger.refresh(); }, 200);
 });
 
 // ─── GSAP SCROLL ANIMATIONS ────────────────────────────
 function initPage() {
-  if (vantaEffect) { vantaEffect.destroy(); vantaEffect = null; }
+  // Kill previous timelines so stale inline styles don't poison "to" captures
+  if (heroTl) { heroTl.kill(); heroTl = null; }
+  if (caseHeroTl) { caseHeroTl.kill(); caseHeroTl = null; }
 
   // Hero entrance — stagger in on page load
   // Pause by default, will be played by loader event listener
@@ -130,20 +151,20 @@ if (typeof SplitType !== 'undefined' && document.querySelector('.hero__name')) {
 }
 
 heroTl
-  .from('.hero__eyebrow',    { y: 24, opacity: 0, duration: 0.7, ease: 'power3.out' });
+  .fromTo('.hero__eyebrow',    { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' });
 
 if (heroNameSplit) {
-  heroTl.from(heroNameSplit.chars, { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.05 }, '-=0.4');
+  heroTl.fromTo(heroNameSplit.chars, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.05 }, '-=0.4');
 } else {
-  heroTl.from('.hero__name', { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4');
+  heroTl.fromTo('.hero__name', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }, '-=0.4');
 }
 
 heroTl
-  .from('.hero__roles',      { y: 24, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
-  .from('.hero__summary',    { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.3')
-  .from('.hero__cta',        { y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
-  .from('.hero__socials',    { y: 10, opacity: 0, duration: 0.4 }, '-=0.2')
-  .from('.hero__scroll-hint',{ opacity: 0, duration: 0.5 }, '-=0.1');
+  .fromTo('.hero__roles',      { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+  .fromTo('.hero__summary',    { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.3')
+  .fromTo('.hero__cta',        { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, '-=0.3')
+  .fromTo('.hero__socials',    { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, '-=0.2')
+  .fromTo('.hero__scroll-hint',{ opacity: 0 },        { opacity: 1, duration: 0.5 }, '-=0.1');
 
 // ─── CASE STUDY HERO ANIMATION ─────────────────────────
   if (document.querySelector('.case-hero')) {
@@ -155,40 +176,83 @@ heroTl
   }
 
   caseHeroTl
-    .from('.case-breadcrumb', { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out' });
+    .fromTo('.case-breadcrumb', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' });
 
   if (caseTitleSplit) {
-    caseHeroTl.from(caseTitleSplit.chars, { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.03 }, '-=0.4');
+    caseHeroTl.fromTo(caseTitleSplit.chars, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.03 }, '-=0.4');
   } else {
-    caseHeroTl.from('.case-hero__title', { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4');
+    caseHeroTl.fromTo('.case-hero__title', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }, '-=0.4');
   }
 
   caseHeroTl
-    .from('.case-hero__icon',    { scale: 0.5, opacity: 0, duration: 0.6, ease: 'back.out(1.7)' }, '-=0.6')
-    .from('.case-hero__lead',    { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
-    .from('.case-hero__actions .btn', { y: 20, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' }, '-=0.3')
-    .from('.case-meta .tag',     { scale: 0.8, opacity: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out' }, '-=0.3');
+    .fromTo('.case-hero__icon',    { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.7)' }, '-=0.6')
+    .fromTo('.case-hero__lead',    { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+    .fromTo('.case-hero__actions .btn', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out' }, '-=0.3')
+    .fromTo('.case-meta .tag',     { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, stagger: 0.05, ease: 'power2.out' }, '-=0.3');
+
+  // Hero preview image reveal (clip-path wipe from top)
+  const heroPreview = document.getElementById('caseHeroPreview');
+  if (heroPreview) {
+    caseHeroTl
+      .fromTo(heroPreview,
+        { opacity: 0, y: 48, clipPath: 'inset(8% 0% 0% 0% round 14px)' },
+        { opacity: 1, y: 0, clipPath: 'inset(0% 0% 0% 0% round 14px)', duration: 1.0, ease: 'power3.out' },
+        '-=0.2'
+      );
+    // Subtle float after load
+    gsap.to(heroPreview, { y: -8, duration: 4, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.4 });
+  }
+
+  // Animate case-hero stats numbers counting up
+  document.querySelectorAll('.case-hero__stat-n').forEach(el => {
+    const text = el.textContent.trim();
+    const match = text.match(/^(\d+)(.*)$/);
+    if (!match) return;
+    const target = parseInt(match[1]);
+    const suffix = match[2];
+    caseHeroTl.add(() => animateCounter(el, target, suffix), '-=0.4');
+  });
 }
 
-// Section titles slide up as they enter viewport
-if (typeof SplitType !== 'undefined') {
-  gsap.utils.toArray('.section__title').forEach(title => {
+// Hero background parallax — subtle depth on scroll
+if (document.querySelector('.hero__bg')) {
+  gsap.to('.hero__bg', {
+    yPercent: 25,
+    ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+}
+if (document.querySelector('.case-hero__bg')) {
+  gsap.to('.case-hero__bg', {
+    yPercent: 18,
+    ease: 'none',
+    scrollTrigger: { trigger: '.case-hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+}
+
+// Section titles slide up as they enter viewport.
+// Skip animation for elements already in the viewport on init — gsap.from() sets
+// opacity:0 immediately and toggleActions only fires play on SCROLL, so pre-visible
+// elements would stay permanently invisible.
+const vh = window.innerHeight;
+gsap.utils.toArray('.section__title').forEach(title => {
+  if (title.getBoundingClientRect().top < vh * 0.92) return; // already visible
+  if (typeof SplitType !== 'undefined') {
     const splitTitle = new SplitType(title, { types: 'chars' });
     gsap.from(splitTitle.chars, {
       y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.02,
       scrollTrigger: { trigger: title, start: 'top 88%', toggleActions: 'play none none none' }
     });
-  });
-} else {
-  gsap.utils.toArray('.section__title').forEach(el => {
-    gsap.from(el, {
+  } else {
+    gsap.from(title, {
       y: 40, opacity: 0, duration: 0.8, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+      scrollTrigger: { trigger: title, start: 'top 88%', toggleActions: 'play none none none' }
     });
-  });
-}
+  }
+});
 
 gsap.utils.toArray('.section__eyebrow').forEach(el => {
+  if (el.getBoundingClientRect().top < vh * 0.92) return; // already visible
   gsap.from(el, {
     y: 40, opacity: 0, duration: 0.8, ease: 'power3.out',
     scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
@@ -219,12 +283,59 @@ gsap.utils.toArray('.skill-group, .edu-card').forEach((el, i) => {
   });
 });
 
-// Case study items fade up
-gsap.utils.toArray('.case-panel, .case-prose, .case-cta-bar').forEach((el, i) => {
-  gsap.from(el, {
-    y: 40, opacity: 0, duration: 0.7, ease: 'power3.out',
-    scrollTrigger: { trigger: el, start: 'top 92%', toggleActions: 'play none none none' }
-  });
+// Case study panels — clip-path wipe reveal (more cinematic than plain fade)
+// Skip panels inside .case-two-col — those are handled by the two-col stagger below
+gsap.utils.toArray('.case-panel').forEach((el) => {
+  if (el.closest('.case-two-col')) return;
+  if (el.getBoundingClientRect().top < vh * 0.95) return;
+  gsap.fromTo(el,
+    { opacity: 0, y: 32, clipPath: 'inset(6% 0% 0% 0% round 10px)' },
+    { opacity: 1, y: 0, clipPath: 'inset(0% 0% 0% 0% round 10px)', duration: 0.75, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 92%', toggleActions: 'play none none none' } }
+  );
+});
+
+gsap.utils.toArray('.case-prose, .case-cta-bar').forEach((el) => {
+  if (el.getBoundingClientRect().top < vh * 0.95) return;
+  gsap.fromTo(el,
+    { y: 40, opacity: 0 },
+    { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 92%', toggleActions: 'play none none none' } }
+  );
+});
+
+// Case flow list items stagger in from left
+gsap.utils.toArray('.case-flow').forEach(list => {
+  const items = list.querySelectorAll('li');
+  if (!items.length) return;
+  if (list.getBoundingClientRect().top < vh * 0.95) return;
+  gsap.fromTo(items,
+    { x: -30, opacity: 0 },
+    { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.1,
+      scrollTrigger: { trigger: list, start: 'top 90%', toggleActions: 'play none none none' } }
+  );
+});
+
+// Case two-col children stagger in (handles all .case-panel children inside grids)
+gsap.utils.toArray('.case-two-col').forEach(grid => {
+  const children = Array.from(grid.children);
+  if (!children.length) return;
+  if (grid.getBoundingClientRect().top < vh * 0.95) return;
+  gsap.fromTo(children,
+    { y: 40, opacity: 0, clipPath: 'inset(6% 0% 0% 0% round 10px)' },
+    { y: 0, opacity: 1, clipPath: 'inset(0% 0% 0% 0% round 10px)', duration: 0.65, ease: 'power2.out', stagger: 0.12,
+      scrollTrigger: { trigger: grid, start: 'top 88%', toggleActions: 'play none none none' } }
+  );
+});
+
+// Screenshot cards pop up with scale
+gsap.utils.toArray('.ss-card').forEach((card, i) => {
+  if (card.getBoundingClientRect().top < vh * 0.95) return;
+  gsap.fromTo(card,
+    { y: 50, opacity: 0, scale: 0.96 },
+    { y: 0, opacity: 1, scale: 1, duration: 0.7, ease: 'power3.out', delay: i * 0.1,
+      scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' } }
+  );
 });
 
 } // <--- END initPage()
@@ -314,7 +425,7 @@ if (UI.cursor && UI.cursorFollower && window.matchMedia("(pointer: fine)").match
   document.addEventListener('mouseover', (e) => {
     if (e.target.closest(interactableSelector)) {
       UI.cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.8)';
-      UI.cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.8)';
+      UI.cursorFollower.style.borderColor = 'rgba(255, 255, 255, 0.7)';
     }
   });
 
@@ -323,7 +434,7 @@ if (UI.cursor && UI.cursorFollower && window.matchMedia("(pointer: fine)").match
     if (parentContainer) {
       if (!e.relatedTarget || !parentContainer.contains(e.relatedTarget)) {
         UI.cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
-        UI.cursorFollower.style.borderColor = 'rgba(168, 85, 247, 0.5)';
+        UI.cursorFollower.style.borderColor = 'rgba(255, 255, 255, 0.35)';
       }
     }
   });
@@ -402,61 +513,6 @@ document.querySelectorAll('.project-card, .skill-card, .case-panel, .stat-card')
   });
 });
 
-// ─── TYPED ROLE EFFECT ─────────────────────────────────
-if (typeof Typed !== 'undefined' && document.getElementById('typedRole')) {
-  if (window.typedInstance) window.typedInstance.destroy();
-  window.typedInstance = new Typed('#typedRole', {
-    strings: [
-      'Software Engineer',
-      'Backend & .NET Developer',
-      'Full-Stack Developer',
-      'Game Developer',
-      'Unity & Interactive Systems',
-      'Games Educator & Lecturer'
-    ],
-    typeSpeed: 50,
-    backSpeed: 30,
-    backDelay: 2000,
-    loop: true,
-    showCursor: true,
-    cursorChar: '|',
-    autoInsertCss: true
-  });
-}
-
-// ─── 3D BACKGROUNDS (VANTA.JS) ─────────────────────────
-const vantaConfigs = [
-  { id: 'vanta-bg', color: 0x7c3aed, backgroundColor: 0x0f0f16, points: 12.0, maxDistance: 22.0, spacing: 16.0 },
-  { id: 'vanta-bg-case', color: 0x14b8a6, backgroundColor: 0x08080c, points: 10.0, maxDistance: 24.0, spacing: 18.0 },
-  { id: 'vanta-bg-contact', color: 0xa855f7, backgroundColor: 0x0f0f16, points: 9.0, maxDistance: 25.0, spacing: 20.0 }
-];
-
-let vantaObserver;
-if (typeof VANTA !== 'undefined') {
-  vantaObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const config = vantaConfigs.find(c => c.id === entry.target.id);
-      if (!config) return;
-      if (entry.isIntersecting) {
-        if (!entry.target.vantaEffect) {
-          entry.target.vantaEffect = VANTA.NET({
-            el: `#${config.id}`,
-            mouseControls: true, touchControls: true, gyroControls: false,
-            minHeight: 200.0, minWidth: 200.0, scale: 1.0, scaleMobile: 1.0,
-            color: config.color, backgroundColor: config.backgroundColor,
-            points: config.points, maxDistance: config.maxDistance, spacing: config.spacing,
-            showDots: true
-          });
-        }
-      } else {
-        if (entry.target.vantaEffect) {
-          entry.target.vantaEffect.destroy();
-          entry.target.vantaEffect = null;
-        }
-      }
-    });
-  }, { rootMargin: '100px 0px' });
-}
 
 // ─── SCROLL SPY NAVIGATION ─────────────────────────────
 let spyObserver;
@@ -516,21 +572,6 @@ if (typeof gsap !== 'undefined') {
 
 
 
-// ─── SKILL BAR ANIMATION ───────────────────────────────
-(function () {
-  const skillBars = document.querySelectorAll('.skill-bar__fill');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animated');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  skillBars.forEach(bar => observer.observe(bar));
-})();
 
 // ─── CONTACT FORM ──────────────────────────────────────
 const contactForm = document.getElementById('contactForm');
@@ -617,34 +658,6 @@ if (typeof Swup !== 'undefined') {
     });
   });
 }
-
-// ─── PROJECT CARD TILT ─────────────────────────────────
-// (Project Card 3D Tilt removed to resolve severe FPS drop and stuttering)
-
-// ─── COUNTER ANIMATION (STAT CARDS) ────────────────────
-function animateCounter(el, target, suffix = '') {
-  let start = 0;
-  // Dynamic duration: finish small numbers faster so they don't 'hang' and stutter
-  const duration = target < 20 ? 800 : 1500; 
-  const step = (timestamp) => {
-    if (!start) start = timestamp;
-    const progress = Math.min((timestamp - start) / duration, 1);
-    // Quartic ease-out for a much smoother deceleration curve
-    const eased = 1 - Math.pow(1 - progress, 4); 
-    if (typeof target === 'number') {
-      el.textContent = Math.floor(eased * target) + suffix;
-    }
-    if (progress < 1) requestAnimationFrame(step);
-    else el.textContent = target + suffix;
-  };
-  requestAnimationFrame(step);
-}
-
-  // Re-observe elements for the new DOM
-  vantaConfigs.forEach(config => {
-    const el = document.getElementById(config.id);
-    if (el && vantaObserver) vantaObserver.observe(el);
-  });
 
   const spySections = document.querySelectorAll('section[id]');
   if (spySections.length > 0 && spyObserver) {

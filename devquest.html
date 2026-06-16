@@ -15,7 +15,7 @@
   <meta name="twitter:description" content="Exploring AI-driven adaptive difficulty scaling in Unity using ML-Agents for high-retention educational gamification.">
   <meta name="twitter:image" content="https://sp-portfolio-nine.vercel.app/img/profile.jpg">
 
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -74,7 +74,7 @@
         </a>
       </div>
       <div class="case-meta">
-        <span class="tag tag--sm tag--research">Academic Research</span>
+        <span class="tag tag--sm">Academic Research</span>
         <span class="tag tag--sm">Unity & ML-Agents</span>
         <span class="tag tag--sm">Machine Learning</span>
         <span class="tag tag--sm">Gamification</span>
@@ -90,18 +90,21 @@
       </div>
       <div class="case-prose">
         <p>
-          [Placeholder] Provide a brief overview of the dissertation thesis. Explain the problem with static difficulty curves in educational games and how adaptive learning systems can bridge the gap in neurodivergent or varying skill-level classrooms.
+          Traditional educational games ship with hand-authored difficulty curves: fixed enemy health values, predetermined puzzle timers, and static resource budgets. These curves are calibrated for an average learner and systematically fail students at the extremes — frustrating high-performers and overwhelming those with limited prior knowledge or neurodivergent processing styles.
+        </p>
+        <p>
+          This dissertation proposes and evaluates an alternative: a <strong>Reinforcement Learning agent</strong>, trained in simulation using Unity ML-Agents and PPO, that continuously observes player behavioural signals and adjusts in-game parameters in real time. By treating difficulty as a dynamic policy rather than a fixed schedule, the system aims to keep every player inside their individual flow state — maximising engagement and knowledge retention simultaneously.
         </p>
       </div>
 
-      <div class="case-panel" style="margin-top: 32px; border-left: 3px solid var(--neon-accent);">
+      <div class="case-panel" style="margin-top: 32px; border-left: 3px solid var(--accent-2);">
         <h3 class="case-panel__title" style="margin-bottom: 12px;"><i class="fas fa-microscope"></i> Research Focus</h3>
-        <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 16px;">
+        <p style="font-size: 0.95rem; margin-bottom: 16px; color: var(--text-muted);">
           The study concentrated on the following execution pillars:
         </p>
         <ul style="margin: 0; padding-left: 1.2rem; display: grid; gap: 0.5rem;">
-          <li><strong>Agent Training:</strong> [Placeholder] Explain how the ML-Agents were trained in Unity, mentioning the neural network training environments and reward signals.</li>
-          <li><strong>Adaptive Systems:</strong> [Placeholder] Detail how the game runtime actively monitored player struggle and adjusted enemy spawn rates, health pools, or puzzle complexity automatically.</li>
+          <li><strong>Agent Training:</strong> Proximal Policy Optimisation (PPO) agents were trained inside isolated Unity simulation environments, receiving reward signals derived from player performance telemetry — penalising premature deaths and rewarding sustained engagement above a target threshold.</li>
+          <li><strong>Adaptive Systems:</strong> At runtime, a lightweight telemetry loop sampled player health, kill rate, and time-per-objective every 10 seconds. The trained policy network consumed these metrics and emitted discrete difficulty adjustments — modifying enemy aggression, spawn density, and puzzle timer windows — without breaking game flow.</li>
         </ul>
       </div>
 
@@ -129,15 +132,19 @@
       </div>
       <div class="case-two-col">
         <div class="case-panel">
-          <h3 class="case-panel__title"><i class="fas fa-chart-line"></i> Quantitative Data</h3>
+          <h3 class="case-panel__title"><i class="fas fa-chart-line"></i> What Was Measured</h3>
           <ul>
-            <li><strong>Retention Metrics:</strong> [Placeholder] Detail the statistical improvement in player testing groups utilizing the adaptive difficulty over the control group.</li>
+            <li><strong>Session Engagement:</strong> Uninterrupted play duration and voluntary quit events were tracked across both the adaptive-difficulty group and a static-curve control group during structured observation windows.</li>
+            <li><strong>Perceived Difficulty:</strong> Post-session Likert surveys captured how participants rated the balance of challenge — comparing the subjective distribution of responses between both groups.</li>
+            <li><strong>Task Completion:</strong> The proportion of learners reaching each curriculum milestone within the allotted time was compared across conditions to evaluate whether adaptive tuning reduced friction without trivialising content.</li>
           </ul>
         </div>
         <div class="case-panel">
           <h3 class="case-panel__title"><i class="fas fa-lightbulb"></i> Key Takeaways</h3>
           <ul>
-            <li><strong>Future Viability:</strong> [Placeholder] Summarize the potential for applying these small-scale ML models to AAA learning or accessibility configurations.</li>
+            <li><strong>RL Viability at Small Scale:</strong> The study evaluated whether a compact, locally-trained PPO policy can operate at interactive frame rates inside Unity without a cloud inference backend — addressing a key barrier for indie and educational studio adoption.</li>
+            <li><strong>Accessibility as Architecture:</strong> Dynamic difficulty scaling was framed as a structural accessibility feature rather than an optional setting, avoiding the stigma of manual difficulty selection while accommodating a wider range of cognitive profiles.</li>
+            <li><strong>Future Directions:</strong> The methodology identifies gaze-tracking, biometric telemetry, and longer longitudinal studies as viable extensions that would improve ecological validity beyond the scope of this prototype evaluation.</li>
           </ul>
         </div>
       </div>

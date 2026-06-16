@@ -4,11 +4,11 @@
   align-items: center;
   gap: 6px;
   padding: 5px 14px;
-  background: rgba(124, 58, 237, 0.12);
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border);
   border-radius: 100px;
   font-size: 0.78rem;
-  color: #c4b5fd; /* Softened light purple for better contrast against dark background */
+  color: #e0e0e0; /* Softened light purple for better contrast against dark background */
   font-family: var(--font-mono);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -16,7 +16,7 @@
 }
 
 .tag:hover {
-  background-image: linear-gradient(90deg, rgba(124, 58, 237, 0.12) 0%, rgba(124, 58, 237, 0.35) 50%, rgba(124, 58, 237, 0.12) 100%);
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.06) 50%, rgba(255, 255, 255, 0.05) 100%);
   background-size: 200% auto;
   animation: shimmerAnim 3.5s linear infinite;
   color: var(--white);
@@ -47,7 +47,7 @@
 .pill:hover {
   border-color: var(--accent);
   color: var(--accent-2);
-  background: rgba(124, 58, 237, 0.08);
+  background: rgba(255, 255, 255, 0.04);
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
