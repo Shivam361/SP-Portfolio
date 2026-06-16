@@ -82,7 +82,7 @@ window.addEventListener('load', () => {
 
       // Refresh ScrollTrigger so in-viewport elements (e.g. first section
       // titles on case study pages) fire their animations immediately.
-      setTimeout(() => { ScrollTrigger.refresh(); }, 50);
+      setTimeout(() => { ScrollTrigger.refresh(); flushPassedTriggers(); }, 50);
 
       // Play immediately (loader is bypassed by Swup)
       if (heroTl) heroTl.play();
@@ -126,12 +126,27 @@ lenis.on('scroll', () => {
   ScrollTrigger.update();
 });
 
+// Safety net: catch native scroll events (keyboard, programmatic, browser back/forward)
+// that bypass Lenis so ScrollTrigger never misses a trigger position.
+window.addEventListener('scroll', () => ScrollTrigger.update(), { passive: true });
+
+// After any refresh, force-complete animations for elements whose trigger is
+// already past the current scroll position so they don't stay invisible.
+function flushPassedTriggers() {
+  const scrollBottom = window.scrollY + window.innerHeight;
+  ScrollTrigger.getAll().forEach(st => {
+    if (st.progress === 0 && st.start != null && st.start <= scrollBottom) {
+      st.animation?.progress(1, true);
+    }
+  });
+}
+
 // Refresh ScrollTrigger once everything is loaded.
 // Two passes: immediate + delayed to catch case study pages where the first
 // section is already partially in viewport (hero is only 56vh tall).
 window.addEventListener('load', () => {
   ScrollTrigger.refresh();
-  setTimeout(() => { ScrollTrigger.refresh(); }, 200);
+  setTimeout(() => { ScrollTrigger.refresh(); flushPassedTriggers(); }, 200);
 });
 
 // ─── GSAP SCROLL ANIMATIONS ────────────────────────────
@@ -261,6 +276,7 @@ gsap.utils.toArray('.section__eyebrow').forEach(el => {
 
 // Project cards stagger in from below
 gsap.utils.toArray('.project-card').forEach((card, i) => {
+  if (card.getBoundingClientRect().top < vh * 0.95) return;
   gsap.from(card, {
     y: 60, opacity: 0, duration: 0.75, ease: 'power3.out', delay: (i % 2) * 0.12,
     scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' }
@@ -269,6 +285,7 @@ gsap.utils.toArray('.project-card').forEach((card, i) => {
 
 // Timeline items slide in from the left
 gsap.utils.toArray('.timeline__item').forEach((item, i) => {
+  if (item.getBoundingClientRect().top < vh * 0.95) return;
   gsap.from(item, {
     x: -40, opacity: 0, duration: 0.7, ease: 'power2.out', delay: i * 0.06,
     scrollTrigger: { trigger: item, start: 'top 90%', toggleActions: 'play none none none' }
@@ -277,6 +294,7 @@ gsap.utils.toArray('.timeline__item').forEach((item, i) => {
 
 // Skill groups and edu cards fade + scale up
 gsap.utils.toArray('.skill-group, .edu-card').forEach((el, i) => {
+  if (el.getBoundingClientRect().top < vh * 0.95) return;
   gsap.from(el, {
     y: 30, opacity: 0, scale: 0.97, duration: 0.65, ease: 'power2.out', delay: (i % 3) * 0.08,
     scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
