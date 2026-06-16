@@ -22,10 +22,10 @@
 }
 
 /* Cards 2 & 3 — asymmetric bento */
-.project-card:nth-child(2) { grid-column: span 7; }
-.project-card:nth-child(3) { grid-column: span 5; }
-.project-card:nth-child(4) { grid-column: span 5; }
-.project-card:nth-child(5) { grid-column: span 7; }
+.project-card:nth-child(2) { grid-column: span 6; }
+.project-card:nth-child(3) { grid-column: span 6; }
+.project-card:nth-child(4) { grid-column: span 7; }
+.project-card:nth-child(5) { grid-column: span 5; }
 .project-card:nth-child(6) { grid-column: span 6; }
 .project-card:nth-child(7) { grid-column: span 6; }
 
@@ -54,6 +54,14 @@
 
 .project-card--featured .project-card__media { min-height: 360px; }
 .project-card:nth-child(6) .project-card__media { min-height: 300px; }
+
+/* Narrow 5-col card — reduce side padding so bullets don't wrap mid-phrase */
+.project-card:nth-child(5) .project-card__body { padding-left: 20px; padding-right: 20px; }
+
+/* Querdle — flip body/media so featured cards mirror each other */
+.project-card:nth-child(9).project-card--featured { grid-template-columns: 1.5fr 1fr; }
+.project-card:nth-child(9) .project-card__media { order: 2; }
+.project-card:nth-child(9) .project-card__body { order: 1; }
 
 /* Shine sweep on hover */
 .project-card__media::after {
@@ -148,7 +156,6 @@
   color: var(--text-muted);
   line-height: 1.75;
   margin-bottom: 20px;
-  flex: 1;
 }
 
 .project-card__bullets {

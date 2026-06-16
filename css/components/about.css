@@ -103,6 +103,10 @@
   line-height: 1.8;
 }
 
+.about__text .section__title {
+  font-size: clamp(1.8rem, 3.8vw, 3rem);
+}
+
 .about__highlights {
   display: flex;
   flex-direction: column;

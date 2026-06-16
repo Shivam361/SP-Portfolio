@@ -121,8 +121,8 @@
 .hero__scroll-hint {
   position: absolute;
   bottom: 40px;
-  left: clamp(24px, 8vw, 120px);
-  transform: none;
+  right: clamp(24px, 4vw, 60px);
+  left: auto;
   z-index: 3;
   display: flex;
   flex-direction: column;
