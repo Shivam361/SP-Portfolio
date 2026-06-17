@@ -346,6 +346,49 @@ gsap.utils.toArray('.case-two-col').forEach(grid => {
   );
 });
 
+// Scrubbing word-opacity reveal — about bio paragraphs
+if (typeof SplitType !== 'undefined' && document.querySelector('.about__bio')) {
+  document.querySelectorAll('.about__bio').forEach(bio => {
+    if (bio.getBoundingClientRect().top < vh * 0.92) return;
+    const bSplit = new SplitType(bio, { types: 'words' });
+    gsap.fromTo(bSplit.words,
+      { opacity: 0.12 },
+      {
+        opacity: 1,
+        ease: 'none',
+        stagger: 0.05,
+        scrollTrigger: {
+          trigger: bio,
+          start: 'top 80%',
+          end: 'bottom 25%',
+          scrub: 2,
+        }
+      }
+    );
+  });
+}
+
+// Image scale-in entrance for project card images (0.85 → 1 as card scrolls up)
+gsap.utils.toArray('.project-card__media').forEach(media => {
+  const imgWrap = media.querySelector('.project-card__img-wrap');
+  if (!imgWrap) return;
+  const card = media.closest('.project-card');
+  if (!card || card.getBoundingClientRect().top < vh * 0.95) return;
+  gsap.fromTo(imgWrap,
+    { scale: 0.85 },
+    {
+      scale: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: card,
+        start: 'top bottom',
+        end: 'top 35%',
+        scrub: true,
+      }
+    }
+  );
+});
+
 // Screenshot cards pop up with scale
 gsap.utils.toArray('.ss-card').forEach((card, i) => {
   if (card.getBoundingClientRect().top < vh * 0.95) return;
