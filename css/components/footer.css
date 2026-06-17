@@ -1,9 +1,9 @@
 /* FOOTER */
 .footer {
-  background: linear-gradient(180deg, rgba(14, 14, 12, 0.98), var(--bg-card));
+  background: var(--bg-card);
   padding: 60px 0 40px;
   position: relative;
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .footer::before {
@@ -52,6 +52,7 @@
   color: var(--white);
   text-decoration: none;
 }
+.footer__logo .accent { color: var(--accent-teal); }
 
 .footer__copy {
   font-size: 0.85rem;
@@ -75,14 +76,14 @@
 
 .footer__github-title {
   font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--accent-2);
+  font-weight: 600;
+  color: var(--text-dim);
   display: flex;
   align-items: center;
   gap: 8px;
   margin: 0;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
 }
 
 .footer__github-stats {

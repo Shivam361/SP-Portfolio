@@ -101,6 +101,8 @@
   margin-bottom: 16px;
   font-size: 1.01rem;
   line-height: 1.8;
+  max-width: 65ch;
+  text-wrap: pretty;
 }
 
 .about__text .section__title {

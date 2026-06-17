@@ -32,9 +32,8 @@
   transition: var(--transition);
 }
 .contact__link-item:hover {
-  border-color: var(--accent);
-  box-shadow: 0 4px 20px var(--accent-glow);
-  transform: translateX(4px);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .contact__link-icon {
@@ -69,11 +68,10 @@
 
 /* Contact Form */
 .contact__form-wrap {
-  background: linear-gradient(165deg, var(--bg-card) 0%, var(--bg-card2) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 36px;
-  box-shadow: var(--shadow-card), 0 0 80px -30px var(--accent-glow);
 }
 
 .form__group {

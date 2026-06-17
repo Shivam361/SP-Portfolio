@@ -17,6 +17,8 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -65,9 +67,8 @@
         My MSc Computer Science <strong>Dissertation</strong> exploring how <strong>adaptive difficulty scaling</strong> using <strong>Reinforcement Learning (ML-Agents)</strong> can drastically improve player retention and educational outcomes in serious learning gamification paradigms.
       </p>
       <div class="case-hero__actions">
-        <!-- Placeholder for actual paper link if available -->
-        <a href="#" target="_blank" rel="noopener" class="btn btn--primary">
-          <i class="fas fa-file-pdf"></i> Read Dissertation
+        <a href="#" class="btn btn--primary btn--disabled" aria-disabled="true" tabindex="-1">
+          <i class="fas fa-file-pdf"></i> Dissertation (Coming Soon)
         </a>
         <a href="index.html#projects" class="btn btn--outline">
           <i class="fas fa-arrow-left"></i> All projects
@@ -97,25 +98,25 @@
         </p>
       </div>
 
-      <div class="case-panel" style="margin-top: 32px; border-left: 3px solid var(--accent-2);">
-        <h3 class="case-panel__title" style="margin-bottom: 12px;"><i class="fas fa-microscope"></i> Research Focus</h3>
-        <p style="font-size: 0.95rem; margin-bottom: 16px; color: var(--text-muted);">
+      <div class="case-panel case-panel--role">
+        <h3 class="case-panel__title"><i class="fas fa-microscope"></i> Research Focus</h3>
+        <p>
           The study concentrated on the following execution pillars:
         </p>
-        <ul style="margin: 0; padding-left: 1.2rem; display: grid; gap: 0.5rem;">
+        <ul>
           <li><strong>Agent Training:</strong> Proximal Policy Optimisation (PPO) agents were trained inside isolated Unity simulation environments, receiving reward signals derived from player performance telemetry — penalising premature deaths and rewarding sustained engagement above a target threshold.</li>
           <li><strong>Adaptive Systems:</strong> At runtime, a lightweight telemetry loop sampled player health, kill rate, and time-per-objective every 10 seconds. The trained policy network consumed these metrics and emitted discrete difficulty adjustments — modifying enemy aggression, spawn density, and puzzle timer windows — without breaking game flow.</li>
         </ul>
       </div>
 
-      <div class="case-panel" style="margin-top: 24px;">
+      <div class="case-panel">
         <h3 class="case-panel__title"><i class="fas fa-layer-group"></i> Core Technology Stack</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
-          <ul style="margin: 0; padding-left: 1.2rem;">
+        <div class="case-stack">
+          <ul>
             <li><strong>Unity ML-Agents:</strong> PyTorch-backed reinforcement learning toolkit for game agents.</li>
             <li><strong>C# Architecture:</strong> Observer patterns for data telemetry collection.</li>
           </ul>
-          <ul style="margin: 0; padding-left: 1.2rem;">
+          <ul>
             <li><strong>Python Scripting:</strong> Data analysis and trajectory graphing.</li>
             <li><strong>Academic Formatting:</strong> IEEE/Harvard standard technical writing.</li>
           </ul>
@@ -154,9 +155,8 @@
   <div class="case-cta-bar">
     <p>Read the full academic dissertation paper to review the methodology and mathematical findings.</p>
     <div class="case-cta-bar__actions">
-      <!-- Placeholder link to the PDF -->
-      <a href="#" target="_blank" rel="noopener" class="btn btn--primary">
-        <i class="fas fa-file-pdf"></i> Download PDF
+      <a href="#" class="btn btn--primary btn--disabled" aria-disabled="true" tabindex="-1">
+        <i class="fas fa-file-pdf"></i> PDF (Coming Soon)
       </a>
       <a href="index.html#contact" class="btn btn--outline">
         <i class="fas fa-envelope"></i> Contact Shivam

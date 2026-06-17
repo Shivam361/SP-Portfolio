@@ -118,7 +118,7 @@
 }
 
 .project-card__body {
-  padding: 28px 32px;
+  padding: 32px 36px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -140,6 +140,7 @@
   margin-bottom: 4px;
   letter-spacing: -0.02em;
   line-height: 1.2;
+  text-wrap: balance;
 }
 
 .project-card--featured .project-card__title { font-size: 1.7rem; }

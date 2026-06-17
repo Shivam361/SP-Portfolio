@@ -1,11 +1,11 @@
 /* SECTION BASE */
 .section {
-  padding: 100px 0;
+  padding: 120px 0;
 }
 
 .section__header {
   text-align: left;
-  margin-bottom: 64px;
+  margin-bottom: 80px;
   max-width: 1200px;
   padding: 0 clamp(16px, 6vw, 80px);
   margin-left: auto;
@@ -39,6 +39,7 @@
   line-height: 1.0;
   color: var(--white);
   letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 
 .accent { color: var(--text-muted); }

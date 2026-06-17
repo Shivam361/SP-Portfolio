@@ -25,6 +25,7 @@
   color: var(--white);
   letter-spacing: -0.03em;
 }
+.nav__logo-text .accent { color: var(--accent-teal); }
 
 .nav__links {
   display: flex;

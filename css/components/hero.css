@@ -1,7 +1,7 @@
 /* HERO */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -54,6 +54,7 @@
   letter-spacing: -0.05em;
   color: var(--white);
   margin-bottom: 28px;
+  text-wrap: balance;
 }
 
 .hero__name .accent,
@@ -84,6 +85,7 @@
   max-width: 520px;
   margin: 0 0 44px;
   line-height: 1.8;
+  text-wrap: pretty;
 }
 
 .hero__cta {

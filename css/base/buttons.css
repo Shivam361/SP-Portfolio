@@ -58,6 +58,11 @@
 
 .btn--full { width: 100%; justify-content: center; }
 
+.btn:not(.btn--disabled):active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 0.08s;
+}
+
 .btn--disabled {
   opacity: 0.35;
   cursor: not-allowed;

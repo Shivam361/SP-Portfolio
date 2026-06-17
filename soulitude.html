@@ -17,6 +17,8 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/vendor/fontawesome.min.css" />
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -93,26 +95,26 @@
         </p>
       </div>
 
-      <div class="case-panel" style="margin-top: 32px; border-left: 3px solid var(--accent-2);">
-        <h3 class="case-panel__title" style="margin-bottom: 12px;"><i class="fas fa-user-astronaut"></i> My Role: Senior Programmer</h3>
-        <p style="font-size: 0.95rem; margin-bottom: 16px; color: var(--text-muted);">
+      <div class="case-panel case-panel--role">
+        <h3 class="case-panel__title"><i class="fas fa-user-astronaut"></i> My Role: Senior Programmer</h3>
+        <p>
           Operating as the Senior Programmer among a collaborative group, I took ownership of the entire <strong>UI Architecture and Quality Assurance</strong> pipelines:
         </p>
-        <ul style="margin: 0; padding-left: 1.2rem; display: grid; gap: 0.5rem;">
+        <ul>
           <li><strong>Minimap Systems:</strong> Programmed real-time orthographic minimap matrices that bind actively to player positional data against the dungeon layout, providing vital navigation info without memory hemorrhage.</li>
           <li><strong>HUD & Widget Blueprints:</strong> Engineered all User Interfaces (HUDs, Menus, health/stamina tracking bars) using Unreal Motion Graphics (UMG), ensuring multi-resolution responsiveness.</li>
           <li><strong>QA & Iteration:</strong> Instituted rigorous, high-frequency gameplay logic integration tests to pinpoint clipping errors, logic overlaps, and UI desynchronization amidst team commits.</li>
         </ul>
       </div>
 
-      <div class="case-panel" style="margin-top: 24px;">
+      <div class="case-panel">
         <h3 class="case-panel__title"><i class="fas fa-layer-group"></i> Core Technology Stack</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
-          <ul style="margin: 0; padding-left: 1.2rem;">
+        <div class="case-stack">
+          <ul>
             <li><strong>Unreal Engine:</strong> Core engine runtime, Blueprint visual scripting logic.</li>
             <li><strong>UMG (Unreal Motion Graphics):</strong> State-bound widget components and dynamic anchors.</li>
           </ul>
-          <ul style="margin: 0; padding-left: 1.2rem;">
+          <ul>
             <li><strong>Version Control (Git/Perforce):</strong> Multi-developer repository branching.</li>
             <li><strong>Agile Collaboration:</strong> Rapid-sprint iteration loops during the strict 48-hour jam constraints.</li>
           </ul>

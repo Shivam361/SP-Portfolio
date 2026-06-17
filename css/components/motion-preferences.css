@@ -365,3 +365,83 @@ a.footer__logo {
     padding: 64px 0;
   }
 }
+
+/* ── Role/contribution panel variant ──────────────────────── */
+.case-panel--role {
+  margin-top: 32px;
+  border-left: 3px solid var(--accent-2);
+}
+
+.case-panel--role + .case-panel {
+  margin-top: 24px;
+}
+
+.case-panel--role > p {
+  margin-bottom: 16px;
+}
+
+.case-panel--role ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.case-panel--role ul li {
+  position: static;
+  padding-left: 0;
+  list-style: disc;
+  margin-bottom: 0;
+}
+
+.case-panel--role ul li::before {
+  content: none;
+}
+
+/* ── Tech stack 2-col grid ────────────────────────────────── */
+.case-stack {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.case-stack ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.case-stack ul li {
+  position: static;
+  padding-left: 0;
+  list-style: disc;
+  margin-bottom: 4px;
+}
+
+.case-stack ul li::before {
+  content: none;
+}
+
+/* ── General case panel cleanup ───────────────────────────── */
+.case-panel > p:last-child {
+  margin-bottom: 0;
+}
+
+.case-prose + .case-two-col {
+  margin-top: 32px;
+}
+
+.case-two-col + .case-two-col {
+  margin-top: 24px;
+}
+
+.case-prose + .case-panel.case-table-wrap {
+  margin-top: 40px;
+}
+
+.case-disclaimer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+}
