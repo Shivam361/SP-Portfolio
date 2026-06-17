@@ -368,6 +368,28 @@ if (typeof SplitType !== 'undefined' && document.querySelector('.about__bio')) {
   });
 }
 
+// Scrubbing word-opacity reveal — case study prose paragraphs
+if (typeof SplitType !== 'undefined' && document.querySelector('.case-prose')) {
+  document.querySelectorAll('.case-prose p').forEach(p => {
+    if (p.getBoundingClientRect().top < vh * 0.92) return;
+    const pSplit = new SplitType(p, { types: 'words' });
+    gsap.fromTo(pSplit.words,
+      { opacity: 0.12 },
+      {
+        opacity: 1,
+        ease: 'none',
+        stagger: 0.04,
+        scrollTrigger: {
+          trigger: p,
+          start: 'top 82%',
+          end: 'bottom 20%',
+          scrub: 2,
+        }
+      }
+    );
+  });
+}
+
 // Image scale-in entrance for project card images (0.85 → 1 as card scrolls up)
 gsap.utils.toArray('.project-card__media').forEach(media => {
   const imgWrap = media.querySelector('.project-card__img-wrap');
